@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class GetCarListResponse {
+    private int id;
     private String plate;
     private double kilometer;
     private double dailyPrice;
