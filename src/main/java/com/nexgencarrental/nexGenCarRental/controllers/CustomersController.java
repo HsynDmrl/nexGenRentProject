@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/customers")
 @AllArgsConstructor
+@CrossOrigin
 public class CustomersController {
     private final CustomerService customerService;
     @GetMapping("/getAll")
