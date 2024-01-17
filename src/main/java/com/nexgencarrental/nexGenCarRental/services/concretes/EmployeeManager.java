@@ -21,12 +21,12 @@ public class EmployeeManager extends BaseManager<Employee, EmployeeRepository, G
     }
     @Override
     public void customAdd(AddEmployeeRequest addEmployeeRequest) {
-        userService.getById(addEmployeeRequest.getUserId()); // User id kontrolü
+        //userService.getById(addEmployeeRequest.getUserId()); // User id kontrolü
         add(addEmployeeRequest, Employee.class);
     }
     @Override
     public void customUpdate(UpdateEmployeeRequest updateEmployeeRequest) {
-        userService.getById(updateEmployeeRequest.getUserId()); // User id kontrolü
+        //userService.getById(updateEmployeeRequest.getUserId()); // User id kontrolü
         update(updateEmployeeRequest, Employee.class);
     }
 }

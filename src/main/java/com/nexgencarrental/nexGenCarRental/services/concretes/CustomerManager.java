@@ -23,13 +23,13 @@ public class CustomerManager extends BaseManager<Customer, CustomerRepository, G
     }
     @Override
     public void customAdd(AddCustomerRequest addCustomerRequest) {
-        userService.getById(addCustomerRequest.getUserId()); // User id kontrolü
+        //userService.getById(addCustomerRequest.getUserId()); // User id kontrolü
         customerBusinessRulesService.existsByNationalityId(addCustomerRequest.getNationalityId()); // NationalityId kontrolü
         add(addCustomerRequest, Customer.class);
     }
     @Override
     public void customUpdate(UpdateCustomerRequest updateCustomerRequest) {
-        userService.getById(updateCustomerRequest.getUserId()); // User id kontrolü
+        //userService.getById(updateCustomerRequest.getUserId()); // User id kontrolü
         customerBusinessRulesService.existsByNationalityId(updateCustomerRequest.getNationalityId()); // NationalityId kontrolü
         update(updateCustomerRequest, Customer.class);
     }

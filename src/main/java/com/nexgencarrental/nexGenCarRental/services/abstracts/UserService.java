@@ -1,13 +1,10 @@
 package com.nexgencarrental.nexGenCarRental.services.abstracts;
 
-import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
-import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.CreateUserRequest;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-
-public interface UserService extends BaseService<User, UserRepository, GetUserResponse,
-        GetUserListResponse, AddUserRequest, UpdateUserRequest> {
+public interface UserService extends UserDetailsService {
+    void register(CreateUserRequest request);
+    void login(LoginRequest request);
 }
