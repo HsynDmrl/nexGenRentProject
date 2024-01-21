@@ -35,19 +35,20 @@ public class UsersController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
-    @PostMapping
+    @PostMapping("/register")
     public void register(@RequestBody CreateUserRequest request)
     {
         userService.register(request);
     }
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public String login(@RequestBody LoginRequest request) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         if(authentication.isAuthenticated())
         {
             // jwt oluştur.
             Map<String,Object> claims = new HashMap<>();
+            claims.put("roles",new String("Admin"));
             return jwtService.generateToken(request.getEmail(), claims);
         }
         throw new RuntimeException("Bilgiler hatalı");

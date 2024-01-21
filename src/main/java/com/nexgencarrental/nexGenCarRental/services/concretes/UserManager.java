@@ -21,18 +21,19 @@ public class UserManager implements UserService {
 
     @Override
     public void register(CreateUserRequest request) {
+        request.setPassword(passwordEncoder.encode(request.getPassword()));
         User user = User.builder()
                 .email(request.getEmail())
                 .authorities(request.getRoles())
-                .password(passwordEncoder.encode(request.getPassword()))
+                .password(request.getPassword())
                 .build();
 
         userRepository.save(user);
     }
 
     @Override
-    public void login(LoginRequest request) {
-
+    public String login(LoginRequest request) {
+        return "";
     }
 
     @Override

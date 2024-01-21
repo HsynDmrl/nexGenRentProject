@@ -25,14 +25,25 @@ public class SecurityConfiguration {
     private final JwtAuthFilter jwtAuthFilter;
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
+
+    private static final String[] WHITE_LIST_URLS = {
+            "/swagger-ui/**",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/api/auth/**",
+            "/api/users/login",
+            "/api/users/register"
+    };
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((req) -> req
-                        .requestMatchers("/api/users/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/brands/**").hasAnyAuthority(Role.MANAGER.toString())
-                        .requestMatchers(HttpMethod.GET, "/api/brands/**").permitAll()
+                        .requestMatchers(WHITE_LIST_URLS).permitAll()
+                        .requestMatchers(HttpMethod.POST,"/api/users/**").hasAnyAuthority(Role.ADMIN.name())
+                        .requestMatchers(HttpMethod.POST, "/api/brands/**").hasAnyAuthority(Role.MANAGER.name())
+                        .requestMatchers("/api/colors/**").hasAnyAuthority(Role.ADMIN.name())
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
