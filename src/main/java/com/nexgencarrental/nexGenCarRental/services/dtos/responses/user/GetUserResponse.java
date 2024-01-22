@@ -17,4 +17,6 @@ public class GetUserResponse {
     private String gsm;
 
     private String email;
+
+    private String roleName;
 }

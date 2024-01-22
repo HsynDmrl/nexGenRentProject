@@ -14,30 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
-public class UserManager implements UserService {
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-
-    @Override
-    public void register(CreateUserRequest request) {
-        request.setPassword(passwordEncoder.encode(request.getPassword()));
-        User user = User.builder()
-                .email(request.getEmail())
-                .authorities(request.getRoles())
-                .password(request.getPassword())
-                .build();
-
-        userRepository.save(user);
-    }
-
-    @Override
-    public String login(LoginRequest request) {
-        return "";
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+public class UserManager extends BaseManager<User, UserRepository, GetUserResponse, GetUserListResponse,
+        AddUserRequest, UpdateUserRequest> implements UserService {
+    public UserManager(UserRepository repository, ModelMapperService modelMapperService) {
+        super(repository, modelMapperService, GetUserResponse.class, GetUserListResponse.class, User.class,
+                AddUserRequest.class, UpdateUserRequest.class);
     }
 }

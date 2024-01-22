@@ -17,4 +17,6 @@ public class GetUserListResponse {
     private String gsm;
 
     private String email;
+
+    private String roleName;
 }

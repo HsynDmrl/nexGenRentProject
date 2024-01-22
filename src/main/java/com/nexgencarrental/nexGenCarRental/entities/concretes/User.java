@@ -5,9 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="users")
@@ -34,9 +39,9 @@ public class User implements UserDetails {
     @Column(name="password")
     private String password;
 
-    @Column(name="roles")
-    @Enumerated(EnumType.STRING)
-    private List<Role> authorities;
+    @ManyToOne
+    @JoinColumn(name = "role_id", unique = true)  // JoinColumn ile benzersiz kısıtlama kullanılıyor
+    private Role role;
 
     @Column(name = "gsm")
     private String gsm;
@@ -46,6 +51,11 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Employee> employees;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(role);
+    }
 
     @Override
     public String getUsername() {

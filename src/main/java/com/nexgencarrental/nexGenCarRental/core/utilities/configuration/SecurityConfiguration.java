@@ -1,8 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.configuration;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.filter.JwtAuthFilter;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
+import com.nexgencarrental.nexGenCarRental.repositories.RoleRepository;
+import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,8 +24,9 @@ public class SecurityConfiguration {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final PasswordEncoder passwordEncoder;
-    private final UserService userService;
-
+    //private final UserService userService;
+    private final AuthService authService;
+    private final RoleRepository roleRepository;
     private static final String[] WHITE_LIST_URLS = {
             "/swagger-ui/**",
             "/v2/api-docs",
@@ -41,9 +42,10 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((req) -> req
                         .requestMatchers(WHITE_LIST_URLS).permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/users/**").hasAnyAuthority(Role.ADMIN.name())
-                        .requestMatchers(HttpMethod.POST, "/api/brands/**").hasAnyAuthority(Role.MANAGER.name())
-                        .requestMatchers("/api/colors/**").hasAnyAuthority(Role.ADMIN.name())
+                        .requestMatchers("/api/brands/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST,"/api/users/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/brands/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers("/api/colors/**").hasAnyAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
@@ -56,7 +58,7 @@ public class SecurityConfiguration {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setPasswordEncoder(passwordEncoder);
-        authenticationProvider.setUserDetailsService(userService);
+        authenticationProvider.setUserDetailsService(authService);
         return authenticationProvider;
     }
 
