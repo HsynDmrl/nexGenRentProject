@@ -37,7 +37,7 @@ public class AuthController {
         {
             // jwt oluştur.
             Map<String,Object> claims = new HashMap<>();
-            claims.put("roles",new String("Admin"));
+            claims.put("roles",new String[]{"Admin","User","Manager"});
             return jwtService.generateToken(request.getEmail(), claims);
         }
         throw new RuntimeException("Bilgiler hatalı");
