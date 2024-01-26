@@ -1,10 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.entities.concretes;
 
 import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Role extends BaseEntity implements GrantedAuthority {
-
+    @Column(name = "name")
     private String name;
 
     @OneToMany(mappedBy = "role")
