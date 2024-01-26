@@ -10,4 +10,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserR
 
 public interface UserService extends BaseService<User, UserRepository, GetUserResponse,
         GetUserListResponse, AddUserRequest, UpdateUserRequest> {
+
+    GetUserResponse getByEmail(String email);
 }

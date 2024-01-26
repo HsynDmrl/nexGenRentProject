@@ -56,4 +56,9 @@ public class UsersController {
     public void delete(@PathVariable int id){
         userService.delete(id);
     }
+
+    @GetMapping("/getByEmail")
+    public GetUserResponse getByEmail(@RequestParam String email){
+        return userService.getByEmail(email);
+    }
 }

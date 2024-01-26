@@ -40,7 +40,7 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToOne
-    @JoinColumn(name = "role_id", unique = true)  // JoinColumn ile benzersiz kısıtlama kullanılıyor
+    @JoinColumn(name = "role_id", unique = true)
     private Role role;
 
     @Column(name = "gsm")
