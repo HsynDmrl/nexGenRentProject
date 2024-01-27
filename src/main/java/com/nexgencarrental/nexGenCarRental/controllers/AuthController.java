@@ -16,13 +16,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 @AllArgsConstructor
-@CrossOrigin
 public class AuthController {
 
     private final AuthService authService;
-    //private final UserService userService;
-    private final AuthenticationManager authenticationManager;
-    private final JwtService jwtService;
 
     @PostMapping("/register")
     public void register(@RequestBody CreateUserRequest request)
@@ -32,14 +28,6 @@ public class AuthController {
 
     @PostMapping("/login")
     public String login(@RequestBody LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        if(authentication.isAuthenticated())
-        {
-            // jwt oluştur.
-            Map<String,Object> claims = new HashMap<>();
-            claims.put("roles",new String[]{"Admin","User","Manager"});
-            return jwtService.generateToken(request.getEmail(), claims);
-        }
-        throw new RuntimeException("Bilgiler hatalı");
+        return authService.login(request);
     }
 }
