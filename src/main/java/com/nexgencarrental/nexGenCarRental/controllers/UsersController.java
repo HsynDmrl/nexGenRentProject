@@ -30,7 +30,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/users")
 @AllArgsConstructor
-@CrossOrigin
 public class UsersController {
     private final UserService userService;
     @GetMapping("/getAll")
