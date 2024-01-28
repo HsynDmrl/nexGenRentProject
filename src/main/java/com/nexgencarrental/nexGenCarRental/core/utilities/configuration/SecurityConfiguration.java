@@ -29,31 +29,33 @@ public class SecurityConfiguration {
     private final AuthService authService;
 
     private static final String[] WHITE_LIST_URLS = {
-            "/swagger-ui/**","/swagger-ui.html","/swagger-resources/**",
-            "/v3/api-docs","/webjars/**","/v3/api-docs/**","/v2/api-docs",
+            "/swagger-ui/**",
+            "/swagger-ui.html",
+            "/swagger-resources/**",
+            "/v3/api-docs",
+            "/webjars/**",
+            "/v3/api-docs/**",
+            "/v2/api-docs",
             "/api/auth/**",
             "/api/auth/login",
-            "/api/auth/register",
-
+            "/api/auth/register"
     };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((req) -> req
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITE_LIST_URLS).permitAll()
-                        .requestMatchers(HttpMethod.POST,"/api/users/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.GET,"/api/users/getByEmail").hasAnyAuthority("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/brands/**").hasAnyAuthority("ADMIN")
-                        .requestMatchers("/api/colors/**").hasAnyAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/users/getByEmail").hasAnyAuthority("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/brands/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/colors/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .sessionManagement(sessionManagement ->
-                        sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                );
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
@@ -74,19 +76,9 @@ public class SecurityConfiguration {
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("OPTIONS");
-        config.addAllowedMethod("HEAD");
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("DELETE");
-        config.addAllowedMethod("PATCH");
+        CorsConfiguration config = new CorsConfiguration().applyPermitDefaultValues();
+        config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
     }
-
 }

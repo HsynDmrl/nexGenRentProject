@@ -33,7 +33,7 @@ public class User implements UserDetails {
     @Column(name = "surname")
     private String surname;
 
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
 
     @Column(name="password")
@@ -51,6 +51,9 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "user")
     private List<Employee> employees;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<RefreshToken> refreshTokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
