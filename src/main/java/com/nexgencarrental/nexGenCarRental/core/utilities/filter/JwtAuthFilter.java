@@ -1,7 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.filter;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
+import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,30 +22,34 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final AuthService authService;
+    private final UserService userService;
 
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
-        String authHeader = request.getHeader("Authorization");
+                                    @NonNull FilterChain filterChain) throws ServletException, IOException
+    {
+        String jwtHeader = request.getHeader("Authorization");
 
-        if (authHeader != null && authHeader.startsWith("Bearer ")) {
-            String token = authHeader.substring(7);
-            String username = jwtService.extractUsername(token);
+        if(jwtHeader != null && jwtHeader.startsWith("Bearer "))
+        {
+            String jwt = jwtHeader.substring(7);
+            String username = jwtService.extractUser(jwt);
 
-            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = authService.loadUserByUsername(username);
-                if (jwtService.isTokenValid(token, userDetails)) {
-                    UsernamePasswordAuthenticationToken authentication =
-                            new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                    authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
+            if(username!=null)
+            {
+                UserDetails user = userService.loadUserByUsername(username);
+                if(jwtService.validateToken(jwt, user))
+                {
+                    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+                    authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authenticationToken);
                 }
             }
         }
 
-        filterChain.doFilter(request, response);
+
+        filterChain.doFilter(request,response);
     }
 }

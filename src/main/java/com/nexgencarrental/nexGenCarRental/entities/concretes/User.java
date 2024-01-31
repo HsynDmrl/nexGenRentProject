@@ -52,9 +52,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Employee> employees;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<RefreshToken> refreshTokens;
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(role);

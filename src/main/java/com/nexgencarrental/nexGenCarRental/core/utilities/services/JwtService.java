@@ -13,12 +13,8 @@ import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
@@ -29,57 +25,49 @@ public class JwtService {
     @Value("${application.security.jwt.expiration}")
     private long expiration;
 
-    @Autowired
-    private UserRepository userRepository;
+    public String generateToken(String userName) {
+        Map<String, Object> claims = new HashMap<>();
+        return createToken(claims, userName);
+    }
 
-    public String generateToken(String username, Map<String, Object> claims) {
-        List<String> roles = getRolesByUsername(username);
+    public Boolean validateToken(String token, UserDetails userDetails) {
+        String username = extractUser(token);
+        Date expirationDate = extractExpiration(token);
+        return userDetails.getUsername().equals(username) && !expirationDate.before(new Date());
+    }
 
-        return Jwts
-                .builder()
+    private Date extractExpiration(String token) {
+        Claims claims = Jwts
+                .parser()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getExpiration();
+    }
+    public String extractUser(String token) {
+        Claims claims = Jwts
+                .parser()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.getSubject();
+    }
+
+    private String createToken(Map<String, Object> claims, String userName) {
+        return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(username)
-                .claim("roles", roles)
+                .setSubject(userName)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
-                .signWith(getSigninKey(), SignatureAlgorithm.HS256)
+                .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
-
-    public boolean isTokenValid(String token, UserDetails user) {
-        final String usernameFromToken = extractUsername(token);
-        return (user.getUsername().equals(usernameFromToken)) && !isTokenExpired(token);
-    }
-
-    public boolean isTokenExpired(String token) {
-        return extractExpiration(token).before(new Date());
-    }
-
-    public Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
-    }
-
-    public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
-        final Claims claims = extractAllClaims(token);
-        return claimsResolver.apply(claims);
-    }
-
-    public Claims extractAllClaims(String token)
-    {
-        return Jwts.parser().setSigningKey(getSigninKey()).build().parseClaimsJws(token).getBody(); // Jwt içerisindeki datayı parse eder.
-    }
-
-    public Key getSigninKey(){
+    private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    private List<String> getRolesByUsername(String username) {
-        Optional<User> userOptional = userRepository.findByEmail(username);
-        return userOptional.map(user -> user.getRole().getName()).map(List::of).orElse(List.of());
-    }
 }

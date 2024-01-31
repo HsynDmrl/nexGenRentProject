@@ -1,7 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.configuration;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.filter.JwtAuthFilter;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -26,7 +26,7 @@ public class SecurityConfiguration {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final PasswordEncoder passwordEncoder;
-    private final AuthService authService;
+    private final UserDetailsService userService;
 
     private static final String[] WHITE_LIST_URLS = {
             "/swagger-ui/**",
@@ -64,7 +64,7 @@ public class SecurityConfiguration {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder);
-        provider.setUserDetailsService(authService);
+        provider.setUserDetailsService(userService);
         return provider;
     }
 
