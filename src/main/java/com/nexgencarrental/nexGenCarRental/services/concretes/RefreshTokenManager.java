@@ -7,7 +7,10 @@ import com.nexgencarrental.nexGenCarRental.repositories.RefreshTokenRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RefreshTokenService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -31,61 +34,86 @@ public class RefreshTokenManager implements RefreshTokenService {
 
     @Override
     public Optional<RefreshToken> findByToken(String token) {
-        return refreshTokenRepository.findByToken(token);
+        try {
+            return refreshTokenRepository.findByToken(token);
+        } catch (Exception ex) {
+            throw new RuntimeException("Error during finding refresh token by token", ex);
+        }
     }
 
     @Override
     public RefreshToken createRefreshToken(int userId) {
-        // Kullanıcıyı bul
-        User user = userService.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+        try {
+            User user = userService.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
 
-        // Kullanıcıya ait mevcut refreshToken'ı kontrol et ve varsa sil
-        refreshTokenRepository.findByUser(user).ifPresent(refreshTokenRepository::delete);
+            refreshTokenRepository.findByUser(user).ifPresent(refreshTokenRepository::delete);
 
-        // Yeni RefreshToken oluştur
-        RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUser(user);
-        refreshToken.setToken(UUID.randomUUID().toString());
-        refreshToken.setExpiryDate(Instant.now().plusMillis(jwtService.refreshtokenms()));
+            RefreshToken refreshToken = new RefreshToken();
+            refreshToken.setUser(user);
+            refreshToken.setToken(UUID.randomUUID().toString());
+            refreshToken.setExpiryDate(Instant.now().plusMillis(jwtService.refreshtokenms()));
 
-        // Yeni RefreshToken'ı kaydet
-        return refreshTokenRepository.save(refreshToken);
+            return refreshTokenRepository.save(refreshToken);
+        } catch (IllegalArgumentException | DataAccessException ex) {
+            throw new RuntimeException(ex.getMessage(), ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Error during creating refresh token", ex);
+        }
     }
 
-        @Override
+    @Override
     public void deleteByUserId(int userId) {
-        User user = userService.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
-        refreshTokenRepository.deleteByUser(user);
+        try {
+            User user = userService.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+            refreshTokenRepository.deleteByUser(user);
+        } catch (IllegalArgumentException | DataAccessException ex) {
+            throw new RuntimeException(ex.getMessage(), ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Error during deleting refresh tokens by user id", ex);
+        }
     }
 
     @Override
     public RefreshToken verifyExpiration(RefreshToken token) {
-        if (token.getExpiryDate().isBefore(Instant.now())) {
-            refreshTokenRepository.delete(token);
-            throw new IllegalStateException("Refresh token was expired.");
+        try {
+            if (token.getExpiryDate().isBefore(Instant.now())) {
+                refreshTokenRepository.delete(token);
+                throw new IllegalStateException("Refresh token was expired.");
+            }
+            return token;
+        } catch (IllegalStateException | DataAccessException ex) {
+            throw new RuntimeException(ex.getMessage(), ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Error during verifying expiration of refresh token", ex);
         }
-        return token;
     }
 
     @Override
     public AuthResponse refreshAccessToken(String refreshTokenValue) {
-        Optional<RefreshToken> refreshTokenOpt = findByToken(refreshTokenValue);
-        RefreshToken refreshToken = refreshTokenOpt.orElseThrow(() ->
-                new IllegalStateException("Invalid Refresh Token"));
-        refreshToken = verifyExpiration(refreshToken);
-        User user = refreshToken.getUser();
+        try {
+            Optional<RefreshToken> refreshTokenOpt = findByToken(refreshTokenValue);
+            RefreshToken refreshToken = refreshTokenOpt.orElseThrow(() ->
+                    new IllegalStateException("Invalid Refresh Token"));
+            refreshToken = verifyExpiration(refreshToken);
+            User user = refreshToken.getUser();
 
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", user.getId());
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("userId", user.getId());
 
-        String newAccessToken = jwtService.generateToken(user.getUsername(), claims);
+            String newAccessToken = jwtService.generateToken(user.getUsername(), claims);
 
-        AuthResponse authResponse = new AuthResponse();
-        authResponse.setAccessToken(newAccessToken);
-        authResponse.setRefreshToken(refreshToken.getToken());
+            AuthResponse authResponse = new AuthResponse();
+            authResponse.setAccessToken(newAccessToken);
+            authResponse.setRefreshToken(refreshToken.getToken());
 
-        return authResponse;
+            return authResponse;
+
+        } catch (IllegalStateException | IllegalArgumentException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        }
     }
 }

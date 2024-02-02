@@ -8,6 +8,7 @@ import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.*;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.*;
+import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -31,37 +32,78 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
 
     @Override
     public void add(User user) {
-        userRepository.save(user);
+        try {
+            userRepository.save(user);
+        } catch (DataAccessException ex) {
+            throw new RuntimeException("Error during adding user", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Unexpected error during adding user", ex);
+        }
     }
 
     public GetUserResponse getByEmail(String email) {
-        User user = userRepository.findByEmail(email).orElse(null);
-        return modelMapperService.forResponse().map(user, GetUserResponse.class);
+        try {
+            User user = userRepository.findByEmail(email).orElse(null);
+            return modelMapperService.forResponse().map(user, GetUserResponse.class);
+        } catch (DataAccessException ex) {
+            throw new RuntimeException("Error during getting user by email", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Unexpected error during getting user by email", ex);
+        }
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        try {
+            return userRepository.findByEmail(email);
+        } catch (DataAccessException ex) {
+            throw new RuntimeException("Error during finding user by email", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Unexpected error during finding user by email", ex);
+        }
     }
 
     @Override
     public boolean existsByEmail(String email) {
-        return userRepository.existsByName(email);
+        try {
+            return userRepository.existsByName(email);
+        } catch (DataAccessException ex) {
+            throw new RuntimeException("Error during checking if user exists by email", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Unexpected error during checking if user exists by email", ex);
+        }
     }
 
     @Override
     public Optional<Role> findRoleById(int roleId) {
-        return roleRepository.findById(roleId);
+        try {
+            return roleRepository.findById(roleId);
+        } catch (DataAccessException ex) {
+            throw new RuntimeException("Error during finding role by id", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Unexpected error during finding role by id", ex);
+        }
     }
 
     @Override
     public Optional<User> findById(int userId) {
-        return userRepository.findById(userId);
+        try {
+            return userRepository.findById(userId);
+        } catch (DataAccessException ex) {
+            throw new RuntimeException("Error during finding user by id", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Unexpected error during finding user by id", ex);
+        }
     }
-
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("No user found!"));
+        try {
+            return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("No user found!"));
+        } catch (UsernameNotFoundException ex) {
+            throw new RuntimeException("Error during loading user by username", ex);
+        } catch (Exception ex) {
+            throw new RuntimeException("Unexpected error during loading user by username", ex);
+        }
     }
 }
