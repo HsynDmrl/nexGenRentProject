@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy JAR app to Azure Web App - nexGenRent
+name: Build and deploy JAR app to Azure Web App - nexgenrentacar
 
 on:
   push:
@@ -48,15 +48,15 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D3B9467023F14C4BB0F105CE750FEF16 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3F7A42827858427CB1EC91A416391749 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_5B9960696D6D42339CE6B9EB4FB60B6D }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_090CCF1306CE41BB8E0C5AD107622481 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_3279B76D604047BA9B7500A3F81C87C0 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_F7DCC3577A394A6DA0BD4BC0F91FA873 }}
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'nexGenRent'
+          app-name: 'nexgenrentacar'
           slot-name: 'Production'
           package: '*.jar'
           
