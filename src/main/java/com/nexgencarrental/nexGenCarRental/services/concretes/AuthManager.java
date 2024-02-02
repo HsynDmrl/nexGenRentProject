@@ -120,13 +120,9 @@ public class AuthManager implements AuthService {
 
     private AuthResponse createAuthResponse(User user) {
         try {
-            Long expiresAt = System.currentTimeMillis() + jwtService.refreshtokenms();
-
             AuthResponse authResponse = new AuthResponse();
             authResponse.setAccessToken(jwtService.generateToken(user.getUsername(), new HashMap<>()));
             authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user.getId()).getToken());
-            authResponse.setEmail(user.getEmail());
-            authResponse.setExpiresAt(expiresAt);
 
             return authResponse;
 
