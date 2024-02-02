@@ -1,7 +1,3 @@
-# Stage 1: Build Stage
-FROM openjdk:17-jre-slim AS build
-
-# Set environment variables
 ARG DATABASE
 ARG DATABASE_USER
 ARG DATABASE_PASSWORD
@@ -20,7 +16,7 @@ RUN apt-get update && \
     mvn clean package -DskipTests
 
 # Stage 2: Run Stage
-FROM openjdk:17-jre-slim
+FROM openjdk:17
 
 # Expose port
 EXPOSE 8080
