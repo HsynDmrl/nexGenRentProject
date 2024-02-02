@@ -36,16 +36,24 @@ public class RefreshTokenManager implements RefreshTokenService {
 
     @Override
     public RefreshToken createRefreshToken(int userId) {
+        // Kullanıcıyı bul
         User user = userService.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+
+        // Kullanıcıya ait mevcut refreshToken'ı kontrol et ve varsa sil
+        refreshTokenRepository.findByUser(user).ifPresent(refreshTokenRepository::delete);
+
+        // Yeni RefreshToken oluştur
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setUser(user);
         refreshToken.setToken(UUID.randomUUID().toString());
         refreshToken.setExpiryDate(Instant.now().plusMillis(jwtService.refreshtokenms()));
+
+        // Yeni RefreshToken'ı kaydet
         return refreshTokenRepository.save(refreshToken);
     }
 
-    @Override
+        @Override
     public void deleteByUserId(int userId) {
         User user = userService.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));

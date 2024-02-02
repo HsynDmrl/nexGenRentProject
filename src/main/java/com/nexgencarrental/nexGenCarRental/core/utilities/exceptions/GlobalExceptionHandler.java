@@ -15,15 +15,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorResponse handleEntityNotFound(EntityNotFoundException exception) {
+    public ApiErrorResponse handleEntityNotFound(EntityNotFoundException exception) {
         String errorMessage = exception.getMessage();
-        return new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Entity Not Found", errorMessage, LocalDateTime.now());
+        return new ApiErrorResponse(HttpStatus.NOT_FOUND, errorMessage);
     }
 
     @ExceptionHandler(AccessDeniedException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ForbiddenResponse handleAccessDenied(AccessDeniedException exception) {
+    public ApiErrorResponse handleAccessDenied(AccessDeniedException exception) {
         String errorMessage = exception.getMessage();
-        return new ForbiddenResponse(HttpStatus.FORBIDDEN.value(), "Access Denied", errorMessage, LocalDateTime.now());
+        return new ApiErrorResponse(HttpStatus.FORBIDDEN, errorMessage);
     }
 }
