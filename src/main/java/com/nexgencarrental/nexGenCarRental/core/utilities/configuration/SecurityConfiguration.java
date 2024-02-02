@@ -26,7 +26,7 @@ public class SecurityConfiguration {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final PasswordEncoder passwordEncoder;
-    private final UserDetailsService userService;
+    private final UserDetailsService userDetailsService;
 
     private static final String[] WHITE_LIST_URLS = {
             "/swagger-ui/**",
@@ -47,6 +47,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITE_LIST_URLS).permitAll()
+                        .requestMatchers("swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/users/getByEmail").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/brands/**").hasAuthority("ADMIN")
@@ -64,7 +65,7 @@ public class SecurityConfiguration {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder);
-        provider.setUserDetailsService(userService);
+        provider.setUserDetailsService(userDetailsService);
         return provider;
     }
 

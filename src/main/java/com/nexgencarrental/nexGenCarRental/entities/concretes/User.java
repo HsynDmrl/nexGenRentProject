@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -52,9 +53,14 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Employee> employees;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private RefreshToken refreshToken;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(role);
+        return role != null
+                ? Collections.singletonList(new SimpleGrantedAuthority(role.getName()))
+                : Collections.emptyList();
     }
 
     @Override
