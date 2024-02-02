@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class UpdateBrandRequest {
     @Positive(message = "Id field cannot be less than 0.")
     private int id;
