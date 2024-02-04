@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -35,9 +36,9 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
         try {
             userRepository.save(user);
         } catch (DataAccessException ex) {
-            throw new RuntimeException("Error during adding user", ex);
+            throw new RuntimeException(ErrorConstants.ERROR_ADDING_USER, ex);
         } catch (Exception ex) {
-            throw new RuntimeException("Unexpected error during adding user", ex);
+            throw new RuntimeException(ErrorConstants.UNEXPECTED_ERROR_ADDING_USER, ex);
         }
     }
 
@@ -46,9 +47,9 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
             User user = userRepository.findByEmail(email).orElse(null);
             return modelMapperService.forResponse().map(user, GetUserResponse.class);
         } catch (DataAccessException ex) {
-            throw new RuntimeException("Error during getting user by email", ex);
+            throw new RuntimeException(ErrorConstants.ERROR_GETTING_USER_BY_EMAIL, ex);
         } catch (Exception ex) {
-            throw new RuntimeException("Unexpected error during getting user by email", ex);
+            throw new RuntimeException(ErrorConstants.UNEXPECTED_ERROR_GETTING_USER_BY_EMAIL, ex);
         }
     }
 
@@ -57,9 +58,9 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
         try {
             return userRepository.findByEmail(email);
         } catch (DataAccessException ex) {
-            throw new RuntimeException("Error during finding user by email", ex);
+            throw new RuntimeException(ErrorConstants.ERROR_FINDING_USER_BY_EMAIL, ex);
         } catch (Exception ex) {
-            throw new RuntimeException("Unexpected error during finding user by email", ex);
+            throw new RuntimeException(ErrorConstants.UNEXPECTED_ERROR_FINDING_USER_BY_EMAIL, ex);
         }
     }
 
@@ -68,9 +69,9 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
         try {
             return userRepository.existsByName(email);
         } catch (DataAccessException ex) {
-            throw new RuntimeException("Error during checking if user exists by email", ex);
+            throw new RuntimeException(ErrorConstants.ERROR_CHECKING_USER_EXISTS_BY_EMAIL, ex);
         } catch (Exception ex) {
-            throw new RuntimeException("Unexpected error during checking if user exists by email", ex);
+            throw new RuntimeException(ErrorConstants.UNEXPECTED_ERROR_CHECKING_USER_EXISTS_BY_EMAIL, ex);
         }
     }
 
@@ -79,9 +80,9 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
         try {
             return roleRepository.findById(roleId);
         } catch (DataAccessException ex) {
-            throw new RuntimeException("Error during finding role by id", ex);
+            throw new RuntimeException(ErrorConstants.ERROR_FINDING_ROLE_BY_ID, ex);
         } catch (Exception ex) {
-            throw new RuntimeException("Unexpected error during finding role by id", ex);
+            throw new RuntimeException(ErrorConstants.UNEXPECTED_ERROR_FINDING_ROLE_BY_ID, ex);
         }
     }
 
@@ -90,20 +91,20 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
         try {
             return userRepository.findById(userId);
         } catch (DataAccessException ex) {
-            throw new RuntimeException("Error during finding user by id", ex);
+            throw new RuntimeException(ErrorConstants.ERROR_FINDING_USER_BY_ID, ex);
         } catch (Exception ex) {
-            throw new RuntimeException("Unexpected error during finding user by id", ex);
+            throw new RuntimeException(ErrorConstants.UNEXPECTED_ERROR_FINDING_USER_BY_ID, ex);
         }
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         try {
-            return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("No user found!"));
+            return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(ErrorConstants.NO_USER_FOUND));
         } catch (UsernameNotFoundException ex) {
-            throw new RuntimeException("Error during loading user by username", ex);
+            throw new RuntimeException(ErrorConstants.ERROR_LOADING_USER_BY_USERNAME, ex);
         } catch (Exception ex) {
-            throw new RuntimeException("Unexpected error during loading user by username", ex);
+            throw new RuntimeException(ErrorConstants.UNEXPECTED_ERROR_LOADING_USER_BY_USERNAME, ex);
         }
     }
 }

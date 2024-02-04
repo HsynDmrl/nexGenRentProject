@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.entities.abstracts;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.DatabaseConstants;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,14 +10,14 @@ import java.time.LocalDate;
 @Data
 public abstract class BaseEntity {
     @Id
-    @Column(name = "id")
+    @Column(name = DatabaseConstants.ID_COLUMN)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "created_date")
+    @Column(name = DatabaseConstants.CREATED_DATE_COLUMN)
     private LocalDate createdDate;
 
-    @Column(name = "updated_date", nullable = true)
+    @Column(name = DatabaseConstants.UPDATED_DATE_COLUMN, nullable = true)
     private LocalDate updatedDate;
 
     @PrePersist

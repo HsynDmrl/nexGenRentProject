@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.model;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -10,12 +11,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateModelRequest {
-    @Positive(message = "Id cannot be less than 0")
+    @Positive(message = ErrorConstants.UPDATE_MODEL_ID_POSITIVE)
     private int id;
 
-    @Size(min = 2,message = "The model entered must have at least 2 letters.")
+    @Size(min = 2, message = ErrorConstants.MODEL_NAME_SIZE)
     private String name;
 
-    @Positive(message = "Brand Id cannot be less than 0")
+    @Positive(message = ErrorConstants.ADD_MODEL_BRAND_ID_POSITIVE)
     private int brandId;
 }

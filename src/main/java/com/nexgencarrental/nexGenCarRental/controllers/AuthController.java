@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RefreshTokenService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
@@ -16,14 +17,14 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping(ApiPathConstants.AUTH_BASE_URL)
 @AllArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
     private final RefreshTokenService refreshTokenService;
 
-    @PostMapping("/register")
+    @PostMapping(ApiPathConstants.REGISTER_URL)
     public ResponseEntity<Void> register(@RequestBody CreateUserRequest createUserRequest) {
         try {
             authService.register(createUserRequest);
@@ -35,7 +36,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/login")
+    @PostMapping(ApiPathConstants.LOGIN_URL)
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         try {
             AuthResponse authResponse = authService.login(loginRequest);
@@ -47,7 +48,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping("/refresh-token")
+    @PostMapping(ApiPathConstants.REFRESH_TOKEN_URL)
     public ResponseEntity<AuthResponse> refreshAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
         try {
             AuthResponse authResponse = refreshTokenService.refreshAccessToken(refreshTokenRequest.getRefreshToken());

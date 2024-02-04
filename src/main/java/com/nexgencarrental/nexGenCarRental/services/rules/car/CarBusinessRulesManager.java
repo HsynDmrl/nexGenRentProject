@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.car;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
     public void existsByPlate(String plate) {
 
         if (carRepository.existsByPlate(plate.trim().replaceAll("\\s", ""))){
-            throw new RuntimeException(plate + " - This license plate is already in the system. Please enter a different license plate.");
+            throw new RuntimeException(plate + ErrorConstants.CAR_PLATE_ALREADY_EXISTS);
         }
     }
 

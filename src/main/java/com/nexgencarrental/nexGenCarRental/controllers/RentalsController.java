@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
@@ -14,27 +15,27 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/rentals")
+@RequestMapping(ApiPathConstants.RENTALS_BASE_URL)
 public class RentalsController {
     private final RentalService rentalService;
-    @GetMapping("/getAll")
+    @GetMapping(ApiPathConstants.GET_ALL_RENTALS)
     public List<GetRentalListResponse> getAll(){
         return rentalService.getAll();
     }
-    @GetMapping("/{id}")
+    @GetMapping(ApiPathConstants.GET_RENTAL_BY_ID)
     public GetRentalResponse getById(@PathVariable int id){
         return rentalService.getById(id);
     }
-    @PostMapping("/add")
+    @PostMapping(ApiPathConstants.ADD_RENTAL)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddRentalRequest addRentalRequest) {
         rentalService.customAdd(addRentalRequest);
     }
-    @PutMapping()
+    @PutMapping(ApiPathConstants.UPDATE_RENTAL)
     public void update(@RequestBody @Valid UpdateRentalRequest updateRentalRequest){
         rentalService.customUpdate(updateRentalRequest);
     }
-    @DeleteMapping("{id}")
+    @DeleteMapping(ApiPathConstants.DELETE_RENTAL)
     public void delete(@PathVariable int id ) {
         this.rentalService.delete(id);
     }
