@@ -37,6 +37,7 @@ public class InvoiceController {
         invoiceService.update(updateInvoiceRequest, Invoice.class);
     }
 
+
     @DeleteMapping("{id}")
     public void delete(@PathVariable int id){
         invoiceService.delete(id);
