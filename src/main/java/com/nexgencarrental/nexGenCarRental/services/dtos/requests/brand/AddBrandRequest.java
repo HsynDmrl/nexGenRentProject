@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddBrandRequest {
-    @Size(min = 2,message ="Enter a brand consisting of at least 2 letters")
-    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message="Enter the first letter Upper and the following letters Small without spaces.(Ex:'Ford'")
+    @Size(min = 2, message = ErrorConstants.BRAND_NAME_SIZE)
+    @Pattern(regexp = "^[A-Z][a-z]{1,13}$", message = ErrorConstants.BRAND_NAME_PATTERN)
     private String name;
 }

@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -41,11 +42,11 @@ public class AuthManager implements AuthService {
     public void register(CreateUserRequest request) {
         try {
             if (userService.existsByEmail(request.getEmail())) {
-                throw new EntityExistsException("Email already in use: " + request.getEmail());
+                throw new EntityExistsException(ErrorConstants.USER_ALREADY_EXISTS + ": " + request.getEmail());
             }
 
             Role userRole = userService.findRoleById(request.getRoleId())
-                    .orElseThrow(() -> new EntityNotFoundException("Role not found with id: " + request.getRoleId()));
+                    .orElseThrow(() -> new EntityNotFoundException(ErrorConstants.ROLE_NOT_FOUND + " with id: " + request.getRoleId()));
 
             String encodedPassword = passwordEncoder.encode(request.getPassword());
 
@@ -60,7 +61,7 @@ public class AuthManager implements AuthService {
         } catch (EntityExistsException | EntityNotFoundException ex) {
             throw new RuntimeException(ex.getMessage(), ex);
         } catch (Exception ex) {
-            throw new RuntimeException("Error during user registration", ex);
+            throw new RuntimeException(ErrorConstants.REGISTRATION_ERROR, ex);
         }
     }
 
@@ -89,9 +90,9 @@ public class AuthManager implements AuthService {
             return authResponse;
 
         } catch (AuthenticationException ex) {
-            throw new AccessDeniedException("Invalid credentials", ex);
+            throw new AccessDeniedException(ErrorConstants.INVALID_CREDENTIALS, ex);
         } catch (Exception ex) {
-            throw new RuntimeException("Error during user login", ex);
+            throw new RuntimeException(ErrorConstants.LOGIN_ERROR, ex);
         }
     }
 
@@ -99,7 +100,7 @@ public class AuthManager implements AuthService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
             Optional<User> optionalUser = userService.findByEmail(username);
-            User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
+            User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException(ErrorConstants.USER_NOT_FOUND + " with email: " + username));
 
             Set<GrantedAuthority> authorities = new HashSet<>();
             authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
@@ -127,7 +128,7 @@ public class AuthManager implements AuthService {
             return authResponse;
 
         } catch (Exception ex) {
-            throw new RuntimeException("Error during creating auth response", ex);
+            throw new RuntimeException(ErrorConstants.AUTH_RESPONSE_ERROR, ex);
         }
     }
 }

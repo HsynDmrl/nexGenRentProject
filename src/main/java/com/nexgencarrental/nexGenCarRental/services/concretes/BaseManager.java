@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.*;
@@ -43,7 +44,7 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
         List<T> entities = repository.findAll();
 
         if (entities.isEmpty())
-            throw new EntityNotFoundException("No entities found in the system.");
+            throw new EntityNotFoundException(ErrorConstants.NO_ENTITIES_FOUND);
 
         return entities.stream()
                 .map(entity -> modelMapperService.forResponse().map(entity, listResponseType))

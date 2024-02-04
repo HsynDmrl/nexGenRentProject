@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BrandService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.AddBrandRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.UpdateBrandRequest;
@@ -13,28 +14,28 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/brands")
+@RequestMapping(ApiPathConstants.BRANDS_BASE_URL)
 @AllArgsConstructor
 public class BrandsController {
     private final BrandService brandService;
-    @GetMapping("/getAll")
+    @GetMapping(ApiPathConstants.GET_ALL_BRANDS)
     public List<GetBrandListResponse> getAll(){
         return brandService.getAll();
     }
-    @GetMapping("/{id}")
+    @GetMapping(ApiPathConstants.GET_BRAND_BY_ID)
     public GetBrandResponse getById(int id){
         return brandService.getById(id);
     }
-    @PostMapping("/add")
+    @PostMapping(ApiPathConstants.ADD_BRAND)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddBrandRequest addBrandRequest) {
         this.brandService.customAdd(addBrandRequest);
     }
-    @PutMapping("/update")
+    @PutMapping(ApiPathConstants.UPDATE_BRAND)
     public void update(@RequestBody @Valid UpdateBrandRequest updateBrandRequest){
         brandService.customUpdate(updateBrandRequest);
     }
-    @DeleteMapping("{id}")
+    @DeleteMapping(ApiPathConstants.DELETE_BRAND)
     public void delete(@PathVariable int id){
         brandService.delete(id);
     }

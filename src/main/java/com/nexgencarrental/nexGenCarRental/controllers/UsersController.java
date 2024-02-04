@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
@@ -28,35 +29,36 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping(ApiPathConstants.USERS_BASE_URL)
+
 @AllArgsConstructor
 public class UsersController {
     private final UserService userService;
-    @GetMapping("/getAll")
+    @GetMapping(ApiPathConstants.GET_ALL_USERS)
     public List<GetUserListResponse> getAll(){
         return userService.getAll();
     }
-    @GetMapping("/{id}")
+    @GetMapping(ApiPathConstants.GET_USER_BY_ID)
     public GetUserResponse getById(int id){
         return userService.getById(id);
     }
-    @PostMapping("/add")
+    @PostMapping(ApiPathConstants.ADD_USER)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddUserRequest addUserRequest) {
         this.userService.add(addUserRequest, User.class);
     }
 
-    @PutMapping("/update")
+    @PutMapping(ApiPathConstants.UPDATE_USER)
     public void update(@RequestBody @Valid UpdateUserRequest updateUserRequest){
         userService.update(updateUserRequest, User.class);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping(ApiPathConstants.DELETE_USER)
     public void delete(@PathVariable int id){
         userService.delete(id);
     }
 
-    @GetMapping("/getByEmail")
+    @GetMapping(ApiPathConstants.GET_USER_BY_EMAIL)
     public GetUserResponse getByEmail(@RequestParam String email){
         return userService.getByEmail(email);
     }

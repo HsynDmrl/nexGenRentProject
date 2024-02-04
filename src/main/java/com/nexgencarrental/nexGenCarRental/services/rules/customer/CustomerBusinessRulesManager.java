@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.customer;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.repositories.CustomerRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +12,7 @@ public class CustomerBusinessRulesManager implements CustomerBusinessRulesServic
     @Override
     public void existsByNationalityId(String name) {
         if (customerRepository.existsByNationalityId(name.trim().replaceAll("\\s", ""))){
-            throw new RuntimeException("The Customer Nationality Id is already exists!");
+            throw new RuntimeException(ErrorConstants.CUSTOMER_NATIONALITY_ID_ALREADY_EXISTS);
         }
     }
 }
