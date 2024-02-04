@@ -15,7 +15,7 @@ public class AddCarRequest {
 
     @Min(value = 2005, message = "Between 2005 and 2024")
     @Max(value = 2024, message = "No older than 2024")
-    private int year;
+    private short year;
 
     //inclusive true olmalı çünkü inclusive=false değerinde 0'ı dahil etmiyor.
     @DecimalMin(value = "0.0", inclusive = true, message = "Daily price cannot be less than zero")
@@ -23,6 +23,8 @@ public class AddCarRequest {
 
     @Pattern(regexp = "^\\d{1,2}\\s[A-Z]{1,3}\\s\\d{1,4}$", message = "'34 ABC 456' enter according to this format")
     private String plate;
+
+    private String imagePath;
 
     //@PositiveOrZero yazmamız yeterli (@Positive de 0 dahil etmiyor)
     @PositiveOrZero(message = "Model Id cannot be less than 0.")

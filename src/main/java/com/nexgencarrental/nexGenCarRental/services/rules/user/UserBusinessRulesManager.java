@@ -15,4 +15,10 @@ public class UserBusinessRulesManager implements UserBusinessRulesService {
             throw new RuntimeException("The User name is already exists!");
         }
     }
+    @Override
+    public void existsByNationalityId(String name) {
+        if (userRepository.existsByNationalityId(name.trim().replaceAll("\\s", ""))){
+            throw new RuntimeException("The Customer Nationality Id is already exists!");
+        }
+    }
 }

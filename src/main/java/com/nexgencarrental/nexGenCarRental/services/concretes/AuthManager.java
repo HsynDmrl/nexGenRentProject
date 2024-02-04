@@ -7,6 +7,7 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RefreshTokenService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.CreateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.user.UserBusinessRulesService;
@@ -55,7 +56,7 @@ public class AuthManager implements AuthService {
                     .role(userRole)
                     .build();
 
-            userService.add(user);
+            userService.customAdd(new AddUserRequest());
 
         } catch (EntityExistsException | EntityNotFoundException ex) {
             throw new RuntimeException(ex.getMessage(), ex);

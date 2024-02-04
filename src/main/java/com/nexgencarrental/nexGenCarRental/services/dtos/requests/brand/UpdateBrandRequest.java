@@ -17,4 +17,6 @@ public class UpdateBrandRequest {
     @Size(min = 2,message = "Enter a brand consisting of at least 2 letters" )
     @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message="Enter the first letter UPPER and the following letters SMALL without spaces.(Ex:'Ford'")
     private String name;
+
+    private String logoPath;
 }

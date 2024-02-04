@@ -16,7 +16,7 @@ public class UpdateCarRequest {
 
     @Min(value = 2005, message = "Between 2005 and 2024")
     @Max(value = 2024, message = "No older than 2024")
-    private int year;
+    private short year;
 
 
     @DecimalMin(value = "0.0", inclusive = true, message = "Daily price cannot be less than zero")
@@ -24,6 +24,8 @@ public class UpdateCarRequest {
 
     @Pattern(regexp = "^\\d{1,2}\\s[A-Z]{1,3}\\s\\d{1,4}$", message = "'34 ABC 456' enter according to this format")
     private String plate;
+
+    private String imagePath;
 
     @PositiveOrZero(message = "Model Id cannot be less than 0.")
     private int modelId;

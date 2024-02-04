@@ -43,7 +43,7 @@ public class UsersController {
     @PostMapping("/add")
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddUserRequest addUserRequest) {
-        this.userService.add(addUserRequest, User.class);
+        this.userService.customAdd(addUserRequest);
     }
 
     @PutMapping("/update")

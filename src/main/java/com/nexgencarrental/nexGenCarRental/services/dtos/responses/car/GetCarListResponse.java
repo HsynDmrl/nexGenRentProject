@@ -12,7 +12,8 @@ public class GetCarListResponse {
     private String plate;
     private double kilometer;
     private double dailyPrice;
-    private int year;
+    private short year;
+    private String imagePath;
     private String modelName;
     private String colorName;
 

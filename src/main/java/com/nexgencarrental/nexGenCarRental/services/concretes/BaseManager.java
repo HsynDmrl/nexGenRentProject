@@ -55,15 +55,15 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
         if (entity instanceof Car) {
             Car carEntity = (Car) entity;
             carEntity.setPlate(carEntity.getPlate().replaceAll("\\s", ""));
-        } else if (entity instanceof Customer) {
-            Customer customerEntity = (Customer) entity;
-            customerEntity.setNationalityId(customerEntity.getNationalityId().replaceAll("\\s", ""));
-        } else if (entity instanceof Employee) {
+        }else if (entity instanceof Employee) {
             Employee employeeEntity = (Employee) entity;
             employeeEntity.setId(0);
         } else if (entity instanceof Model) {
             Model modelEntity = (Model) entity;
             modelEntity.setId(0);
+        }else if (entity instanceof User) {
+            User userEntity = (User) entity;
+            userEntity.setNationalityId(userEntity.getNationalityId().replaceAll("\s", ""));
         }
         repository.save(entity);
     }
@@ -86,9 +86,9 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
         if (entity instanceof Car) {
             Car carEntity = (Car) entity;
             carEntity.setPlate(carEntity.getPlate().replaceAll("\\s", ""));
-        } else if (entity instanceof Customer) {
-            Customer customerEntity = (Customer) entity;
-            customerEntity.setNationalityId(customerEntity.getNationalityId().replaceAll("\\s", ""));
+        } else if (entity instanceof User) {
+            User userEntity = (User) entity;
+            userEntity.setNationalityId(userEntity.getNationalityId().replaceAll("\\s", ""));
         }
         repository.save(entity);
     }

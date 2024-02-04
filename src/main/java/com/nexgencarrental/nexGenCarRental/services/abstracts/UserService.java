@@ -16,7 +16,12 @@ import java.util.Optional;
 public interface UserService extends BaseService<User, UserRepository, GetUserResponse,
         GetUserListResponse, AddUserRequest, UpdateUserRequest> , UserDetailsService {
 
-    void add(User user);
+    //void add(User user);
+
+    void customAdd(AddUserRequest addUserRequest);
+
+    void customUpdate(UpdateUserRequest updateUserRequest);
+
     GetUserResponse getByEmail(String email);
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
