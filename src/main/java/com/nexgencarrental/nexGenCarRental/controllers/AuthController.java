@@ -9,6 +9,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterR
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,7 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping(ApiPathConstants.REGISTER_URL)
-    public ResponseEntity<Void> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequest registerRequest) {
         try {
             authService.register(registerRequest);
             return ResponseEntity.ok().build();
@@ -37,7 +38,7 @@ public class AuthController {
     }
 
     @PostMapping(ApiPathConstants.LOGIN_URL)
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         try {
             AuthResponse authResponse = authService.login(loginRequest);
             return ResponseEntity.ok(authResponse);
