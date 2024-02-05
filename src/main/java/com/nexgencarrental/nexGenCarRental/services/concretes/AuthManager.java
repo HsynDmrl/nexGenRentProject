@@ -50,6 +50,10 @@ public class AuthManager implements AuthService {
             String encodedPassword = passwordEncoder.encode(request.getPassword());
 
             User user = User.builder()
+                    .name(request.getName())
+                    .surname(request.getSurname())
+                    .nationalityId(request.getNationalityId())
+                    .gsm(request.getGsm())
                     .email(request.getEmail())
                     .password(encodedPassword)
                     .role(userRole)
