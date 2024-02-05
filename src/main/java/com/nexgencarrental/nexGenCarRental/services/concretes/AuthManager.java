@@ -8,7 +8,7 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RefreshTokenService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.CreateUserRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -38,7 +38,7 @@ public class AuthManager implements AuthService {
     private final AuthenticationManager authenticationManager;
 
     @Override
-    public void register(CreateUserRequest request) {
+    public void register(RegisterRequest request) {
         try {
             if (userService.existsByEmail(request.getEmail())) {
                 throw new EntityExistsException(ErrorConstants.USER_ALREADY_EXISTS + ": " + request.getEmail());

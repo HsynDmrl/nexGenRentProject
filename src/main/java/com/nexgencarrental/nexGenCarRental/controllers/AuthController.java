@@ -5,7 +5,7 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RefreshTokenService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RefreshTokenRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.CreateUserRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,9 +25,9 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping(ApiPathConstants.REGISTER_URL)
-    public ResponseEntity<Void> register(@RequestBody CreateUserRequest createUserRequest) {
+    public ResponseEntity<Void> register(@RequestBody RegisterRequest registerRequest) {
         try {
-            authService.register(createUserRequest);
+            authService.register(registerRequest);
             return ResponseEntity.ok().build();
         } catch (EntityExistsException | EntityNotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, ex.getMessage(), ex);
