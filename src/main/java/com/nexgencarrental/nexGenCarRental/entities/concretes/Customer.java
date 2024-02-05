@@ -16,16 +16,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Customer extends BaseEntity {
 
-    @Column(name = "nationality_id",unique = true)
-    private String nationalityId;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "customer")
     private List<Rental> rentals;
-
-
-
 }

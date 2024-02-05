@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.color;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.Size;
@@ -11,10 +12,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateColorRequest {
-    @Positive(message = "Id field cannot be less than 0.")
+    @Positive(message = ErrorConstants.UPDATE_COLOR_ID_POSITIVE)
     private int id;
 
-    @Size(min = 2,message = "Enter a color consisting of at least 2 letters" )
-    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message="Enter the first letter UPPER and the following letters SMALL.(Ex:'White'")
+    @Size(min = 2, message = ErrorConstants.COLOR_NAME_SIZE)
+    @Pattern(regexp = "^[A-Z][a-z]{1,13}$", message = ErrorConstants.COLOR_NAME_PATTERN)
     private String name;
 }

@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.color;
 
-import jakarta.validation.constraints.NotBlank;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddColorRequest {
-    @Size(min = 2,message = "Enter a color consisting of at least 2 letters" )
-    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message="Enter the first letter UPPER and the following letters SMALL.(Ex:'White'")
+    @Size(min = 2,message = ErrorConstants.COLOR_NAME_SIZE )
+    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message=ErrorConstants.COLOR_NAME_PATTERN)
     private String name;
 }

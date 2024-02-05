@@ -1,5 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.car;
 
+import com.nexgencarrental.nexGenCarRental.entities.concretes.FuelType;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.GearType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,11 +11,23 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetCarListResponse {
     private int id;
+
     private String plate;
+
     private double kilometer;
+
     private double dailyPrice;
-    private int year;
+
+    private short year;
+
+    private String imagePath;
+
+    private GearType gearType;
+
+    private FuelType fuelType;
+
     private String modelName;
+
     private String colorName;
 
 }

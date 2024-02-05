@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.configuration;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.SecurityConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.filter.JwtAuthFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -28,25 +29,14 @@ public class SecurityConfiguration {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
 
-    private static final String[] WHITE_LIST_URLS = {
-            "/swagger-ui/**",
-            "/swagger-ui.html",
-            "/swagger-resources/**",
-            "/v3/api-docs",
-            "/webjars/**",
-            "/v3/api-docs/**",
-            "/v2/api-docs",
-            "/api/auth/**",
-            "/api/auth/login",
-            "/api/auth/register"
-    };
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(WHITE_LIST_URLS).permitAll()
+                        .requestMatchers(SecurityConstants.WHITE_LIST_URLS).permitAll()
                         .requestMatchers("swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/users/getByEmail").hasAnyAuthority("USER", "ADMIN")

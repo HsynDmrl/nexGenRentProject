@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.configuration;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.SecurityConstants;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;
@@ -15,11 +16,11 @@ public class SwaggerConfiguration {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .components(new io.swagger.v3.oas.models.Components()
-                        .addSecuritySchemes("bearerAuth", new SecurityScheme()
+                        .addSecuritySchemes(SecurityConstants.BEARER_AUTH_SCHEME_NAME, new SecurityScheme()
                                 .type(SecurityScheme.Type.HTTP)
-                                .scheme("bearer")
-                                .bearerFormat("JWT")
+                                .scheme(SecurityConstants.BEARER_SCHEME)
+                                .bearerFormat(SecurityConstants.BEARER_FORMAT)
                         )
-                ).security(List.of(new SecurityRequirement().addList("bearerAuth")));
+                ).security(List.of(new SecurityRequirement().addList(SecurityConstants.BEARER_AUTH_SCHEME_NAME)));
     }
 }

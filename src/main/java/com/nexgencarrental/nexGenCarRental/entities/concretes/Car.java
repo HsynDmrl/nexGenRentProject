@@ -19,13 +19,24 @@ public class Car extends BaseEntity {
     private double kilometer;
 
     @Column(name = "year")
-    private int year;
+    private short year;
 
     @Column(name ="daily_price")
     private double dailyPrice;
 
     @Column(name = "plate",unique = true)
     private String plate;
+
+    @Column(name="image_path")
+    private String imagePath;
+
+    @Column(name = "gear_type")
+    @Enumerated(EnumType.STRING)
+    private GearType gearType;
+
+    @Column(name = "fuel_type")
+    @Enumerated(EnumType.STRING)
+    private FuelType fuelType;
 
     @ManyToOne
     @JoinColumn(name ="model_id")

@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.model;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,10 +9,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddModelRequest {
-    @Size(min = 2, message = "Enter a model name consisting of at least 2 letters")
-    @Pattern(regexp = "^[A-Z][a-z0-9]{0,13}$", message = "Enter the first letter in CAPITAL and the following letters in SMALL. (Ex: 'Focus')")
+    @Size(min = 2, message = ErrorConstants.MODEL_NAME_SIZE)
+    @Pattern(regexp = "^[A-Z][a-z0-9]{0,13}$", message = ErrorConstants.MODEL_NAME_PATTERN)
     private String name;
 
-    @Positive(message = "Brand Id must be a positive value.")
+    @Positive(message = ErrorConstants.ADD_MODEL_BRAND_ID_POSITIVE)
     private int brandId;
 }

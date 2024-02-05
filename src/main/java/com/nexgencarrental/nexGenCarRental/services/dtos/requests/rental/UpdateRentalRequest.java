@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +11,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateRentalRequest {
-    @Positive (message = "Id cannot be less than 0")
+    @Positive (message = ErrorConstants.UPDATE_RENTAL_ID_POSITIVE)
     private int id;
 
     private LocalDate startDate;

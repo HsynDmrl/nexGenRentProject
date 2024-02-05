@@ -8,5 +8,4 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class GetCustomerResponse {
     private int id;
-    private String nationalityId;
 }

@@ -23,8 +23,8 @@ public class RentalManager extends BaseManager <Rental, RentalRepository, GetRen
     private final EmployeeService employeeService;
     private final RentalBusinessRulesService rentalBusinessRulesService;
     public RentalManager(RentalRepository repository, ModelMapperService modelMapperService,
-            CarService carService, CustomerService customerService, EmployeeService employeeService,
-            RentalBusinessRulesService rentalBusinessRulesService) {
+                         CarService carService, CustomerService customerService, EmployeeService employeeService,
+                         RentalBusinessRulesService rentalBusinessRulesService) {
         super(repository, modelMapperService, GetRentalResponse.class, GetRentalListResponse.class, Rental.class,
                 AddRentalRequest.class, UpdateRentalRequest.class);
         this.carService = carService;

@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RoleService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.role.AddRoleRequest;
@@ -14,31 +15,31 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping(ApiPathConstants.ROLES_BASE_URL)
 @AllArgsConstructor
 public class RolesController {
 
     private final RoleService roleService;
-    @GetMapping("/getAll")
+    @GetMapping(ApiPathConstants.GET_ALL_ROLES)
     public List<GetRoleListResponse> getAll(){
         return roleService.getAll();
     }
-    @GetMapping("/{id}")
+    @GetMapping(ApiPathConstants.GET_ROLE_BY_ID)
     public GetRoleResponse getById(int id){
         return roleService.getById(id);
     }
-    @PostMapping("/add")
+    @PostMapping(ApiPathConstants.ADD_ROLE)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddRoleRequest addRoleRequest) {
         this.roleService.add(addRoleRequest, Role.class);
     }
 
-    @PutMapping("/update")
+    @PutMapping(ApiPathConstants.UPDATE_ROLE)
     public void update(@RequestBody @Valid UpdateRoleRequest updateRoleRequest){
         roleService.update(updateRoleRequest, Role.class);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping(ApiPathConstants.DELETE_ROLE)
     public void delete(@PathVariable int id){
         roleService.delete(id);
     }
