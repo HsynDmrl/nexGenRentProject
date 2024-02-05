@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.car;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

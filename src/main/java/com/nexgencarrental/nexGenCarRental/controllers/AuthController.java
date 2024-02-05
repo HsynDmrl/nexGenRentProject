@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ApiPathConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RefreshTokenService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;

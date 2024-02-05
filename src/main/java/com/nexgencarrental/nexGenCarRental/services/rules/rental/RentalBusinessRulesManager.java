@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.rental;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
 import lombok.AllArgsConstructor;

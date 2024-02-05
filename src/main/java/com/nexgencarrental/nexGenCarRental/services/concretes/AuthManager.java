@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -10,7 +10,6 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.CreateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
-import com.nexgencarrental.nexGenCarRental.services.rules.user.UserBusinessRulesService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;

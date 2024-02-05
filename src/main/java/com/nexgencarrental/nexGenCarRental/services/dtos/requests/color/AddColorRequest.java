@@ -1,7 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.color;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
-import jakarta.validation.constraints.NotBlank;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;

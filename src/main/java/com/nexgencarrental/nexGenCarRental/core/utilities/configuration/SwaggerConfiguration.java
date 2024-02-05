@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.configuration;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.SecurityConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.SecurityConstants;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.security.SecurityRequirement;
 import io.swagger.v3.oas.models.security.SecurityScheme;

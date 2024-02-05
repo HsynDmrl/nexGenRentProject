@@ -1,4 +1,4 @@
-package com.nexgencarrental.nexGenCarRental.core.utilities.Constants;
+package com.nexgencarrental.nexGenCarRental.core.utilities.constants;
 
 public final class DatabaseConstants {
     public static final String TABLE_NAME = "your_table_name";

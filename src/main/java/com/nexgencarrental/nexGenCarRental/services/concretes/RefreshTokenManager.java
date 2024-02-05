@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.RefreshToken;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;

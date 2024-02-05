@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.configuration;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.SecurityConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.SecurityConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.filter.JwtAuthFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;

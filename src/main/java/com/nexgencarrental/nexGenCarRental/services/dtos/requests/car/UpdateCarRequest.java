@@ -1,6 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.car;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.FuelType;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.GearType;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +19,7 @@ public class UpdateCarRequest {
 
     @Min(value = 2005, message = ErrorConstants.YEAR_MIN)
     @Max(value = 2024, message = ErrorConstants.YEAR_MAX)
-    private int year;
+    private short year;
 
 
     @DecimalMin(value = "0.0", inclusive = true, message = ErrorConstants.DAILY_PRICE_MIN)
@@ -25,6 +27,12 @@ public class UpdateCarRequest {
 
     @Pattern(regexp = "^\\d{1,2}\\s[A-Z]{1,3}\\s\\d{1,4}$", message = ErrorConstants.PLATE_PATTERN)
     private String plate;
+
+    private String imagePath;
+
+    private GearType gearType;
+
+    private FuelType fuelType;
 
     @PositiveOrZero(message = ErrorConstants.MODEL_ID_POSITIVE)
     private int modelId;

@@ -1,8 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ApiPathConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ModelService;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.AddModelRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.UpdateModelRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;

@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name="rentals")
@@ -51,5 +52,6 @@ public class Rental extends BaseEntity {
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
-
+    @OneToMany(mappedBy = "rental")
+    private List<Invoice> invoices;
 }

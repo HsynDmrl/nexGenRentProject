@@ -1,4 +1,4 @@
-package com.nexgencarrental.nexGenCarRental.core.utilities.Constants;
+package com.nexgencarrental.nexGenCarRental.core.utilities.constants;
 
 public final class ErrorConstants {
     private ErrorConstants() {

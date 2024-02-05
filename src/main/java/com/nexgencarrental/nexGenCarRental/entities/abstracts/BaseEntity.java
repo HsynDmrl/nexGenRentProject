@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.entities.abstracts;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.DatabaseConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DatabaseConstants;
 import jakarta.persistence.*;
 import lombok.Data;
 

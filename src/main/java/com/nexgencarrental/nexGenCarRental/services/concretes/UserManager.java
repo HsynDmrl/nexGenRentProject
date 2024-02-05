@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -9,6 +9,7 @@ import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.*;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.*;
+import com.nexgencarrental.nexGenCarRental.services.rules.user.UserBusinessRulesService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,12 +24,14 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final UserBusinessRulesService userBusinessRulesService;
 
-    public UserManager(UserRepository repository, ModelMapperService modelMapperService, UserRepository userRepository, RoleRepository roleRepository) {
+    public UserManager(UserRepository repository, ModelMapperService modelMapperService, UserRepository userRepository, RoleRepository roleRepository, UserBusinessRulesService userBusinessRulesService) {
         super(repository, modelMapperService, GetUserResponse.class, GetUserListResponse.class, User.class,
                 AddUserRequest.class, UpdateUserRequest.class);
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.userBusinessRulesService = userBusinessRulesService;
     }
 
     @Override
@@ -40,6 +43,12 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
         } catch (Exception ex) {
             throw new RuntimeException(ErrorConstants.UNEXPECTED_ERROR_ADDING_USER, ex);
         }
+    }
+
+    @Override
+    public void customUpdate(UpdateUserRequest updateUserRequest) {
+        userBusinessRulesService.existsByNationalityId(updateUserRequest.getNationalityId()); // NationalityId kontrolü
+        update(updateUserRequest, User.class);
     }
 
     public GetUserResponse getByEmail(String email) {

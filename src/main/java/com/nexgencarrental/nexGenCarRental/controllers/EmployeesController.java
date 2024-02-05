@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ApiPathConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.AddEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.UpdateEmployeeRequest;

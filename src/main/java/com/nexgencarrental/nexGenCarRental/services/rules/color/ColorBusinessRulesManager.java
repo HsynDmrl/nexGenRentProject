@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.color;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.repositories.ColorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

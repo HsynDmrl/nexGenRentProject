@@ -10,7 +10,5 @@ import lombok.NoArgsConstructor;
 public class UpdateCustomerRequest {
     private int id;
 
-    private String nationalityId;
-
     private int userId;
 }

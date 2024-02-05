@@ -17,6 +17,7 @@ public interface UserService extends BaseService<User, UserRepository, GetUserRe
         GetUserListResponse, AddUserRequest, UpdateUserRequest> , UserDetailsService {
 
     void add(User user);
+    void customUpdate(UpdateUserRequest updateUserRequest);
     GetUserResponse getByEmail(String email);
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);

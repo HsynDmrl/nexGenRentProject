@@ -14,6 +14,8 @@ import java.util.List;
 @Builder
 public class CreateUserRequest {
     private String email;
+
     private String password;
+
     private int roleId;
 }

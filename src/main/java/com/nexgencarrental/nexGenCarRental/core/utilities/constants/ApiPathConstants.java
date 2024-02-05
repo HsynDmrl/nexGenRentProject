@@ -1,4 +1,4 @@
-package com.nexgencarrental.nexGenCarRental.core.utilities.Constants;
+package com.nexgencarrental.nexGenCarRental.core.utilities.constants;
 
 public final class ApiPathConstants {
 
@@ -69,6 +69,14 @@ public final class ApiPathConstants {
     public static final String UPDATE_USER = "/update";
     public static final String DELETE_USER = "/{id}";
     public static final String GET_USER_BY_EMAIL = "/getByEmail";
+    public static final String INVOICE_BASE_URL = "/api/invoices";
+    public static final String GET_ALL_INVOICES = "/getAll";
+    public static final String GET_INVOICE_BY_ID = "/{id}";
+    public static final String ADD_INVOICE = "/add";
+    public static final String UPDATE_INVOICE = "/update";
+    public static final String DELETE_INVOICE = "/{id}";
+
+
 
 
 }

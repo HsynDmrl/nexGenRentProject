@@ -1,32 +1,18 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.Constants.ApiPathConstants;
-import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.AddEmployeeRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.UpdateEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.CreateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeListResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(ApiPathConstants.USERS_BASE_URL)
