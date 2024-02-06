@@ -1,9 +1,9 @@
 package com.nexgencarrental.nexGenCarRental.entities.concretes;
 
-import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
-
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.Instant;
 

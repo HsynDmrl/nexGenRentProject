@@ -10,6 +10,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -36,6 +37,9 @@ public class User implements UserDetails {
     @Column(name = "email",unique = true)
     private String email;
 
+    @Column(name = "nationality_id",unique = true)
+    private String nationalityId;
+
     @Column(name="password")
     private String password;
 
@@ -57,7 +61,9 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(role);
+        return role != null
+                ? Collections.singletonList(new SimpleGrantedAuthority(role.getName()))
+                : Collections.emptyList();
     }
 
     @Override

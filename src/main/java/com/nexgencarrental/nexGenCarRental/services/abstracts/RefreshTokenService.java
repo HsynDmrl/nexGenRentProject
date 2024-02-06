@@ -1,9 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.services.abstracts;
 
 import com.nexgencarrental.nexGenCarRental.entities.concretes.RefreshToken;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
 
-import java.util.Map;
 import java.util.Optional;
 
 public interface RefreshTokenService {
@@ -11,5 +10,6 @@ public interface RefreshTokenService {
     RefreshToken createRefreshToken(int userId);
     void deleteByUserId(int userId);
     RefreshToken verifyExpiration(RefreshToken token);
-    Map<String, String> refreshAccessToken(String refreshToken);
+    AuthResponse refreshAccessToken(String refreshToken);
+
 }

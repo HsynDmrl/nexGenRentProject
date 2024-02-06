@@ -1,7 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.configuration;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.SecurityConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.filter.JwtAuthFilter;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -26,27 +27,17 @@ public class SecurityConfiguration {
 
     private final JwtAuthFilter jwtAuthFilter;
     private final PasswordEncoder passwordEncoder;
-    private final AuthService authService;
+    private final UserDetailsService userDetailsService;
 
-    private static final String[] WHITE_LIST_URLS = {
-            "/swagger-ui/**",
-            "/swagger-ui.html",
-            "/swagger-resources/**",
-            "/v3/api-docs",
-            "/webjars/**",
-            "/v3/api-docs/**",
-            "/v2/api-docs",
-            "/api/auth/**",
-            "/api/auth/login",
-            "/api/auth/register"
-    };
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(WHITE_LIST_URLS).permitAll()
+                        .requestMatchers(SecurityConstants.WHITE_LIST_URLS).permitAll()
+                        .requestMatchers("swagger-ui/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/users/getByEmail").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/brands/**").hasAuthority("ADMIN")
@@ -64,7 +55,7 @@ public class SecurityConfiguration {
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder);
-        provider.setUserDetailsService(authService);
+        provider.setUserDetailsService(userDetailsService);
         return provider;
     }
 

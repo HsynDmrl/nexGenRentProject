@@ -1,7 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.filter;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
+import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,7 +22,7 @@ import java.io.IOException;
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
-    private final AuthService authService;
+    private final UserService userService;
 
 
     @Override
@@ -36,7 +36,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             String username = jwtService.extractUsername(token);
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                UserDetails userDetails = authService.loadUserByUsername(username);
+                UserDetails userDetails = userService.loadUserByUsername(username);
                 if (jwtService.isTokenValid(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

@@ -14,9 +14,11 @@ public class GetUserListResponse {
 
     private String surname;
 
-    private String gsm;
-
     private String email;
+
+    private String nationalityId;
+
+    private String gsm;
 
     private String roleName;
 }

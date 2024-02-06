@@ -16,4 +16,5 @@ public class NexGenCarRentalApplication {
 	public ModelMapper getModelMapper(){
 		return new ModelMapper();
 	}
+
 }

@@ -1,13 +1,17 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.RefreshToken;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.repositories.RefreshTokenRepository;
-import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RefreshTokenService;
-import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
-import org.springframework.beans.factory.annotation.Value;
+import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
+import org.springframework.dao.DataAccessException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -19,69 +23,98 @@ import java.util.UUID;
 public class RefreshTokenManager implements RefreshTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final JwtService jwtService;
-    private final Long refreshTokenDurationMs;
 
     public RefreshTokenManager(RefreshTokenRepository refreshTokenRepository,
-                               UserRepository userRepository,
-                               JwtService jwtService,
-                               @Value("${application.security.jwt.refreshtoken}") Long refreshTokenDurationMs) {
+                               UserService userService, JwtService jwtService) {
         this.refreshTokenRepository = refreshTokenRepository;
-        this.userRepository = userRepository;
+        this.userService = userService;
         this.jwtService = jwtService;
-        this.refreshTokenDurationMs = refreshTokenDurationMs;
     }
 
     @Override
     public Optional<RefreshToken> findByToken(String token) {
-        return refreshTokenRepository.findByToken(token);
+        try {
+            return refreshTokenRepository.findByToken(token);
+        } catch (Exception ex) {
+            throw new RuntimeException(ErrorConstants.FIND_REFRESH_TOKEN_ERROR, ex);
+        }
     }
 
     @Override
     public RefreshToken createRefreshToken(int userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
-        RefreshToken refreshToken = new RefreshToken();
-        refreshToken.setUser(user);
-        refreshToken.setToken(UUID.randomUUID().toString());
-        refreshToken.setExpiryDate(Instant.now().plusMillis(refreshTokenDurationMs));
-        return refreshTokenRepository.save(refreshToken);
+        try {
+            User user = userService.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException(String.format(ErrorConstants.USERS_NOT_FOUND + userId)));
+
+            refreshTokenRepository.findByUser(user).ifPresent(refreshTokenRepository::delete);
+
+            RefreshToken refreshToken = new RefreshToken();
+            refreshToken.setUser(user);
+            refreshToken.setToken(UUID.randomUUID().toString());
+            refreshToken.setExpiryDate(Instant.now().plusMillis(jwtService.refreshtokenms()));
+
+            return refreshTokenRepository.save(refreshToken);
+        } catch (IllegalArgumentException | DataAccessException ex) {
+            throw new RuntimeException(ex.getMessage(), ex);
+        } catch (Exception ex) {
+            throw new RuntimeException(ErrorConstants.CREATE_REFRESH_TOKEN_ERROR, ex);
+        }
     }
 
     @Override
     public void deleteByUserId(int userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
-        refreshTokenRepository.deleteByUser(user);
+        try {
+            User user = userService.findById(userId)
+                    .orElseThrow(() -> new IllegalArgumentException(String.format(ErrorConstants.USER_NOT_FOUND + userId)));
+            refreshTokenRepository.deleteByUser(user);
+        } catch (IllegalArgumentException | DataAccessException ex) {
+            throw new RuntimeException(ex.getMessage(), ex);
+        } catch (Exception ex) {
+            throw new RuntimeException(ErrorConstants.DELETE_REFRESH_TOKEN_ERROR, ex);
+        }
     }
 
     @Override
     public RefreshToken verifyExpiration(RefreshToken token) {
-        if (token.getExpiryDate().isBefore(Instant.now())) {
-            refreshTokenRepository.delete(token);
-            throw new IllegalStateException("Refresh token was expired.");
+        try {
+            if (token.getExpiryDate().isBefore(Instant.now())) {
+                refreshTokenRepository.delete(token);
+                throw new IllegalStateException(ErrorConstants.REFRESH_TOKEN_EXPIRED);
+            }
+            return token;
+        } catch (IllegalStateException | DataAccessException ex) {
+            throw new RuntimeException(ex.getMessage(), ex);
+        } catch (Exception ex) {
+            throw new RuntimeException(ErrorConstants.REFRESH_TOKEN_EXPIRED, ex);
         }
-        return token;
     }
 
     @Override
-    public Map<String, String> refreshAccessToken(String refreshTokenValue) {
-        Optional<RefreshToken> refreshTokenOpt = findByToken(refreshTokenValue);
-        RefreshToken refreshToken = refreshTokenOpt.orElseThrow(() ->
-                new IllegalStateException("Invalid Refresh Token"));
-        refreshToken = verifyExpiration(refreshToken);
-        User user = refreshToken.getUser();
+    public AuthResponse refreshAccessToken(String refreshTokenValue) {
+        try {
+            Optional<RefreshToken> refreshTokenOpt = findByToken(refreshTokenValue);
+            RefreshToken refreshToken = refreshTokenOpt.orElseThrow(() ->
+                    new IllegalStateException(ErrorConstants.INVALID_REFRESH_TOKEN));
+            refreshToken = verifyExpiration(refreshToken);
+            User user = refreshToken.getUser();
 
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", user.getId());
+            Map<String, Object> claims = new HashMap<>();
+            claims.put("userId", user.getId());
 
-        String newAccessToken = jwtService.generateToken(user.getUsername(), claims);
+            String newAccessToken = jwtService.generateToken(user.getUsername(), claims);
 
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("accessToken", newAccessToken);
-        tokens.put("refreshToken", refreshToken.getToken());
+            AuthResponse authResponse = new AuthResponse();
+            authResponse.setAccessToken(newAccessToken);
+            authResponse.setRefreshToken(refreshToken.getToken());
 
-        return tokens;
+            return authResponse;
+
+        } catch (IllegalStateException | IllegalArgumentException ex) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
+        } catch (RuntimeException ex) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        }
     }
 }

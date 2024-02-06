@@ -13,12 +13,8 @@ import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 public class JwtService {
@@ -28,6 +24,10 @@ public class JwtService {
 
     @Value("${application.security.jwt.expiration}")
     private long expiration;
+
+    @Value("${application.security.jwt.refreshtoken}")
+    private long refreshtoken;
+
 
     @Autowired
     private UserRepository userRepository;
@@ -81,5 +81,8 @@ public class JwtService {
     private List<String> getRolesByUsername(String username) {
         Optional<User> userOptional = userRepository.findByEmail(username);
         return userOptional.map(user -> user.getRole().getName()).map(List::of).orElse(List.of());
+    }
+    public long refreshtokenms() {
+        return refreshtoken;
     }
 }
