@@ -1,6 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -13,11 +14,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddBrandRequest {
-    @Size(min = 2, message = ErrorConstants.BRAND_NAME_SIZE)
-    @Pattern(regexp = "^[A-Z][a-z]{1,13}$", message = ErrorConstants.BRAND_NAME_PATTERN)
-    @NotBlank(message = ErrorConstants.BRAND_NAME_BLANK )
+    @Size(min = 2, message = ApplicationConstants.BRAND_NAME_SIZE)
+    @Pattern(regexp = "^[A-Z][a-z]{1,13}$", message = ApplicationConstants.BRAND_NAME_PATTERN)
+    @NotBlank(message = ApplicationConstants.BRAND_NAME_BLANK )
     private String name;
 
-    @NotBlank(message = ErrorConstants.BRAND_LOGO_BLANK)
+    @NotBlank(message = ApplicationConstants.BRAND_LOGO_BLANK)
     private String logoPath;
 }

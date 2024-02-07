@@ -1,6 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -27,6 +29,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants.*;
+
 @Service
 @AllArgsConstructor
 public class AuthManager implements AuthService {
@@ -41,11 +45,11 @@ public class AuthManager implements AuthService {
     public void register(RegisterRequest request) {
         try {
             if (userService.existsByEmail(request.getEmail())) {
-                throw new EntityExistsException(ErrorConstants.USER_ALREADY_EXISTS + ": " + request.getEmail());
+                throw new ErrorConstantException(USER_ALREADY_EXISTS);
             }
 
             Role userRole = userService.findRoleById(request.getRoleId())
-                    .orElseThrow(() -> new EntityNotFoundException(ErrorConstants.ROLE_NOT_FOUND + " with id: " + request.getRoleId()));
+                    .orElseThrow(() -> new ErrorConstantException(ROLE_NOT_FOUND));
 
             String encodedPassword = passwordEncoder.encode(request.getPassword());
 
@@ -64,7 +68,7 @@ public class AuthManager implements AuthService {
         } catch (EntityExistsException | EntityNotFoundException ex) {
             throw new RuntimeException(ex.getMessage(), ex);
         } catch (Exception ex) {
-            throw new RuntimeException(ErrorConstants.REGISTRATION_ERROR, ex);
+            throw new ErrorConstantException(REGISTRATION_ERROR);
         }
     }
 
@@ -93,9 +97,9 @@ public class AuthManager implements AuthService {
             return authResponse;
 
         } catch (AuthenticationException ex) {
-            throw new AccessDeniedException(ErrorConstants.INVALID_CREDENTIALS, ex);
+            throw new AccessDeniedException(ApplicationConstants.INVALID_CREDENTIALS, ex);
         } catch (Exception ex) {
-            throw new RuntimeException(ErrorConstants.LOGIN_ERROR, ex);
+            throw new ErrorConstantException(LOGIN_ERROR);
         }
     }
 
@@ -103,7 +107,7 @@ public class AuthManager implements AuthService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         try {
             Optional<User> optionalUser = userService.findByEmail(username);
-            User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException(ErrorConstants.USER_NOT_FOUND + " with email: " + username));
+            User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException(ApplicationConstants.USER_NOT_FOUND + " with email: " + username));
 
             Set<GrantedAuthority> authorities = new HashSet<>();
             authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
@@ -131,7 +135,7 @@ public class AuthManager implements AuthService {
             return authResponse;
 
         } catch (Exception ex) {
-            throw new RuntimeException(ErrorConstants.AUTH_RESPONSE_ERROR, ex);
+            throw new ErrorConstantException(AUTH_RESPONSE_ERROR);
         }
     }
 }

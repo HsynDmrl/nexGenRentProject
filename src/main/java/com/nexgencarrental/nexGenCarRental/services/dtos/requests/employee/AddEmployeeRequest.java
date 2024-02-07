@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddEmployeeRequest {
-    @Min(value = 0, message =ErrorConstants.EMPLOYEE_MIN )
-    @NotNull(message =ErrorConstants.EMPLOYEE_SALARY )
+    @Min(value = 0, message =ApplicationConstants.EMPLOYEE_MIN )
+    @NotNull(message =ApplicationConstants.EMPLOYEE_SALARY )
     private double salary;
 
-    @Positive(message = ErrorConstants.ID_POSITIVE)
-    @NotNull(message = ErrorConstants.USER_ID)
+    @Positive(message = ApplicationConstants.ID_POSITIVE)
+    @NotNull(message = ApplicationConstants.USER_ID)
     private int userId;
 }

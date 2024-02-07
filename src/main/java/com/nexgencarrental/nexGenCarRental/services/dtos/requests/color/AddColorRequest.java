@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.color;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddColorRequest {
-    @Size(min = 2,message = ErrorConstants.COLOR_NAME_SIZE )
-    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message=ErrorConstants.COLOR_NAME_PATTERN)
-    @NotBlank(message = ErrorConstants.COLOR_BLANK)
+    @Size(min = 2,message = ApplicationConstants.COLOR_NAME_SIZE )
+    @Pattern(regexp = "^[A-Z][a-z]{1,13}$",message=ApplicationConstants.COLOR_NAME_PATTERN)
+    @NotBlank(message = ApplicationConstants.COLOR_BLANK)
     private String name;
 }

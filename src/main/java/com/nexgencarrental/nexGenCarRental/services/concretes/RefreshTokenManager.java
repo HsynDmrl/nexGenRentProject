@@ -1,6 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.RefreshToken;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -18,6 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants.*;
 
 @Service
 public class RefreshTokenManager implements RefreshTokenService {
@@ -38,7 +42,7 @@ public class RefreshTokenManager implements RefreshTokenService {
         try {
             return refreshTokenRepository.findByToken(token);
         } catch (Exception ex) {
-            throw new RuntimeException(ErrorConstants.FIND_REFRESH_TOKEN_ERROR, ex);
+            throw new ErrorConstantException(FIND_REFRESH_TOKEN_ERROR);
         }
     }
 
@@ -46,7 +50,7 @@ public class RefreshTokenManager implements RefreshTokenService {
     public RefreshToken createRefreshToken(int userId) {
         try {
             User user = userService.findById(userId)
-                    .orElseThrow(() -> new IllegalArgumentException(String.format(ErrorConstants.USERS_NOT_FOUND + userId)));
+                    .orElseThrow(() -> new IllegalArgumentException(String.format(ApplicationConstants.USERS_NOT_FOUND + userId)));
 
             refreshTokenRepository.findByUser(user).ifPresent(refreshTokenRepository::delete);
 
@@ -59,7 +63,7 @@ public class RefreshTokenManager implements RefreshTokenService {
         } catch (IllegalArgumentException | DataAccessException ex) {
             throw new RuntimeException(ex.getMessage(), ex);
         } catch (Exception ex) {
-            throw new RuntimeException(ErrorConstants.CREATE_REFRESH_TOKEN_ERROR, ex);
+            throw new ErrorConstantException(CREATE_REFRESH_TOKEN_ERROR);
         }
     }
 
@@ -67,12 +71,12 @@ public class RefreshTokenManager implements RefreshTokenService {
     public void deleteByUserId(int userId) {
         try {
             User user = userService.findById(userId)
-                    .orElseThrow(() -> new IllegalArgumentException(String.format(ErrorConstants.USER_NOT_FOUND + userId)));
+                    .orElseThrow(() -> new IllegalArgumentException(String.format(ApplicationConstants.USER_NOT_FOUND + userId)));
             refreshTokenRepository.deleteByUser(user);
         } catch (IllegalArgumentException | DataAccessException ex) {
             throw new RuntimeException(ex.getMessage(), ex);
         } catch (Exception ex) {
-            throw new RuntimeException(ErrorConstants.DELETE_REFRESH_TOKEN_ERROR, ex);
+            throw new ErrorConstantException(DELETE_REFRESH_TOKEN_ERROR);
         }
     }
 
@@ -81,13 +85,13 @@ public class RefreshTokenManager implements RefreshTokenService {
         try {
             if (token.getExpiryDate().isBefore(Instant.now())) {
                 refreshTokenRepository.delete(token);
-                throw new IllegalStateException(ErrorConstants.REFRESH_TOKEN_EXPIRED);
+                throw new IllegalStateException(ApplicationConstants.REFRESH_TOKEN_EXPIRED);
             }
             return token;
         } catch (IllegalStateException | DataAccessException ex) {
             throw new RuntimeException(ex.getMessage(), ex);
         } catch (Exception ex) {
-            throw new RuntimeException(ErrorConstants.REFRESH_TOKEN_EXPIRED, ex);
+            throw new ErrorConstantException(REFRESH_TOKEN_EXPIRED);
         }
     }
 
@@ -96,7 +100,7 @@ public class RefreshTokenManager implements RefreshTokenService {
         try {
             Optional<RefreshToken> refreshTokenOpt = findByToken(refreshTokenValue);
             RefreshToken refreshToken = refreshTokenOpt.orElseThrow(() ->
-                    new IllegalStateException(ErrorConstants.INVALID_REFRESH_TOKEN));
+                    new IllegalStateException(ApplicationConstants.INVALID_REFRESH_TOKEN));
             refreshToken = verifyExpiration(refreshToken);
             User user = refreshToken.getUser();
 

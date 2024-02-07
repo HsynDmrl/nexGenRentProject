@@ -1,155 +1,136 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.constants;
 
-public final class ErrorConstants {
-    private ErrorConstants() {
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
-    }
+@Getter
+@RequiredArgsConstructor
+public enum ErrorConstants {
+    USER_ALREADY_EXISTS(5000, "user.already.exists"),
+    ROLE_NOT_FOUND(5001, "role.not.found"),
+    INVALID_CREDENTIALS(5002, "invalid.credentials"),
+    USER_NOT_FOUND(5003, "user.not.found"),
+    REGISTRATION_ERROR(5004, "registration.error"),
+    LOGIN_ERROR(5005, "login.error"),
+    AUTH_RESPONSE_ERROR(5006, "auth.response.error"),
+    ENTITY_NOT_FOUND(5007, "Entity not found."),
+    ENTITY_NOT_FOUND_WITH_ID(5008, "Entity with ID %s not found."),
+    NO_ENTITIES_FOUND(5009, "No entities found in the system."),
+    FIND_REFRESH_TOKEN_ERROR(5010, "Error during finding refresh token by token"),
+    USERS_NOT_FOUND(5011, "User not found with id: %s"),
+    CREATE_REFRESH_TOKEN_ERROR(5012, "Error during creating refresh token"),
+    DELETE_REFRESH_TOKEN_ERROR(5013, "Error during deleting refresh tokens by user id"),
+    REFRESH_TOKEN_EXPIRED(5014, "Refresh token was expired."),
+    INVALID_REFRESH_TOKEN(5015, "Invalid Refresh Token"),
+    INVALID_REFRESH_TOKEN_REQUEST(5016, "Invalid Refresh Token Request"),
+    ERROR_ADDING_USER(5017, "Error during adding user"),
+    UNEXPECTED_ERROR_ADDING_USER(5018, "Unexpected error during adding user"),
+    ERROR_GETTING_USER_BY_EMAIL(5019, "Error during getting user by email"),
+    UNEXPECTED_ERROR_GETTING_USER_BY_EMAIL(5020, "Unexpected error during getting user by email"),
+    ERROR_FINDING_USER_BY_EMAIL(5021, "Error during finding user by email"),
+    UNEXPECTED_ERROR_FINDING_USER_BY_EMAIL(5022, "Unexpected error during finding user by email"),
+    ERROR_CHECKING_USER_EXISTS_BY_EMAIL(5023, "Error during checking if user exists by email"),
+    UNEXPECTED_ERROR_CHECKING_USER_EXISTS_BY_EMAIL(5024, "Unexpected error during checking if user exists by email"),
+    ERROR_FINDING_ROLE_BY_ID(5025, "Error during finding role by id"),
+    UNEXPECTED_ERROR_FINDING_ROLE_BY_ID(5026, "Unexpected error during finding role by id"),
+    ERROR_FINDING_USER_BY_ID(5027, "Error during finding user by id"),
+    UNEXPECTED_ERROR_FINDING_USER_BY_ID(5028, "Unexpected error during finding user by id"),
+    NO_USER_FOUND(5029, "No user found!"),
+    ERROR_LOADING_USER_BY_USERNAME(5030, "Error during loading user by username"),
+    UNEXPECTED_ERROR_LOADING_USER_BY_USERNAME(5031, "Unexpected error during loading user by username"),
+    BRAND_NAME_SIZE(5032, "Enter a brand consisting of at least 2 letters"),
+    BRAND_NAME_PATTERN(5033, "Enter the first letter Upper and the following letters Small without spaces. (Ex: 'Ford')"),
+    BRAND_NAME_BLANK(5034, "Brand cannot be blank"),
+    BRAND_LOGO_BLANK(5035, "Brand logo cannot be blank"),
+    BRAND_ID_NULL(5036, "Brand ID cannot be null"),
+    CUSTOMER_ID_NULL(5037, "Brand ID cannot be null"),
+    ID_POSITIVE(5038, "Id field cannot be less than 0."),
+    KILOMETER_MIN(5039, "Enter zero or a value greater than zero"),
+    KILOMETER_MAX(5040, "Kilometer value cannot exceed 1,000,000"),
+    KILOMETER_NULL(5041, "Kilometer cannot be null"),
+    YEAR_MIN(5042, "Between 2005 and 2024"),
+    YEAR_MAX(5043, "No older than 2024"),
+    YEAR_NULL(5044, "Year cannot be null"),
+    DAILY_PRICE_MIN(5045, "Daily price cannot be less than zero"),
+    DAILY_PRICE_NULL(5046, "Daily price cannot be null"),
+    PLATE_PATTERN(5047, "'34 ABC 456' enter according to this format"),
+    PLATE_BLANK(5048, "Plate cannot be blank"),
+    IMAGE_BLANK(5049, "Image path cannot be blank"),
+    GEAR_NULL(5050, "Gear type cannot be null"),
+    UPDATE_CAR_ID_NULL(5051, "ID cannot be null"),
+    FUEL_NULL(5052, "Fuel type cannot be null"),
+    MODEL_ID_NULL(5053, "Model ID cannot be null"),
+    ROLE_ID_NULL(5054, "Role ID cannot be null"),
+    USER_ID_NULL(5055, "User ID cannot be null"),
+    MODEL_NAME_BLANK(5056, "Model name cannot be blank"),
+    ROLE_NAME_BLANK(5057, "Role cannot be blank"),
+    COLOR_ID_NULL(5058, "Color ID cannot be null"),
+    RENTAL_ID_NULL(5059, "Rental ID cannot be null"),
+    EMPLOYEE_ID_NULL(5060, "Employee ID cannot be null"),
+    EMPLOYEE_ID_POSITIVE(5061, "Employee Id cannot be less than 0."),
+    INVOICE_ID_NULL(5062, "Invoice ID cannot be null"),
+    EMPLOYEE_MIN(5063, "Salary must be greater than or equal to 0"),
+    EMPLOYEE_SALARY(5064, "Salary cannot be null"),
+    COLOR_BLANK(5065, "Name cannot be blank"),
+    MODEL_ID_POSITIVE(5066, "Model Id cannot be less than 0."),
+    COLOR_ID_POSITIVE(5067, "Color Id cannot be less than 0."),
+    ROLE_ID_POSITIVE(5068, "Role Id cannot be less than 0."),
+    CUSTOMER_ID_POSITIVE(5069, "Customer Id cannot be less than 0."),
+    USER_ID_POSITIVE(5070, "User Id cannot be less than 0."),
+    COLOR_NAME_SIZE(5071, "Enter a color consisting of at least 2 letters"),
+    COLOR_NAME_PATTERN(5072, "Enter the first letter UPPER and the following letters SMALL without spaces.(Ex:'White')"),
+    ROLE_NAME_PATTERN(5073, "Enter the first letter UPPER and the following letters SMALL without spaces.(Ex:'White')"),
+    UPDATE_COLOR_ID_POSITIVE(5074, "Id field cannot"),
+    MODEL_NAME_PATTERN(5075, "Enter the first letter in CAPITAL and the following letters in SMALL. (Ex: 'Focus')"),
+    ADD_MODEL_BRAND_ID_POSITIVE(5076, "Brand Id must be a positive value."),
+    UPDATE_MODEL_ID_POSITIVE(5077, "Id cannot be less than 0"),
+    UPDATE_RENTAL_ID_POSITIVE(5078, "Id cannot be less than 0"),
+    ADD_ROLE_NAME_SIZE(5079, "Enter a role consisting of at least 2 letters"),
+    UPDATE_ROLE_ID_POSITIVE(5080, "Id field cannot be less than 0."),
+    BRAND_NAME_ALREADY_EXISTS(5081, "The Brand name is already exists!"),
+    CAR_PLATE_ALREADY_EXISTS(5082, "This license plate is already in the system. Please enter a different license plate."),
+    COLOR_NAME_ALREADY_EXISTS(5083, "The Color name is already exists!!!!!!!!!"),
+    USER_ID(5084, "User ID cannot be null"),
+    CUSTOMER_NATIONALITY_ID_ALREADY_EXISTS(5085, "The Customer Nationality Id is already exists!"),
+    MODEL_NAME_ALREADY_EXISTS(5086, "The Model name is already exists!"),
+    START_DATE_BEFORE_TODAY(5087, "Start date cannot be earlier than today, which is "),
+    END_DATE_BEFORE_START_DATE(5088, "The entered date must be after "),
+    RENTAL_MIN_MAX_DAYS(5089, "A Car can be rented for a minimum of 1 day and a maximum of 25 days."),
+    UPDATED_START_DATE_BEFORE_TODAY(5090, "Start date for the updated rental cannot be earlier than today, which is "),
+    UPDATED_END_DATE_BEFORE_START_DATE(5091, "The entered date for the updated rental must be after "),
+    UPDATED_RENTAL_MIN_MAX_DAYS(5092, "The updated rental must be for a minimum of 1 day and a maximum of 25 days."),
+    USER_NAME_ALREADY_EXISTS(5093, "The User name is already exists!"),
+    EMAIL_BLANK(5094, "E-mail cannot be blank"),
+    EMAIL_FORMAT(5095, "Invalid e-mail format"),
+    EMAIL_PATTERN(5096, "Invalid e-mail format. It must contain @ and at least one dot."),
+    PASSWORD_BLANK(5097, "Password cannot be blank"),
+    PASSWORD_PATTERN(5098, "Password must be at least 8 characters long and contain at least one letter and one number"),
+    NAME_SIZE(5099, "The name cannot be less than 2 letters."),
+    NAME_BLANK(5100, "Name cannot be blank"),
+    NAME_PATTERN(5101, "Enter upper case followed by lower case.'Name'"),
+    SURNAME_SIZE(5102, "The name cannot be less than 2 letters."),
+    SURNAME_BLANK(5103, "Surname cannot be blank"),
+    SURNAME_PATTERN(5104, "Enter upper case followed by lower case.'Surname'"),
+    NATIONALITY_BLANK(5105, "Nationality ID cannot be blank"),
+    NATIONALITY_PATTERN(5106, "Invalid National ID format. It must be an 11-digit number."),
+    GSM_BLANK(5107, "GSM cannot be blank"),
+    ROLE_BLANK(5108, "Role cannot be blank"),
+    GSM_PATTERN(5109, "Invalid GSM format. It must be a 10-digit number."),
+    INVOICE_NO_BLANK(5110, "Invoice number cannot be blank"),
+    INVOICE_NO_PATTERN(5111, "Invalid GSM format. It must be a 10-digit number."),
+    INVOICE_TOTAL_NULL(5112, "Total price cannot be null"),
+    INVOICE_TOTAL_POSITIVE(5113, "Total price must be a positive number"),
+    INVOICE_DISCOUNT_NULL(5114, "Discount rate cannot be null"),
+    INVOICE_DECIMAL_DISCOUNT_MIN(5115, "Discount rate cannot be negative"),
+    INVOICE_DECIMAL_DISCOUNT_MAX(5116, "Discount rate cannot be greater than 100"),
+    INVOICE_TAX_NULL(5117, "Tax rate cannot be null"),
+    INVOICE_TAX_DISCOUNT_MIN(5118, "Tax rate cannot be negative"),
+    INVOICE_TAX_DISCOUNT_MAX(5119, "Tax rate cannot be greater than 100"),
+    START_DATE_NULL(5120, "Start date cannot be null"),
+    START_DATE_FUTURE(5121, "Start date must be in the future or present"),
+    END_DATE_NULL(5122, "End date cannot be null"),
+    END_DATE_FUTURE(5123, "End date must be in the future");
 
-    public static final String USER_ALREADY_EXISTS = "user.already.exists";
-    public static final String ROLE_NOT_FOUND = "role.not.found";
-    public static final String INVALID_CREDENTIALS = "invalid.credentials";
-    public static final String USER_NOT_FOUND = "user.not.found";
-    public static final String REGISTRATION_ERROR = "registration.error";
-    public static final String LOGIN_ERROR = "login.error";
-    public static final String AUTH_RESPONSE_ERROR = "auth.response.error";
-    public static final String ENTITY_NOT_FOUND = "Entity not found.";
-    public static final String ENTITY_NOT_FOUND_WITH_ID = "Entity with ID %s not found.";
-    public static final String NO_ENTITIES_FOUND = "No entities found in the system.";
-    public static final String FIND_REFRESH_TOKEN_ERROR = "Error during finding refresh token by token";
-    public static final String USERS_NOT_FOUND = "User not found with id: %s";
-    public static final String CREATE_REFRESH_TOKEN_ERROR = "Error during creating refresh token";
-    public static final String DELETE_REFRESH_TOKEN_ERROR = "Error during deleting refresh tokens by user id";
-    public static final String REFRESH_TOKEN_EXPIRED = "Refresh token was expired.";
-    public static final String INVALID_REFRESH_TOKEN = "Invalid Refresh Token";
-    public static final String INVALID_REFRESH_TOKEN_REQUEST = "Invalid Refresh Token Request";
-    public static final String ERROR_ADDING_USER = "Error during adding user";
-    public static final String UNEXPECTED_ERROR_ADDING_USER = "Unexpected error during adding user";
-    public static final String ERROR_GETTING_USER_BY_EMAIL = "Error during getting user by email";
-    public static final String UNEXPECTED_ERROR_GETTING_USER_BY_EMAIL = "Unexpected error during getting user by email";
-    public static final String ERROR_FINDING_USER_BY_EMAIL = "Error during finding user by email";
-    public static final String UNEXPECTED_ERROR_FINDING_USER_BY_EMAIL = "Unexpected error during finding user by email";
-    public static final String ERROR_CHECKING_USER_EXISTS_BY_EMAIL = "Error during checking if user exists by email";
-    public static final String UNEXPECTED_ERROR_CHECKING_USER_EXISTS_BY_EMAIL = "Unexpected error during checking if user exists by email";
-    public static final String ERROR_FINDING_ROLE_BY_ID = "Error during finding role by id";
-    public static final String UNEXPECTED_ERROR_FINDING_ROLE_BY_ID = "Unexpected error during finding role by id";
-    public static final String ERROR_FINDING_USER_BY_ID = "Error during finding user by id";
-    public static final String UNEXPECTED_ERROR_FINDING_USER_BY_ID = "Unexpected error during finding user by id";
-    public static final String NO_USER_FOUND = "No user found!";
-    public static final String ERROR_LOADING_USER_BY_USERNAME = "Error during loading user by username";
-    public static final String UNEXPECTED_ERROR_LOADING_USER_BY_USERNAME = "Unexpected error during loading user by username";
-    public static final String BRAND_NAME_SIZE = "Enter a brand consisting of at least 2 letters";
-    public static final String BRAND_NAME_PATTERN = "Enter the first letter Upper and the following letters Small without spaces. (Ex: 'Ford')";
-    public static final String BRAND_NAME_BLANK = "Brand cannot be blank";
-    public static final String BRAND_LOGO_BLANK = "Brand logo cannot be blank";
-    public static final String BRAND_ID_NULL = "Brand ID cannot be null";
-    public static final String CUSTOMER_ID_NULL = "Brand ID cannot be null";
-
-
-    public static final String ID_POSITIVE = "Id field cannot be less than 0.";
-    public static final String KILOMETER_MIN = "Enter zero or a value greater than zero";
-    public static final String KILOMETER_MAX = "Kilometer value cannot exceed 1,000,000";
-    public static final String KILOMETER_NULL = "Kilometer cannot be null";
-
-    public static final String YEAR_MIN = "Between 2005 and 2024";
-    public static final String YEAR_MAX = "No older than 2024";
-    public static final String YEAR_NULL = "Year cannot be null";
-    public static final String DAILY_PRICE_MIN = "Daily price cannot be less than zero";
-    public static final String DAILY_PRICE_NULL = "Daily price cannot be null";
-
-    public static final String PLATE_PATTERN = "'34 ABC 456' enter according to this format";
-    public static final String PLATE_BLANK = "Plate cannot be blank";
-
-    public static final String IMAGE_BLANK ="Image path cannot be blank";
-
-    public static final String GEAR_NULL = "Gear type cannot be null";
-    public static final String UPDATE_CAR_ID_NULL = "ID cannot be null";
-    public static final String FUEL_NULL = "Fuel type cannot be null";
-    public static final String MODEL_ID_NULL = "Model ID cannot be null";
-    public static final String ROLE_ID_NULL = "Role ID cannot be null";
-    public static final String USER_ID_NULL = "User ID cannot be null";
-    public static final String MODEL_NAME_BLANK = "Model name cannot be blank";
-    public static final String ROLE_NAME_BLANK = "Role cannot be blank";
-    public static final String COLOR_ID_NULL = "Color ID cannot be null";
-    public static final String RENTAL_ID_NULL = "Rental ID cannot be null";
-    public static final String EMPLOYEE_ID_NULL = "Employee ID cannot be null";
-    public static final String EMPLOYEE_ID_POSITIVE = "Employee Id cannot be less than 0.";
-    public static final String INVOICE_ID_NULL = "Invoice ID cannot be null";
-    public static final String EMPLOYEE_MIN = "Salary must be greater than or equal to 0";
-    public static final String EMPLOYEE_SALARY = "Salary cannot be null";
-    public static final String COLOR_BLANK = "Name cannot be blank";
-    public static final String MODEL_ID_POSITIVE = "Model Id cannot be less than 0.";
-    public static final String COLOR_ID_POSITIVE = "Color Id cannot be less than 0.";
-    public static final String ROLE_ID_POSITIVE = "Role Id cannot be less than 0.";
-    public static final String CUSTOMER_ID_POSITIVE = "Customer Id cannot be less than 0.";
-    public static final String USER_ID_POSITIVE = "User Id cannot be less than 0.";
-    public static final String COLOR_NAME_SIZE = "Enter a color consisting of at least 2 letters";
-    public static final String COLOR_NAME_PATTERN = "Enter the first letter UPPER and the following letters SMALL without spaces.(Ex:'White')";
-    public static final String ROLE_NAME_PATTERN = "Enter the first letter UPPER and the following letters SMALL without spaces.(Ex:'White')";
-    public static final String UPDATE_COLOR_ID_POSITIVE = "Id field cannot be less than 0.";
-    public static final String MODEL_NAME_SIZE = "Enter a model name consisting of at least 2 letters";
-    public static final String MODEL_NAME_PATTERN = "Enter the first letter in CAPITAL and the following letters in SMALL. (Ex: 'Focus')";
-    public static final String ADD_MODEL_BRAND_ID_POSITIVE = "Brand Id must be a positive value.";
-    public static final String UPDATE_MODEL_ID_POSITIVE = "Id cannot be less than 0";
-    public static final String UPDATE_RENTAL_ID_POSITIVE = "Id cannot be less than 0";
-    public static final String ADD_ROLE_NAME_SIZE = "Enter a role consisting of at least 2 letters";
-    public static final String UPDATE_ROLE_ID_POSITIVE = "Id field cannot be less than 0.";
-
-    public static final String BRAND_NAME_ALREADY_EXISTS = "The Brand name is already exists!";
-    public static final String CAR_PLATE_ALREADY_EXISTS = "This license plate is already in the system. Please enter a different license plate.";
-
-    public static final String COLOR_NAME_ALREADY_EXISTS = "The Color name is already exists!";
-    public static final String USER_ID = "User ID cannot be null";
-    public static final String CUSTOMER_NATIONALITY_ID_ALREADY_EXISTS = "The Customer Nationality Id is already exists!";
-    public static final String MODEL_NAME_ALREADY_EXISTS = "The Model name is already exists!";
-    public static final String START_DATE_BEFORE_TODAY = "Start date cannot be earlier than today, which is ";
-    public static final String END_DATE_BEFORE_START_DATE = "The entered date must be after ";
-    public static final String RENTAL_MIN_MAX_DAYS = "A Car can be rented for a minimum of 1 day and a maximum of 25 days.";
-    public static final String UPDATED_START_DATE_BEFORE_TODAY = "Start date for the updated rental cannot be earlier than today, which is ";
-    public static final String UPDATED_END_DATE_BEFORE_START_DATE = "The entered date for the updated rental must be after ";
-    public static final String UPDATED_RENTAL_MIN_MAX_DAYS = "The updated rental must be for a minimum of 1 day and a maximum of 25 days.";
-    public static final String USER_NAME_ALREADY_EXISTS = "The User name is already exists!";
-
-    public static final String EMAIL_BLANK = "E-mail cannot be blank";
-
-    public static final String EMAIL_FORMAT = "Invalid e-mail format";
-
-    public static final String EMAIL_PATTERN = "Invalid e-mail format. It must contain @ and at least one dot.";
-
-    public static final String PASSWORD_BLANK = "Password cannot be blank";
-    public static final String PASSWORD_PATTERN = "Password must be at least 8 characters long and contain at least one letter and one number";
-
-    public static final String NAME_SIZE ="The name cannot be less than 2 letters.";
-    public static final String NAME_BLANK ="Name cannot be blank";
-    public static final String NAME_PATTERN ="Enter upper case followed by lower case.'Name'";
-    public static final String SURNAME_SIZE ="The name cannot be less than 2 letters.";
-    public static final String SURNAME_BLANK ="Surname cannot be blank";
-    public static final String SURNAME_PATTERN ="Enter upper case followed by lower case.'Surname'";
-
-    public static final String NATIONALITY_BLANK ="Nationality ID cannot be blank";
-
-    public static final String NATIONALITY_PATTERN ="Invalid National ID format. It must be an 11-digit number.";
-    public static final String GSM_BLANK = "GSM cannot be blank";
-
-    public static final String ROLE_BLANK = "Role cannot be blank";
-    public static final String GSM_PATTERN ="Invalid GSM format. It must be a 10-digit number.";
-    public static final String INVOICE_NO_BLANK ="Invoice number cannot be blank";
-    public static final String INVOICE_NO_PATTERN ="Invalid GSM format. It must be a 10-digit number.";
-    public static final String INVOICE_TOTAL_NULL ="Total price cannot be null";
-    public static final String INVOICE_TOTAL_POSITIVE ="Total price must be a positive number";
-
-    public static final String INVOICE_DISCOUNT_NULL ="Discount rate cannot be null";
-    public static final String INVOICE_DECIMAL_DISCOUNT_MIN ="Discount rate cannot be negative";
-    public static final String INVOICE_DECIMAL_DISCOUNT_MAX ="Discount rate cannot be greater than 100";
-    public static final String INVOICE_TAX_NULL ="Tax rate cannot be null";
-    public static final String INVOICE_TAX_DISCOUNT_MIN ="Tax rate cannot be negative";
-    public static final String INVOICE_TAX_DISCOUNT_MAX ="Tax rate cannot be greater than 100";
-    public static final String START_DATE_NULL ="Start date cannot be null";
-    public static final String START_DATE_FUTURE ="Start date must be in the future or present";
-    public static final String END_DATE_NULL ="End date cannot be null";
-    public static final String END_DATE_FUTURE ="End date must be in the future";
-
-
-
-
-
+    private final Integer errorCode;
+    private final String errorMessage;
 }
