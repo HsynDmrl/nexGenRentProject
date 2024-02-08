@@ -2,6 +2,7 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
@@ -29,6 +30,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundConstants.ROLE_NOT_FOUND;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants.*;
 
 @Service
@@ -49,7 +51,7 @@ public class AuthManager implements AuthService {
             }
 
             Role userRole = userService.findRoleById(request.getRoleId())
-                    .orElseThrow(() -> new ErrorConstantException(ROLE_NOT_FOUND));
+                    .orElseThrow(() -> new DataNotFoundException(ROLE_NOT_FOUND));
 
             String encodedPassword = passwordEncoder.encode(request.getPassword());
 

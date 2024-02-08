@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.model;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.ModelConstants;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,12 +10,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddModelRequest {
 
-    @Size(min = 2, message = ApplicationConstants.MODELS_NAME_SIZE)
-    @Pattern(regexp = "^[A-Z][a-z0-9]{0,13}$", message = ApplicationConstants.MODEL_NAME_PATTERN)
-    @NotBlank(message = ApplicationConstants.MODEL_NAME_BLANK)
+    @Size(min = 2, message = ModelConstants.MODELS_NAME_SIZE)
+    @Pattern(regexp = "^[A-Z][a-z0-9]{0,13}$", message = ModelConstants.MODEL_NAME_PATTERN)
+    @NotBlank(message = ModelConstants.MODEL_NAME_BLANK)
     private String name;
 
-    @Positive(message = ApplicationConstants.ADD_MODEL_BRAND_ID_POSITIVE)
-    @NotNull(message = ApplicationConstants.BRAND_ID_NULL)
+    @Positive(message = ModelConstants.ADD_MODEL_BRAND_ID_POSITIVE)
+    @NotNull(message = ModelConstants.BRAND_ID_NULL)
     private int brandId;
 }

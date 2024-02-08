@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.user;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.UserConstants;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,30 +10,30 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateUserRequest {
-    @Positive(message = ApplicationConstants.USER_ID_POSITIVE)
-    @NotNull(message = ApplicationConstants.USER_ID_NULL)
+    @Positive(message = UserConstants.USER_ID_POSITIVE)
+    @NotNull(message = UserConstants.USER_ID_NULL)
     private int id;
 
-    @Size(min = 2,message = ApplicationConstants.NAME_SIZE)
-    @NotBlank(message = ApplicationConstants.NAME_BLANK)
-    @Pattern(regexp = "^[A-Z][a-z]$",message= ApplicationConstants.NAME_PATTERN)
+    @Size(min = 2,message = UserConstants.NAME_SIZE)
+    @NotBlank(message = UserConstants.NAME_BLANK)
+    @Pattern(regexp = "^[A-Z][a-z]$",message= UserConstants.NAME_PATTERN)
     private String name;
 
-    @Size(min = 2,message = ApplicationConstants.SURNAME_SIZE)
-    @NotBlank(message =ApplicationConstants.SURNAME_BLANK )
-    @Pattern(regexp = "^[A-Z][a-z]$",message=ApplicationConstants.SURNAME_PATTERN)
+    @Size(min = 2,message = UserConstants.SURNAME_SIZE)
+    @NotBlank(message =UserConstants.SURNAME_BLANK )
+    @Pattern(regexp = "^[A-Z][a-z]$",message=UserConstants.SURNAME_PATTERN)
     private String surname;
 
-    @NotBlank(message = ApplicationConstants.EMAIL_BLANK)
-    @Email(message = ApplicationConstants.EMAIL_FORMAT)
-    @Pattern(regexp = "[^@]+@[^\\.]+\\..+", message = ApplicationConstants.EMAIL_PATTERN)
+    @NotBlank(message = UserConstants.EMAIL_BLANK)
+    @Email(message = UserConstants.EMAIL_FORMAT)
+    @Pattern(regexp = "[^@]+@[^\\.]+\\..+", message = UserConstants.EMAIL_PATTERN)
     private String email;
 
-    @NotBlank(message = ApplicationConstants.NATIONALITY_BLANK)
-    @Pattern(regexp = "\\d{11}", message =ApplicationConstants.NATIONALITY_PATTERN)
+    @NotBlank(message = UserConstants.NATIONALITY_BLANK)
+    @Pattern(regexp = "\\d{11}", message =UserConstants.NATIONALITY_PATTERN)
     private String nationalityId;
 
-    @NotBlank(message =ApplicationConstants.GSM_BLANK)
-    @Pattern(regexp = "\\d{11}", message = ApplicationConstants.GSM_PATTERN)
+    @NotBlank(message =UserConstants.GSM_BLANK)
+    @Pattern(regexp = "\\d{11}", message = UserConstants.GSM_PATTERN)
     private String gsm;
 }

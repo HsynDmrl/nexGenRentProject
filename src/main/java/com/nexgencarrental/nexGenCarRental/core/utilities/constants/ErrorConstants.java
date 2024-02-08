@@ -6,18 +6,19 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum ErrorConstants {
+
     USER_ALREADY_EXISTS(5000, "user.already.exists"),
-    ROLE_NOT_FOUND(5001, "role.not.found"),
+
     INVALID_CREDENTIALS(5002, "invalid.credentials"),
-    USER_NOT_FOUND(5003, "user.not.found"),
+
     REGISTRATION_ERROR(5004, "registration.error"),
     LOGIN_ERROR(5005, "login.error"),
     AUTH_RESPONSE_ERROR(5006, "auth.response.error"),
-    ENTITY_NOT_FOUND(5007, "Entity not found."),
-    ENTITY_NOT_FOUND_WITH_ID(5008, "Entity with ID %s not found."),
-    NO_ENTITIES_FOUND(5009, "No entities found in the system."),
+
+
+
     FIND_REFRESH_TOKEN_ERROR(5010, "Error during finding refresh token by token"),
-    USERS_NOT_FOUND(5011, "User not found with id: %s"),
+
     CREATE_REFRESH_TOKEN_ERROR(5012, "Error during creating refresh token"),
     DELETE_REFRESH_TOKEN_ERROR(5013, "Error during deleting refresh tokens by user id"),
     REFRESH_TOKEN_EXPIRED(5014, "Refresh token was expired."),
@@ -35,12 +36,12 @@ public enum ErrorConstants {
     UNEXPECTED_ERROR_FINDING_ROLE_BY_ID(5026, "Unexpected error during finding role by id"),
     ERROR_FINDING_USER_BY_ID(5027, "Error during finding user by id"),
     UNEXPECTED_ERROR_FINDING_USER_BY_ID(5028, "Unexpected error during finding user by id"),
-    NO_USER_FOUND(5029, "No user found!"),
+
     ERROR_LOADING_USER_BY_USERNAME(5030, "Error during loading user by username"),
     UNEXPECTED_ERROR_LOADING_USER_BY_USERNAME(5031, "Unexpected error during loading user by username"),
     BRAND_NAME_SIZE(5032, "Enter a brand consisting of at least 2 letters"),
     BRAND_NAME_PATTERN(5033, "Enter the first letter Upper and the following letters Small without spaces. (Ex: 'Ford')"),
-    BRAND_NAME_BLANK(5034, "Brand cannot be blank"),
+
     BRAND_LOGO_BLANK(5035, "Brand logo cannot be blank"),
     BRAND_ID_NULL(5036, "Brand ID cannot be null"),
     CUSTOMER_ID_NULL(5037, "Brand ID cannot be null"),

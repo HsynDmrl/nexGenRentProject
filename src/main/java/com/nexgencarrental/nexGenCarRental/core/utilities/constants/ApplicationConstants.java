@@ -76,7 +76,7 @@ public final class ApplicationConstants {
     public static final String CUSTOMER_ID_POSITIVE = "CUSTOMER_ID_POSITIVE";
     public static final String USER_ID_POSITIVE = "USER_ID_POSITIVE";
     public static final String COLOR_NAME_SIZE = "COLOR_NAME_SIZE";
-    public static final String COLOR_NAME_PATTERN = "COLOR_NAME_PATTERN";
+    public static final String COLOR_NAME_PATTERN = "Maalesef hatalı girdiniz..";
     public static final String ROLE_NAME_PATTERN = "ROLE_NAME_PATTERN";
     public static final String UPDATE_COLOR_ID_POSITIVE = "UPDATE_COLOR_ID_POSITIVE";
     public static final String MODEL_NAME_PATTERN = "MODEL_NAME_PATTERN";

@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.customer;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.CustomerConstants;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCustomerRequest {
-    @Positive(message = ApplicationConstants.ID_POSITIVE)
-    @NotNull(message = ApplicationConstants.CUSTOMER_ID_NULL)
+    @Positive(message = CustomerConstants.ID_POSITIVE)
+    @NotNull(message = CustomerConstants.CUSTOMER_ID_NULL)
     private int id;
 
-    @Positive(message = ApplicationConstants.ID_POSITIVE)
-    @NotNull(message = ApplicationConstants.USER_ID)
+    @Positive(message = CustomerConstants.ID_POSITIVE)
+    @NotNull(message = CustomerConstants.USER_ID)
     private int userId;
 }

@@ -23,6 +23,7 @@ public class ColorsController {
         return colorService.getAll();
     }
     @GetMapping(ApiPathConstants.GET_COLOR_BY_ID)
+    @ResponseStatus(code = HttpStatus.OK)
     public GetColorResponse getById(int id){
         return colorService.getById(id);
     }

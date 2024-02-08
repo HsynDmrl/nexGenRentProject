@@ -1,7 +1,9 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.color;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
 import com.nexgencarrental.nexGenCarRental.repositories.ColorRepository;
 import lombok.AllArgsConstructor;
@@ -19,7 +21,7 @@ public class ColorBusinessRulesManager implements ColorBusinessRulesService {
     @Override
     public void existsByName(String name) {
         if (colorRepository.existsByName(name.trim().replaceAll("\\s", ""))) {
-            throw new ErrorConstantException(COLOR_NAME_ALREADY_EXISTS);
+            throw new DataNotFoundException(DataNotFoundConstants.NO_USER_FOUND);
         }
     }
 }
