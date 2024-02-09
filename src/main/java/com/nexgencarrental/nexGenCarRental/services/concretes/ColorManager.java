@@ -15,17 +15,20 @@ import org.springframework.stereotype.Service;
 public class ColorManager extends BaseManager<Color, ColorRepository, GetColorResponse, GetColorListResponse,
         AddColorRequest, UpdateColorRequest> implements ColorService {
     private final ColorBusinessRulesService colorBusinessRulesService;
+
     public ColorManager(ColorRepository repository, ModelMapperService modelMapperService,
                         ColorBusinessRulesService colorBusinessRulesService) {
         super(repository, modelMapperService, GetColorResponse.class, GetColorListResponse.class, Color.class,
                 AddColorRequest.class, UpdateColorRequest.class);
         this.colorBusinessRulesService = colorBusinessRulesService;
     }
+
     @Override
     public void customAdd(AddColorRequest addColorRequest) {
         colorBusinessRulesService.existsByName(addColorRequest.getName());
         add(addColorRequest, Color.class);
     }
+
     @Override
     public void customUpdate(UpdateColorRequest updateColorRequest) {
         colorBusinessRulesService.existsByName(updateColorRequest.getName());

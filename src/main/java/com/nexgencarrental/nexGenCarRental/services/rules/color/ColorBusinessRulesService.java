@@ -1,5 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.color;
 
-public interface ColorBusinessRulesService{
+public interface ColorBusinessRulesService {
     void existsByName(String name);
 }

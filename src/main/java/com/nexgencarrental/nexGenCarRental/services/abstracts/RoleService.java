@@ -8,5 +8,5 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.role.GetRoleL
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.role.GetRoleResponse;
 
 public interface RoleService extends BaseService<Role, RoleRepository, GetRoleResponse,
-        GetRoleListResponse, AddRoleRequest, UpdateRoleRequest>  {
+        GetRoleListResponse, AddRoleRequest, UpdateRoleRequest> {
 }

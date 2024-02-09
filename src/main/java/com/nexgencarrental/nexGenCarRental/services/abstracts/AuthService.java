@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 public interface AuthService {
     void register(RegisterRequest request);
+
     AuthResponse login(LoginRequest request);
 
     UserDetails loadUserByUsername(String username);

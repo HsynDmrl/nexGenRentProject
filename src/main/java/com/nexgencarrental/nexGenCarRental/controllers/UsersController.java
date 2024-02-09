@@ -20,14 +20,19 @@ import java.util.List;
 @AllArgsConstructor
 public class UsersController {
     private final UserService userService;
+
     @GetMapping(ApiPathConstants.GET_ALL_USERS)
-    public List<GetUserListResponse> getAll(){
+    @ResponseStatus(HttpStatus.OK)
+    public List<GetUserListResponse> getAll() {
         return userService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_USER_BY_ID)
-    public GetUserResponse getById(int id){
+    @ResponseStatus(HttpStatus.OK)
+    public GetUserResponse getById(int id) {
         return userService.getById(id);
     }
+
     @PostMapping(ApiPathConstants.ADD_USER)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddUserRequest addUserRequest) {
@@ -35,17 +40,20 @@ public class UsersController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_USER)
-    public void update(@RequestBody @Valid UpdateUserRequest updateUserRequest){
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
         userService.update(updateUserRequest, User.class);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_USER)
-    public void delete(@PathVariable int id){
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable int id) {
         userService.delete(id);
     }
 
     @GetMapping(ApiPathConstants.GET_USER_BY_EMAIL)
-    public GetUserResponse getByEmail(@RequestParam String email){
+    @ResponseStatus(HttpStatus.OK)
+    public GetUserResponse getByEmail(@RequestParam String email) {
         return userService.getByEmail(email);
     }
 }

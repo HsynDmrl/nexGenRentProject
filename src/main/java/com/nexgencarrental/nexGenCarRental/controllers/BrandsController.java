@@ -18,25 +18,34 @@ import java.util.List;
 @AllArgsConstructor
 public class BrandsController {
     private final BrandService brandService;
+
     @GetMapping(ApiPathConstants.GET_ALL_BRANDS)
-    public List<GetBrandListResponse> getAll(){
+    @ResponseStatus(HttpStatus.OK)
+    public List<GetBrandListResponse> getAll() {
         return brandService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_BRAND_BY_ID)
-    public GetBrandResponse getById(int id){
+    @ResponseStatus(HttpStatus.OK)
+    public GetBrandResponse getById(int id) {
         return brandService.getById(id);
     }
+
     @PostMapping(ApiPathConstants.ADD_BRAND)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddBrandRequest addBrandRequest) {
         this.brandService.customAdd(addBrandRequest);
     }
+
     @PutMapping(ApiPathConstants.UPDATE_BRAND)
-    public void update(@RequestBody @Valid UpdateBrandRequest updateBrandRequest){
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody @Valid UpdateBrandRequest updateBrandRequest) {
         brandService.customUpdate(updateBrandRequest);
     }
+
     @DeleteMapping(ApiPathConstants.DELETE_BRAND)
-    public void delete(@PathVariable int id){
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable int id) {
         brandService.delete(id);
     }
 }

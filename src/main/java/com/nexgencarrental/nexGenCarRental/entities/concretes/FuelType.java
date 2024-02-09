@@ -7,8 +7,9 @@ public enum FuelType {
     GASOLINE("Gasoline");
 
     private final String fuel;
+
     FuelType(String fuel) {
-        this.fuel=fuel;
+        this.fuel = fuel;
     }
 
     public String getFuelType() {

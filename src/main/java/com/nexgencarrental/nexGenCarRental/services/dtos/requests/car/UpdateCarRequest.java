@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.car;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.CarConstants;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.FuelType;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.GearType;
 import jakarta.validation.constraints.*;
@@ -12,43 +12,43 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCarRequest {
-    @Positive(message = ErrorConstants.UPDATE_COLOR_ID_POSITIVE)
-    @NotNull(message = ErrorConstants.UPDATE_CAR_ID_NULL)
+    @Positive(message = CarConstants.UPDATE_COLOR_ID_POSITIVE)
+    @NotNull(message = CarConstants.UPDATE_CAR_ID_NULL)
     private int id;
 
-    @Min(value = 0,message = ErrorConstants.KILOMETER_MIN)
-    @Max(value = 1000000, message = ErrorConstants.KILOMETER_MAX )
-    @NotNull(message = ErrorConstants.KILOMETER_NULL)
+    @Min(value = 0, message = CarConstants.CAR_KILOMETER_MIN)
+    @Max(value = 1000000, message = CarConstants.CAR_KILOMETER_MAX)
+    @NotNull(message = CarConstants.CAR_KILOMETER_NULL)
     private double kilometer;
 
-    @Min(value = 2005, message = ErrorConstants.YEAR_MIN)
-    @Max(value = 2024, message = ErrorConstants.YEAR_MAX)
-    @NotNull(message = ErrorConstants.YEAR_NULL)
+    @Min(value = 2005, message = CarConstants.CAR_YEAR_MIN)
+    @Max(value = 2024, message = CarConstants.CAR_YEAR_MAX)
+    @NotNull(message = CarConstants.CAR_YEAR_NULL)
     private short year;
 
-    @DecimalMin(value = "0.0", inclusive = true, message = ErrorConstants.DAILY_PRICE_MIN)
-    @NotNull(message = ErrorConstants.DAILY_PRICE_NULL )
+    @DecimalMin(value = "0.0", inclusive = true, message = CarConstants.CAR_DAILY_PRICE_MIN)
+    @NotNull(message = CarConstants.CAR_DAILY_PRICE_NULL)
     private double dailyPrice;
 
-    @Pattern(regexp = "^\\d{1,2}\\s[A-Z]{1,3}\\s\\d{1,4}$", message = ErrorConstants.PLATE_PATTERN)
-    @NotBlank(message = ErrorConstants.PLATE_BLANK )
+    @Pattern(regexp = "^\\d{1,2}\\s[A-Z]{1,3}\\s\\d{1,4}$", message = CarConstants.CAR_PLATE_PATTERN)
+    @NotBlank(message = CarConstants.CAR_PLATE_BLANK)
     private String plate;
 
-    @NotBlank(message = ErrorConstants.IMAGE_BLANK )
+    @NotBlank(message = CarConstants.CAR_IMAGE_BLANK)
     private String imagePath;
 
-    @NotNull(message = ErrorConstants.GEAR_NULL )
+    @NotNull(message = CarConstants.CAR_GEAR_NULL)
     private GearType gearType;
 
-    @NotNull(message = ErrorConstants.FUEL_NULL)
+    @NotNull(message = CarConstants.CAR_FUEL_NULL)
     private FuelType fuelType;
 
-    @PositiveOrZero(message = ErrorConstants.MODEL_ID_POSITIVE)
-    @NotNull(message = ErrorConstants.MODEL_ID_NULL )
+    @PositiveOrZero(message = CarConstants.CAR_MODEL_ID_POSITIVE)
+    @NotNull(message = CarConstants.CAR_MODEL_ID_NULL)
     private int modelId;
 
-    @PositiveOrZero(message = ErrorConstants.COLOR_ID_POSITIVE)
-    @NotNull(message = ErrorConstants.COLOR_ID_NULL )
+    @PositiveOrZero(message = CarConstants.CAR_COLOR_ID_POSITIVE)
+    @NotNull(message = CarConstants.CAR_COLOR_ID_NULL)
     private int colorId;
 
 }

@@ -18,12 +18,16 @@ import java.util.List;
 @AllArgsConstructor
 public class ColorsController {
     private final ColorService colorService;
+
     @GetMapping(ApiPathConstants.GET_ALL_COLORS)
-    public List<GetColorListResponse> getAll(){
+    @ResponseStatus(HttpStatus.OK)
+    public List<GetColorListResponse> getAll() {
         return colorService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_COLOR_BY_ID)
-    public GetColorResponse getById(int id){
+    @ResponseStatus(code = HttpStatus.OK)
+    public GetColorResponse getById(int id) {
         return colorService.getById(id);
     }
 
@@ -34,12 +38,14 @@ public class ColorsController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_COLOR)
-    public void update(@RequestBody @Valid UpdateColorRequest updateColorRequest){
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody @Valid UpdateColorRequest updateColorRequest) {
         colorService.customUpdate(updateColorRequest);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_COLOR)
-    public void delete(@PathVariable int id){
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable int id) {
         colorService.delete(id);
     }
 

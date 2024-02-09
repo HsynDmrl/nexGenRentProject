@@ -10,5 +10,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColo
 public interface ColorService extends BaseService<Color, ColorRepository, GetColorResponse,
         GetColorListResponse, AddColorRequest, UpdateColorRequest> {
     void customAdd(AddColorRequest addColorRequest);
+
     void customUpdate(UpdateColorRequest updateColorRequest);
 }

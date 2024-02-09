@@ -26,40 +26,23 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping(ApiPathConstants.REGISTER_URL)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequest registerRequest) {
-        try {
             authService.register(registerRequest);
             return ResponseEntity.ok().build();
-        } catch (EntityExistsException | EntityNotFoundException ex) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, ex.getMessage(), ex);
-        } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
-        }
     }
 
     @PostMapping(ApiPathConstants.LOGIN_URL)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
-        try {
             AuthResponse authResponse = authService.login(loginRequest);
             return ResponseEntity.ok(authResponse);
-        } catch (AccessDeniedException ex) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ex.getMessage(), ex);
-        } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
-        }
     }
 
     @PostMapping(ApiPathConstants.REFRESH_TOKEN_URL)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AuthResponse> refreshAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
-        try {
             AuthResponse authResponse = refreshTokenService.refreshAccessToken(refreshTokenRequest.getRefreshToken());
             return ResponseEntity.ok(authResponse);
-        } catch (IllegalStateException | IllegalArgumentException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
-        } catch (ResponseStatusException ex) {
-            throw ex; // Do not wrap ResponseStatusException again
-        } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
-        }
     }
 }
