@@ -22,11 +22,13 @@ public class RolesController {
     private final RoleService roleService;
 
     @GetMapping(ApiPathConstants.GET_ALL_ROLES)
+    @ResponseStatus(HttpStatus.OK)
     public List<GetRoleListResponse> getAll() {
         return roleService.getAll();
     }
 
     @GetMapping(ApiPathConstants.GET_ROLE_BY_ID)
+    @ResponseStatus(HttpStatus.OK)
     public GetRoleResponse getById(int id) {
         return roleService.getById(id);
     }
@@ -38,11 +40,13 @@ public class RolesController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_ROLE)
+    @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Valid UpdateRoleRequest updateRoleRequest) {
         roleService.update(updateRoleRequest, Role.class);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_ROLE)
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable int id) {
         roleService.delete(id);
     }

@@ -20,6 +20,7 @@ public class ColorsController {
     private final ColorService colorService;
 
     @GetMapping(ApiPathConstants.GET_ALL_COLORS)
+    @ResponseStatus(HttpStatus.OK)
     public List<GetColorListResponse> getAll() {
         return colorService.getAll();
     }
@@ -37,11 +38,13 @@ public class ColorsController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_COLOR)
+    @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Valid UpdateColorRequest updateColorRequest) {
         colorService.customUpdate(updateColorRequest);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_COLOR)
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable int id) {
         colorService.delete(id);
     }

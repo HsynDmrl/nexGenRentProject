@@ -20,11 +20,13 @@ public class CarsController {
     private final CarService carService;
 
     @GetMapping(ApiPathConstants.GET_ALL_CARS)
+    @ResponseStatus(HttpStatus.OK)
     public List<GetCarListResponse> getAll() {
         return this.carService.getAll();
     }
 
     @GetMapping(ApiPathConstants.GET_CAR_BY_ID)
+    @ResponseStatus(HttpStatus.OK)
     public GetCarResponse getById(@PathVariable int id) {
         return carService.getById(id);
     }
@@ -36,11 +38,13 @@ public class CarsController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_CAR)
+    @ResponseStatus(HttpStatus.OK)
     public void update(@Valid @RequestBody UpdateCarRequest updateCarRequest) {
         carService.customUpdate(updateCarRequest);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_CAR)
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable int id) {
         this.carService.delete(id);
     }

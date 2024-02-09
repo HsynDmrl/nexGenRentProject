@@ -52,6 +52,7 @@ public class AuthManager implements AuthService {
 
     @Override
     public void register(RegisterRequest request) {
+
         authBusinessRulesService.validateRegistration(request);
             if (userService.existsByEmail(request.getEmail())) {
                 throw new ConflictException(USER_ALREADY_EXISTS);
@@ -77,6 +78,7 @@ public class AuthManager implements AuthService {
 
     @Override
     public AuthResponse login(LoginRequest request) {
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         request.getEmail(),

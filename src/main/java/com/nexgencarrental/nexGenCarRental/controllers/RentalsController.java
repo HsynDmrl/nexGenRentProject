@@ -20,11 +20,13 @@ public class RentalsController {
     private final RentalService rentalService;
 
     @GetMapping(ApiPathConstants.GET_ALL_RENTALS)
+    @ResponseStatus(HttpStatus.OK)
     public List<GetRentalListResponse> getAll() {
         return rentalService.getAll();
     }
 
     @GetMapping(ApiPathConstants.GET_RENTAL_BY_ID)
+    @ResponseStatus(HttpStatus.OK)
     public GetRentalResponse getById(@PathVariable int id) {
         return rentalService.getById(id);
     }
@@ -36,11 +38,13 @@ public class RentalsController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_RENTAL)
+    @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Valid UpdateRentalRequest updateRentalRequest) {
         rentalService.customUpdate(updateRentalRequest);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_RENTAL)
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable int id) {
         this.rentalService.delete(id);
     }

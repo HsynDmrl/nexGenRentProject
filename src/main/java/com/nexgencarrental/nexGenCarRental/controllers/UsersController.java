@@ -22,11 +22,13 @@ public class UsersController {
     private final UserService userService;
 
     @GetMapping(ApiPathConstants.GET_ALL_USERS)
+    @ResponseStatus(HttpStatus.OK)
     public List<GetUserListResponse> getAll() {
         return userService.getAll();
     }
 
     @GetMapping(ApiPathConstants.GET_USER_BY_ID)
+    @ResponseStatus(HttpStatus.OK)
     public GetUserResponse getById(int id) {
         return userService.getById(id);
     }
@@ -38,16 +40,19 @@ public class UsersController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_USER)
+    @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
         userService.update(updateUserRequest, User.class);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_USER)
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable int id) {
         userService.delete(id);
     }
 
     @GetMapping(ApiPathConstants.GET_USER_BY_EMAIL)
+    @ResponseStatus(HttpStatus.OK)
     public GetUserResponse getByEmail(@RequestParam String email) {
         return userService.getByEmail(email);
     }

@@ -11,6 +11,7 @@ public enum ConflictEnum {
     COLOR_NAME_ALREADY_EXISTS(4093, "Color name already exist!"),
     BRAND_NAME_ALREADY_EXISTS(4094,"Brand name already exist!"),
     MODEL_NAME_ALREADY_EXISTS(4095, "Model name already exist!"),
+    NO_INVOICE_ALREADY_EXISTS(4096, "The invoice number is already in use"),
     USER_ALREADY_EXISTS(5000, "user.already.exists");
 
 

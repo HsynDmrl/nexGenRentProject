@@ -20,11 +20,13 @@ public class ModelsController {
     private final ModelService modelService;
 
     @GetMapping(ApiPathConstants.GET_ALL_MODELS)
+    @ResponseStatus(HttpStatus.OK)
     public List<GetModelListResponse> getAll() {
         return modelService.getAll();
     }
 
     @GetMapping(ApiPathConstants.GET_MODEL_BY_ID)
+    @ResponseStatus(HttpStatus.OK)
     public GetModelResponse getById(int id) {
         return modelService.getById(id);
     }
@@ -36,11 +38,13 @@ public class ModelsController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_MODEL)
+    @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Valid UpdateModelRequest updateModelRequest) {
         modelService.customUpdate(updateModelRequest);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_MODEL)
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable int id) {
         modelService.delete(id);
     }

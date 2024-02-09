@@ -21,27 +21,31 @@ public class InvoiceController {
     private final InvoiceService invoiceService;
 
     @GetMapping(ApiPathConstants.GET_ALL_INVOICES)
+    @ResponseStatus(HttpStatus.OK)
     public List<GetInvoiceListResponse> getAll() {
         return invoiceService.getAll();
     }
 
     @GetMapping(ApiPathConstants.GET_INVOICE_BY_ID)
+    @ResponseStatus(HttpStatus.OK)
     public GetInvoiceResponse getById(int id) {
         return invoiceService.getById(id);
     }
 
     @PostMapping(ApiPathConstants.ADD_INVOICE)
-    @ResponseStatus(code = HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddInvoiceRequest addInvoiceRequest) {
-        this.invoiceService.add(addInvoiceRequest, Invoice.class);
+        this.invoiceService.customAdd(addInvoiceRequest);
     }
 
     @PutMapping(ApiPathConstants.UPDATE_INVOICE)
+    @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Valid UpdateInvoiceRequest updateInvoiceRequest) {
-        invoiceService.update(updateInvoiceRequest, Invoice.class);
+        invoiceService.customUpdate(updateInvoiceRequest);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_INVOICE)
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable int id) {
         invoiceService.delete(id);
     }

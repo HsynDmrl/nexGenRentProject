@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Invoice extends BaseEntity {
 
-    @Column(name = "invoice_no")
+    @Column(name = "invoice_no", unique = true)
     private String invoiceNo;
 
     @Column(name = "total_price")

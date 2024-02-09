@@ -20,11 +20,13 @@ public class CustomersController {
     private final CustomerService customerService;
 
     @GetMapping(ApiPathConstants.GET_ALL_CUSTOMERS)
+    @ResponseStatus(HttpStatus.OK)
     public List<GetCustomerListResponse> getAll() {
         return customerService.getAll();
     }
 
     @GetMapping(ApiPathConstants.GET_CUSTOMER_BY_ID)
+    @ResponseStatus(HttpStatus.OK)
     public GetCustomerResponse getById(int id) {
         return customerService.getById(id);
     }
@@ -36,11 +38,13 @@ public class CustomersController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_CUSTOMER)
+    @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Valid UpdateCustomerRequest updateCustomerRequest) {
         customerService.customUpdate(updateCustomerRequest);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_CUSTOMER)
+    @ResponseStatus(HttpStatus.OK)
     public void delete(@PathVariable int id) {
         customerService.delete(id);
     }
