@@ -12,8 +12,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddEmployeeRequest {
-    @Min(value = 0, message = EmployeeConstants.EMPLOYEE_MIN )
-    @NotNull(message =EmployeeConstants.EMPLOYEE_SALARY )
+    @Min(value = 0, message = EmployeeConstants.EMPLOYEE_MIN)
+    @NotNull(message = EmployeeConstants.EMPLOYEE_SALARY)
     private double salary;
 
     @Positive(message = EmployeeConstants.ID_POSITIVE)

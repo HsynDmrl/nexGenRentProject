@@ -18,25 +18,30 @@ import java.util.List;
 @RequestMapping(ApiPathConstants.RENTALS_BASE_URL)
 public class RentalsController {
     private final RentalService rentalService;
+
     @GetMapping(ApiPathConstants.GET_ALL_RENTALS)
-    public List<GetRentalListResponse> getAll(){
+    public List<GetRentalListResponse> getAll() {
         return rentalService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_RENTAL_BY_ID)
-    public GetRentalResponse getById(@PathVariable int id){
+    public GetRentalResponse getById(@PathVariable int id) {
         return rentalService.getById(id);
     }
+
     @PostMapping(ApiPathConstants.ADD_RENTAL)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddRentalRequest addRentalRequest) {
         rentalService.customAdd(addRentalRequest);
     }
+
     @PutMapping(ApiPathConstants.UPDATE_RENTAL)
-    public void update(@RequestBody @Valid UpdateRentalRequest updateRentalRequest){
+    public void update(@RequestBody @Valid UpdateRentalRequest updateRentalRequest) {
         rentalService.customUpdate(updateRentalRequest);
     }
+
     @DeleteMapping(ApiPathConstants.DELETE_RENTAL)
-    public void delete(@PathVariable int id ) {
+    public void delete(@PathVariable int id) {
         this.rentalService.delete(id);
     }
 

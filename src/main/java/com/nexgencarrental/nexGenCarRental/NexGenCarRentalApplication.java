@@ -8,13 +8,13 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class NexGenCarRentalApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(NexGenCarRentalApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(NexGenCarRentalApplication.class, args);
+    }
 
-	@Bean
-	public ModelMapper getModelMapper(){
-		return new ModelMapper();
-	}
+    @Bean
+    public ModelMapper getModelMapper() {
+        return new ModelMapper();
+    }
 
 }

@@ -1,5 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.brand;
 
-public interface BrandBusinessRulesService{
+public interface BrandBusinessRulesService {
     void existsByName(String name);
 }

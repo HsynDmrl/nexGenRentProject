@@ -6,6 +6,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class InvoiceBusinessRulesManager implements InvoiceBusinessRulesService{
+public class InvoiceBusinessRulesManager implements InvoiceBusinessRulesService {
     private InvoiceRepository invoiceRepository;
 }

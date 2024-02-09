@@ -1,14 +1,14 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.exceptions;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum;
 import lombok.Getter;
 
 @Getter
 public class DataNotFoundException extends RuntimeException {
-    private final DataNotFoundConstants dataNotFoundConstants;
+    private final DataNotFoundEnum dataNotFoundEnum;
 
-    public DataNotFoundException(DataNotFoundConstants dataNotFoundConstants){
-        super(dataNotFoundConstants.getErrorMessage());
-        this.dataNotFoundConstants = dataNotFoundConstants;
+    public DataNotFoundException(DataNotFoundEnum dataNotFoundEnum) {
+        super(dataNotFoundEnum.getErrorMessage());
+        this.dataNotFoundEnum = dataNotFoundEnum;
     }
 }

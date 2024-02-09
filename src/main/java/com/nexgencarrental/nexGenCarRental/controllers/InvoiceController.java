@@ -19,14 +19,17 @@ import java.util.List;
 @AllArgsConstructor
 public class InvoiceController {
     private final InvoiceService invoiceService;
+
     @GetMapping(ApiPathConstants.GET_ALL_INVOICES)
-    public List<GetInvoiceListResponse> getAll(){
+    public List<GetInvoiceListResponse> getAll() {
         return invoiceService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_INVOICE_BY_ID)
-    public GetInvoiceResponse getById(int id){
+    public GetInvoiceResponse getById(int id) {
         return invoiceService.getById(id);
     }
+
     @PostMapping(ApiPathConstants.ADD_INVOICE)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddInvoiceRequest addInvoiceRequest) {
@@ -34,12 +37,12 @@ public class InvoiceController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_INVOICE)
-    public void update(@RequestBody @Valid UpdateInvoiceRequest updateInvoiceRequest){
+    public void update(@RequestBody @Valid UpdateInvoiceRequest updateInvoiceRequest) {
         invoiceService.update(updateInvoiceRequest, Invoice.class);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_INVOICE)
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) {
         invoiceService.delete(id);
     }
 

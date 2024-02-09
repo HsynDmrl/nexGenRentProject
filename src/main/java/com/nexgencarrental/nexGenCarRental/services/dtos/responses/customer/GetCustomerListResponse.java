@@ -1,4 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,15 +1,14 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.exceptions;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ForbiddenConstants;
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.UnauthorizedConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.UnauthorizedEnum;
 import lombok.Getter;
 
 @Getter
 public class UnauthorizedException extends RuntimeException {
-    private final UnauthorizedConstants unauthorizedConstants;
+    private final UnauthorizedEnum unauthorizedEnum;
 
-    public UnauthorizedException(UnauthorizedConstants unauthorizedConstants) {
-        super(unauthorizedConstants.getErrorMessage());
-        this.unauthorizedConstants = unauthorizedConstants;
+    public UnauthorizedException(UnauthorizedEnum unauthorizedEnum) {
+        super(unauthorizedEnum.getErrorMessage());
+        this.unauthorizedEnum = unauthorizedEnum;
     }
 }

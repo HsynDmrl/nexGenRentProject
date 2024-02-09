@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UpdateColorRequest {
     @Positive(message = ColorConstants.UPDATE_COLOR_ID_POSITIVE)
-    @NotNull(message =ColorConstants.COLOR_ID_NULL)
+    @NotNull(message = ColorConstants.COLOR_ID_NULL)
     private int id;
 
     @Size(min = 2, message = ColorConstants.COLOR_NAME_SIZE)

@@ -1,8 +1,9 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.UnauthorizedException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.RefreshToken;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -21,7 +22,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants.*;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.FIND_REFRESH_TOKEN_ERROR;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum.*;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.UnauthorizedEnum.EXPIRED_TOKEN;
 
 @Service
 public class RefreshTokenManager implements RefreshTokenService {
@@ -42,7 +45,7 @@ public class RefreshTokenManager implements RefreshTokenService {
         try {
             return refreshTokenRepository.findByToken(token);
         } catch (Exception ex) {
-            throw new ErrorConstantException(FIND_REFRESH_TOKEN_ERROR);
+            throw new DataNotFoundException(FIND_REFRESH_TOKEN_ERROR);
         }
     }
 
@@ -74,7 +77,7 @@ public class RefreshTokenManager implements RefreshTokenService {
                     .orElseThrow(() -> new IllegalArgumentException(String.format(ApplicationConstants.USER_NOT_FOUND + userId)));
             refreshTokenRepository.deleteByUser(user);
         } catch (IllegalArgumentException | DataAccessException ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
+            throw new UnauthorizedException(EXPIRED_TOKEN);
         } catch (Exception ex) {
             throw new ErrorConstantException(DELETE_REFRESH_TOKEN_ERROR);
         }

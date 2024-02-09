@@ -9,25 +9,25 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table(name="cars")
+@Table(name = "cars")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Car extends BaseEntity {
 
-    @Column(name ="kilometer")
+    @Column(name = "kilometer")
     private double kilometer;
 
     @Column(name = "year")
     private short year;
 
-    @Column(name ="daily_price")
+    @Column(name = "daily_price")
     private double dailyPrice;
 
-    @Column(name = "plate",unique = true)
+    @Column(name = "plate", unique = true)
     private String plate;
 
-    @Column(name="image_path")
+    @Column(name = "image_path")
     private String imagePath;
 
     @Column(name = "gear_type")
@@ -39,11 +39,11 @@ public class Car extends BaseEntity {
     private FuelType fuelType;
 
     @ManyToOne
-    @JoinColumn(name ="model_id")
+    @JoinColumn(name = "model_id")
     private Model model;
 
     @ManyToOne
-    @JoinColumn(name ="color_id")
+    @JoinColumn(name = "color_id")
     private Color color;
 
     @OneToMany(mappedBy = "car")

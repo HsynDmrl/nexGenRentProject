@@ -1,31 +1,31 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.user;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
-import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
+
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
 import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants.USER_NAME_ALREADY_EXISTS;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.DATA_CONFLICT;
+
 
 @Service
 @AllArgsConstructor
 public class UserBusinessRulesManager implements UserBusinessRulesService {
 
     private UserRepository userRepository;
+
     @Override
     public void existsByName(String name) {
-        if (userRepository.existsByName(name)){
-            throw new ErrorConstantException(USER_NAME_ALREADY_EXISTS);
+        if (userRepository.existsByName(name)) {
+            throw new ConflictException(DATA_CONFLICT);
         }
     }
 
     @Override
     public void existsByNationalityId(String nationalityId) {
         if (userRepository.existsByNationalityId(nationalityId.trim().replaceAll("\\s", ""))) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "The Customer Nationality Id is already exists!");
+            throw new ConflictException(DATA_CONFLICT);
         }
     }
 }

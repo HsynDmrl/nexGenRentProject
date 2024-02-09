@@ -10,5 +10,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBran
 public interface BrandService extends BaseService<Brand, BrandRepository, GetBrandResponse,
         GetBrandListResponse, AddBrandRequest, UpdateBrandRequest> {
     void customAdd(AddBrandRequest addBrandRequest);
+
     void customUpdate(UpdateBrandRequest updateBrandRequest);
 }

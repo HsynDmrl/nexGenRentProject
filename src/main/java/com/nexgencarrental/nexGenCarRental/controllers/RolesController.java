@@ -20,14 +20,17 @@ import java.util.List;
 public class RolesController {
 
     private final RoleService roleService;
+
     @GetMapping(ApiPathConstants.GET_ALL_ROLES)
-    public List<GetRoleListResponse> getAll(){
+    public List<GetRoleListResponse> getAll() {
         return roleService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_ROLE_BY_ID)
-    public GetRoleResponse getById(int id){
+    public GetRoleResponse getById(int id) {
         return roleService.getById(id);
     }
+
     @PostMapping(ApiPathConstants.ADD_ROLE)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddRoleRequest addRoleRequest) {
@@ -35,12 +38,12 @@ public class RolesController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_ROLE)
-    public void update(@RequestBody @Valid UpdateRoleRequest updateRoleRequest){
+    public void update(@RequestBody @Valid UpdateRoleRequest updateRoleRequest) {
         roleService.update(updateRoleRequest, Role.class);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_ROLE)
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) {
         roleService.delete(id);
     }
 }

@@ -1,7 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
@@ -9,8 +8,10 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.repositories.RoleRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.*;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.*;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.user.UserBusinessRulesService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants.UNEXPECTED_ERROR_GETTING_USER_BY_EMAIL;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants.ERROR_GETTING_USER_BY_EMAIL;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum.ERROR_GETTING_USER_BY_EMAIL;
 
 @Service
 public class UserManager extends BaseManager<User, UserRepository, GetUserResponse, GetUserListResponse,

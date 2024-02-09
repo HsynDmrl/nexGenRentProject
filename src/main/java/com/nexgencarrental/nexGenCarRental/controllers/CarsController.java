@@ -18,25 +18,30 @@ import java.util.List;
 @AllArgsConstructor
 public class CarsController {
     private final CarService carService;
+
     @GetMapping(ApiPathConstants.GET_ALL_CARS)
-    public List<GetCarListResponse> getAll(){
+    public List<GetCarListResponse> getAll() {
         return this.carService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_CAR_BY_ID)
-    public GetCarResponse getById(@PathVariable int id){
+    public GetCarResponse getById(@PathVariable int id) {
         return carService.getById(id);
     }
+
     @PostMapping(ApiPathConstants.ADD_CAR)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddCarRequest addCarRequest) {
         this.carService.customAdd(addCarRequest);
     }
+
     @PutMapping(ApiPathConstants.UPDATE_CAR)
     public void update(@Valid @RequestBody UpdateCarRequest updateCarRequest) {
         carService.customUpdate(updateCarRequest);
     }
+
     @DeleteMapping(ApiPathConstants.DELETE_CAR)
-    public void delete(@PathVariable int id ) {
+    public void delete(@PathVariable int id) {
         this.carService.delete(id);
     }
 }

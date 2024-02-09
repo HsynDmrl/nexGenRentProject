@@ -17,8 +17,8 @@ public class UpdateEmployeeRequest {
     @NotNull(message = EmployeeConstants.EMPLOYEE_ID_NULL)
     private int id;
 
-    @Min(value = 0, message =EmployeeConstants.EMPLOYEE_MIN )
-    @NotNull(message =EmployeeConstants.EMPLOYEE_SALARY )
+    @Min(value = 0, message = EmployeeConstants.EMPLOYEE_MIN)
+    @NotNull(message = EmployeeConstants.EMPLOYEE_SALARY)
     private double salary;
 
     @Positive(message = EmployeeConstants.ID_POSITIVE)

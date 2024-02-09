@@ -30,7 +30,6 @@ public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
 
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -38,7 +37,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(SecurityConstants.WHITE_LIST_URLS).permitAll()
                         .requestMatchers("swagger-ui/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/users/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/getByEmail").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/brands/**").hasAuthority("ADMIN")
                         .requestMatchers("/api/colors/**").permitAll()

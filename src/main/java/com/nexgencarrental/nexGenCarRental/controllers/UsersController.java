@@ -20,14 +20,17 @@ import java.util.List;
 @AllArgsConstructor
 public class UsersController {
     private final UserService userService;
+
     @GetMapping(ApiPathConstants.GET_ALL_USERS)
-    public List<GetUserListResponse> getAll(){
+    public List<GetUserListResponse> getAll() {
         return userService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_USER_BY_ID)
-    public GetUserResponse getById(int id){
+    public GetUserResponse getById(int id) {
         return userService.getById(id);
     }
+
     @PostMapping(ApiPathConstants.ADD_USER)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddUserRequest addUserRequest) {
@@ -35,17 +38,17 @@ public class UsersController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_USER)
-    public void update(@RequestBody @Valid UpdateUserRequest updateUserRequest){
+    public void update(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
         userService.update(updateUserRequest, User.class);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_USER)
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) {
         userService.delete(id);
     }
 
     @GetMapping(ApiPathConstants.GET_USER_BY_EMAIL)
-    public GetUserResponse getByEmail(@RequestParam String email){
+    public GetUserResponse getByEmail(@RequestParam String email) {
         return userService.getByEmail(email);
     }
 }

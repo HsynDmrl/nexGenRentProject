@@ -20,7 +20,7 @@ public class AddInvoiceRequest {
     private Float totalPrice;
 
     @NotNull(message = InvoiceConstants.INVOICE_DISCOUNT_NULL)
-    @DecimalMin(value = "0.0", message = InvoiceConstants.INVOICE_DECIMAL_DISCOUNT_MIN )
+    @DecimalMin(value = "0.0", message = InvoiceConstants.INVOICE_DECIMAL_DISCOUNT_MIN)
     @DecimalMax(value = "100.0", message = InvoiceConstants.INVOICE_DECIMAL_DISCOUNT_MAX)
     private Float discountRate;
 

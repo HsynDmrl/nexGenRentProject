@@ -18,25 +18,30 @@ import java.util.List;
 @AllArgsConstructor
 public class ModelsController {
     private final ModelService modelService;
+
     @GetMapping(ApiPathConstants.GET_ALL_MODELS)
-    public List<GetModelListResponse> getAll(){
+    public List<GetModelListResponse> getAll() {
         return modelService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_MODEL_BY_ID)
-    public GetModelResponse getById(int id){
+    public GetModelResponse getById(int id) {
         return modelService.getById(id);
     }
+
     @PostMapping(ApiPathConstants.ADD_MODEL)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddModelRequest addModelRequest) {
         this.modelService.customAdd(addModelRequest);
     }
+
     @PutMapping(ApiPathConstants.UPDATE_MODEL)
-    public void update(@RequestBody @Valid UpdateModelRequest updateModelRequest){
+    public void update(@RequestBody @Valid UpdateModelRequest updateModelRequest) {
         modelService.customUpdate(updateModelRequest);
     }
+
     @DeleteMapping(ApiPathConstants.DELETE_MODEL)
-    public void delete(@PathVariable int id){
+    public void delete(@PathVariable int id) {
         modelService.delete(id);
     }
 }

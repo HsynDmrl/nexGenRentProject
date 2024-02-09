@@ -16,8 +16,8 @@ public class UpdateCarRequest {
     @NotNull(message = CarConstants.UPDATE_CAR_ID_NULL)
     private int id;
 
-    @Min(value = 0,message = CarConstants.CAR_KILOMETER_MIN)
-    @Max(value = 1000000, message = CarConstants.CAR_KILOMETER_MAX )
+    @Min(value = 0, message = CarConstants.CAR_KILOMETER_MIN)
+    @Max(value = 1000000, message = CarConstants.CAR_KILOMETER_MAX)
     @NotNull(message = CarConstants.CAR_KILOMETER_NULL)
     private double kilometer;
 
@@ -27,28 +27,28 @@ public class UpdateCarRequest {
     private short year;
 
     @DecimalMin(value = "0.0", inclusive = true, message = CarConstants.CAR_DAILY_PRICE_MIN)
-    @NotNull(message = CarConstants.CAR_DAILY_PRICE_NULL )
+    @NotNull(message = CarConstants.CAR_DAILY_PRICE_NULL)
     private double dailyPrice;
 
     @Pattern(regexp = "^\\d{1,2}\\s[A-Z]{1,3}\\s\\d{1,4}$", message = CarConstants.CAR_PLATE_PATTERN)
-    @NotBlank(message = CarConstants.CAR_PLATE_BLANK )
+    @NotBlank(message = CarConstants.CAR_PLATE_BLANK)
     private String plate;
 
-    @NotBlank(message = CarConstants.CAR_IMAGE_BLANK )
+    @NotBlank(message = CarConstants.CAR_IMAGE_BLANK)
     private String imagePath;
 
-    @NotNull(message = CarConstants.CAR_GEAR_NULL )
+    @NotNull(message = CarConstants.CAR_GEAR_NULL)
     private GearType gearType;
 
     @NotNull(message = CarConstants.CAR_FUEL_NULL)
     private FuelType fuelType;
 
     @PositiveOrZero(message = CarConstants.CAR_MODEL_ID_POSITIVE)
-    @NotNull(message = CarConstants.CAR_MODEL_ID_NULL )
+    @NotNull(message = CarConstants.CAR_MODEL_ID_NULL)
     private int modelId;
 
     @PositiveOrZero(message = CarConstants.CAR_COLOR_ID_POSITIVE)
-    @NotNull(message = CarConstants.CAR_COLOR_ID_NULL )
+    @NotNull(message = CarConstants.CAR_COLOR_ID_NULL)
     private int colorId;
 
 }

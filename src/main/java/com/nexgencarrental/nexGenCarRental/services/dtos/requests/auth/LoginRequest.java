@@ -3,7 +3,6 @@ package com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.LoginConstants;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

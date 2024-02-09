@@ -5,8 +5,9 @@ public enum GearType {
     AUTO("Auto");
 
     private final String gear;
+
     GearType(String gear) {
-        this.gear=gear;
+        this.gear = gear;
     }
 
     public String getGearType() {

@@ -7,6 +7,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.invoice.Update
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.invoice.GetInvoiceListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.invoice.GetInvoiceResponse;
 
-public interface InvoiceService  extends BaseService<Invoice, InvoiceRepository, GetInvoiceResponse,
-        GetInvoiceListResponse, AddInvoiceRequest, UpdateInvoiceRequest>  {
+public interface InvoiceService extends BaseService<Invoice, InvoiceRepository, GetInvoiceResponse,
+        GetInvoiceListResponse, AddInvoiceRequest, UpdateInvoiceRequest> {
 }

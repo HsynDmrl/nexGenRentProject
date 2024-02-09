@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum ForbiddenConstants {
+public enum ForbiddenEnum {
 
     ROLE_NOT_ALLOWED(4031, "You are not allowed to access this resource."),
     ENTITY_ACCESS_DENIED(4032, "Access to entity is denied."),

@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public enum  InternalServerConstants {
+public enum InternalServerEnum {
 
     DATABASE_ERROR(5001, "An error occurred while accessing the database."),
     EXTERNAL_SERVICE_ERROR(5002, "An error occurred while accessing external service."),

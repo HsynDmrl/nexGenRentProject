@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class AuthBusinessRulesManager implements AuthBusinessRulesService{
+public class AuthBusinessRulesManager implements AuthBusinessRulesService {
     @Override
     public void validateRegistration(RegisterRequest request) {
         return;

@@ -1,14 +1,14 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.exceptions;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ForbiddenConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ForbiddenEnum;
 import lombok.Getter;
 
 @Getter
 public class ForbiddenException extends RuntimeException {
-    ForbiddenConstants forbiddenConstants;
+    ForbiddenEnum forbiddenEnum;
 
-    public ForbiddenException(ForbiddenConstants forbiddenConstants){
-        super(forbiddenConstants.getErrorMessage());
-        this.forbiddenConstants = forbiddenConstants;
+    public ForbiddenException(ForbiddenEnum forbiddenEnum) {
+        super(forbiddenEnum.getErrorMessage());
+        this.forbiddenEnum = forbiddenEnum;
     }
 }

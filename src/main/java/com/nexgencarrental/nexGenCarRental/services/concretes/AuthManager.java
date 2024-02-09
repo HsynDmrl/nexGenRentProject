@@ -1,7 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
@@ -30,8 +30,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundConstants.ROLE_NOT_FOUND;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants.*;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.USER_ALREADY_EXISTS;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ROLE_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum.*;
 
 @Service
 @AllArgsConstructor
@@ -47,7 +48,7 @@ public class AuthManager implements AuthService {
     public void register(RegisterRequest request) {
         try {
             if (userService.existsByEmail(request.getEmail())) {
-                throw new ErrorConstantException(USER_ALREADY_EXISTS);
+                throw new ConflictException(USER_ALREADY_EXISTS);
             }
 
             Role userRole = userService.findRoleById(request.getRoleId())
