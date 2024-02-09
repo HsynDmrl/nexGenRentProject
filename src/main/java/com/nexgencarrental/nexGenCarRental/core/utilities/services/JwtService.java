@@ -1,19 +1,22 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
+import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
-import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 
 @Service
@@ -68,12 +71,11 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public Claims extractAllClaims(String token)
-    {
+    public Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(getSigninKey()).build().parseClaimsJws(token).getBody(); // Jwt içerisindeki datayı parse eder.
     }
 
-    public Key getSigninKey(){
+    public Key getSigninKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -82,6 +84,7 @@ public class JwtService {
         Optional<User> userOptional = userRepository.findByEmail(username);
         return userOptional.map(user -> user.getRole().getName()).map(List::of).orElse(List.of());
     }
+
     public long refreshtokenms() {
         return refreshtoken;
     }

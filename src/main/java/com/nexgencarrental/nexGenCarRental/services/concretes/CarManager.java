@@ -14,13 +14,14 @@ import com.nexgencarrental.nexGenCarRental.services.rules.car.CarBusinessRulesSe
 import org.springframework.stereotype.Service;
 
 @Service
-public class CarManager extends BaseManager <Car, CarRepository, GetCarResponse, GetCarListResponse, AddCarRequest,
-        UpdateCarRequest> implements CarService{
+public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, GetCarListResponse, AddCarRequest,
+        UpdateCarRequest> implements CarService {
     private final ModelService modelService;
     private final ColorService colorService;
     private final CarBusinessRulesService carBusinessRulesService;
+
     public CarManager(CarRepository repository, ModelMapperService modelMapperService, ModelService modelService,
-            ColorService colorService, CarBusinessRulesService carBusinessRulesService) {
+                      ColorService colorService, CarBusinessRulesService carBusinessRulesService) {
         super(repository, modelMapperService, GetCarResponse.class, GetCarListResponse.class, Car.class,
                 AddCarRequest.class, UpdateCarRequest.class);
         this.modelService = modelService;

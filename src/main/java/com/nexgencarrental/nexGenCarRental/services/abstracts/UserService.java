@@ -14,14 +14,20 @@ import java.util.Optional;
 
 
 public interface UserService extends BaseService<User, UserRepository, GetUserResponse,
-        GetUserListResponse, AddUserRequest, UpdateUserRequest> , UserDetailsService {
+        GetUserListResponse, AddUserRequest, UpdateUserRequest>, UserDetailsService {
 
     void add(User user);
+
     void customUpdate(UpdateUserRequest updateUserRequest);
+
     GetUserResponse getByEmail(String email);
+
     Optional<User> findByEmail(String email);
+
     boolean existsByEmail(String email);
+
     Optional<Role> findRoleById(int roleId);
+
     Optional<User> findById(int userId);
 
     UserDetails loadUserByUsername(String username);

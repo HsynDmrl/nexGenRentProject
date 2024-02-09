@@ -7,8 +7,8 @@ public final class ApiPathConstants {
         throw new IllegalStateException("Utility class");
     }
 
-    // AuthController için base URL sabiti.
-    String user ="user";
+
+    String user = "user";
     public static final String AUTH_BASE_URL = "/api/auth";
     public static final String REFRESH_TOKEN_URL = "/refresh-token";
     public static final String REGISTER_URL = "/register";
@@ -75,8 +75,6 @@ public final class ApiPathConstants {
     public static final String ADD_INVOICE = "/add";
     public static final String UPDATE_INVOICE = "/update";
     public static final String DELETE_INVOICE = "/{id}";
-
-
 
 
 }

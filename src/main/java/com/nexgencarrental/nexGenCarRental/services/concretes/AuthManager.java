@@ -1,6 +1,11 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.InternalServerErrorException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -10,6 +15,8 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
+import com.nexgencarrental.nexGenCarRental.services.rules.auth.AuthBusinessRulesManager;
+import com.nexgencarrental.nexGenCarRental.services.rules.auth.AuthBusinessRulesService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -27,11 +34,17 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.USER_ALREADY_EXISTS;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ROLE_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.USER_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum.TOKEN_GENERATION_ERROR;
+
 @Service
 @AllArgsConstructor
 public class AuthManager implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
+    private final AuthBusinessRulesService authBusinessRulesService;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
     private final UserService userService;
@@ -39,13 +52,14 @@ public class AuthManager implements AuthService {
 
     @Override
     public void register(RegisterRequest request) {
-        try {
+
+        authBusinessRulesService.validateRegistration(request);
             if (userService.existsByEmail(request.getEmail())) {
-                throw new EntityExistsException(ErrorConstants.USER_ALREADY_EXISTS + ": " + request.getEmail());
+                throw new ConflictException(USER_ALREADY_EXISTS);
             }
 
             Role userRole = userService.findRoleById(request.getRoleId())
-                    .orElseThrow(() -> new EntityNotFoundException(ErrorConstants.ROLE_NOT_FOUND + " with id: " + request.getRoleId()));
+                    .orElseThrow(() -> new DataNotFoundException(ROLE_NOT_FOUND));
 
             String encodedPassword = passwordEncoder.encode(request.getPassword());
 
@@ -60,78 +74,51 @@ public class AuthManager implements AuthService {
                     .build();
 
             userService.add(user);
-
-        } catch (EntityExistsException | EntityNotFoundException ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
-        } catch (Exception ex) {
-            throw new RuntimeException(ErrorConstants.REGISTRATION_ERROR, ex);
-        }
     }
 
     @Override
     public AuthResponse login(LoginRequest request) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getEmail(),
-                            request.getPassword()
-                    )
-            );
 
-            User user = (User) authentication.getPrincipal();
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
 
-            Map<String, Object> claims = new HashMap<>();
-            claims.put("userId", user.getId());
+        User user = (User) authentication.getPrincipal();
+        String accessToken = jwtService.generateToken(user.getUsername(), Collections.singletonMap("userId", user.getId()));
+        String refreshToken = refreshTokenService.createRefreshToken(user.getId()).getToken();
 
-            String accessToken = jwtService.generateToken(user.getUsername(), claims);
-            String refreshToken = refreshTokenService.createRefreshToken(user.getId()).getToken();
-
-            AuthResponse authResponse = new AuthResponse();
-            authResponse.setAccessToken(accessToken);
-            authResponse.setRefreshToken(refreshToken);
-
-            return authResponse;
-
-        } catch (AuthenticationException ex) {
-            throw new AccessDeniedException(ErrorConstants.INVALID_CREDENTIALS, ex);
-        } catch (Exception ex) {
-            throw new RuntimeException(ErrorConstants.LOGIN_ERROR, ex);
-        }
+        return new AuthResponse(accessToken, refreshToken);
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            Optional<User> optionalUser = userService.findByEmail(username);
-            User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException(ErrorConstants.USER_NOT_FOUND + " with email: " + username));
+    public UserDetails loadUserByUsername(String username) {
+        Optional<User> optionalUser = userService.findByEmail(username);
+        User user = optionalUser.orElseThrow(() -> new DataNotFoundException(USER_NOT_FOUND));
 
-            Set<GrantedAuthority> authorities = new HashSet<>();
-            authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
 
-            AuthResponse authResponse = createAuthResponse(user);
+        AuthResponse authResponse = createAuthResponse(user);
 
-            return new org.springframework.security.core.userdetails.User(
-                    user.getEmail(),
-                    user.getPassword(),
-                    true, true, true, true,
-                    authorities
-            );
-
-        } catch (UsernameNotFoundException ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
-        }
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                true, true, true, true,
+                authorities
+        );
     }
 
     private AuthResponse createAuthResponse(User user) {
+        AuthResponse authResponse = new AuthResponse();
         try {
-            AuthResponse authResponse = new AuthResponse();
             authResponse.setAccessToken(jwtService.generateToken(user.getUsername(), new HashMap<>()));
             authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user.getId()).getToken());
-
-            return authResponse;
-
-        } catch (Exception ex) {
-            throw new RuntimeException(ErrorConstants.AUTH_RESPONSE_ERROR, ex);
+        } catch (InternalServerErrorException ex) {
+            throw new InternalServerErrorException(TOKEN_GENERATION_ERROR);
         }
+        return authResponse;
     }
 }

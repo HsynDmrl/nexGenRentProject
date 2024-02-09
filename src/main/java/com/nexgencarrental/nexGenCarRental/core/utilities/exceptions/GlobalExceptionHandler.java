@@ -1,51 +1,65 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.exceptions;
 
-import jakarta.persistence.EntityExistsException;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ForbiddenEnum;
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.nio.file.AccessDeniedException;
-import java.time.LocalDateTime;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+    @ExceptionHandler(ForbiddenException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiErrorResponse handleForbiddenException(ForbiddenException exception) {
+        ForbiddenEnum errorConstants = exception.getForbiddenEnum();
+        return new ApiErrorResponse(HttpStatus.FORBIDDEN, errorConstants.getErrorCode(), errorConstants.getErrorMessage());
+    }
 
-    @ExceptionHandler({
-            EntityExistsException.class,
-            AccessDeniedException.class,
-            IllegalArgumentException.class,
-            UsernameNotFoundException.class
-    })
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiErrorResponse handleBadRequest(Exception exception) {
-        String errorMessage = exception.getMessage();
-        return new ApiErrorResponse(HttpStatus.BAD_REQUEST, errorMessage);
+
+    @ExceptionHandler(InternalServerErrorException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ApiErrorResponse handleInternalServerErrorException(InternalServerErrorException exception) {
+        return new ApiErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, exception.getInternalServerEnum().getErrorCode(), exception.getMessage());
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiErrorResponse handleUnauthorizedException(UnauthorizedException exception) {
+        return new ApiErrorResponse(HttpStatus.UNAUTHORIZED, 4010, exception.getMessage());
+    }
+
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ApiErrorResponse handleConflictException(ConflictException exception) {
+        return new ApiErrorResponse(HttpStatus.CONFLICT, exception.getConflictEnum().getErrorCode(), exception.getMessage());
     }
 
     @ExceptionHandler({
             EntityNotFoundException.class,
-            IllegalStateException.class
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrorResponse handleNotFound(Exception exception) {
         String errorMessage = exception.getMessage();
-        return new ApiErrorResponse(HttpStatus.NOT_FOUND, errorMessage);
+        return new ApiErrorResponse(HttpStatus.NOT_FOUND, 404, errorMessage);
     }
 
-    @ExceptionHandler({
-            DataAccessException.class,
-            RuntimeException.class,
-            Exception.class
-    })
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiErrorResponse handleInternalServerError(Exception exception) {
-        String errorMessage = exception.getMessage();
-        return new ApiErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, errorMessage);
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrorResponse handleValidationError(MethodArgumentNotValidException exception) {
+        String validationErrors = exception.getBindingResult().getFieldErrors().stream()
+                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                .collect(Collectors.joining(", "));
+        return new ApiErrorResponse(HttpStatus.BAD_REQUEST, 3000, validationErrors);
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrorResponse handleCustomException(Exception exception) {
+        return new ApiErrorResponse(HttpStatus.BAD_REQUEST,4000,exception.getMessage());
     }
 }

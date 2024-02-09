@@ -7,11 +7,10 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarR
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 
-import java.util.List;
-
 public interface CarService extends BaseService<Car, CarRepository, GetCarResponse,
         GetCarListResponse, AddCarRequest, UpdateCarRequest> {
     void customAdd(AddCarRequest addColorRequest);
+
     void customUpdate(UpdateCarRequest updateColorRequest);
 
 }

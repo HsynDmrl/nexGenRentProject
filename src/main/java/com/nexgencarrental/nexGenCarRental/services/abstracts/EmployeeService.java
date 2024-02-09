@@ -7,7 +7,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.Updat
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeResponse;
 
-public interface EmployeeService extends BaseService<Employee, EmployeeRepository, GetEmployeeResponse, GetEmployeeListResponse, AddEmployeeRequest, UpdateEmployeeRequest>{
+public interface EmployeeService extends BaseService<Employee, EmployeeRepository, GetEmployeeResponse, GetEmployeeListResponse, AddEmployeeRequest, UpdateEmployeeRequest> {
     void customAdd(AddEmployeeRequest addEmployeeRequest);
+
     void customUpdate(UpdateEmployeeRequest updateEmployeeRequest);
 }

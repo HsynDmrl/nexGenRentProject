@@ -9,6 +9,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.role.UpdateRol
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.role.GetRoleListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.role.GetRoleResponse;
 import org.springframework.stereotype.Service;
+
 @Service
 public class RoleManager extends BaseManager<Role, RoleRepository, GetRoleResponse, GetRoleListResponse,
         AddRoleRequest, UpdateRoleRequest> implements RoleService {

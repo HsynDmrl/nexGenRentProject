@@ -18,14 +18,19 @@ import java.util.List;
 @AllArgsConstructor
 public class EmployeesController {
     private final EmployeeService employeeService;
+
     @GetMapping(ApiPathConstants.GET_ALL_EMPLOYEES)
-    public List<GetEmployeeListResponse> getAll(){
+    @ResponseStatus(HttpStatus.OK)
+    public List<GetEmployeeListResponse> getAll() {
         return employeeService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_EMPLOYEE_BY_ID)
-    public GetEmployeeResponse getById(int id){
+    @ResponseStatus(HttpStatus.OK)
+    public GetEmployeeResponse getById(int id) {
         return employeeService.getById(id);
     }
+
     @PostMapping(ApiPathConstants.ADD_EMPLOYEE)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddEmployeeRequest addEmployeeRequest) {
@@ -33,12 +38,14 @@ public class EmployeesController {
     }
 
     @PutMapping(ApiPathConstants.UPDATE_EMPLOYEE)
-    public void update(@RequestBody @Valid UpdateEmployeeRequest updateEmployeeRequest){
+    @ResponseStatus(HttpStatus.OK)
+    public void update(@RequestBody @Valid UpdateEmployeeRequest updateEmployeeRequest) {
         employeeService.customUpdate(updateEmployeeRequest);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_EMPLOYEE)
-    public void delete(@PathVariable int id){
+    @ResponseStatus(HttpStatus.OK)
+    public void delete(@PathVariable int id) {
         employeeService.delete(id);
     }
 }

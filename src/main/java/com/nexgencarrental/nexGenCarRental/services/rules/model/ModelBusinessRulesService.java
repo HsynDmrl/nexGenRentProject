@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.model;
 
 
-public interface ModelBusinessRulesService{
+public interface ModelBusinessRulesService {
     void existsByName(String name);
 }

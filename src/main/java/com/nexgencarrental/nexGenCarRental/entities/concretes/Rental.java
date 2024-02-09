@@ -1,9 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.entities.concretes;
 
 import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,7 +10,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Entity
-@Table(name="rentals")
+@Table(name = "rentals")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
