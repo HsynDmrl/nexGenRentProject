@@ -55,77 +55,37 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
 
     @Override
     public void customUpdate(UpdateUserRequest updateUserRequest) {
-        try {
             userBusinessRulesService.existsByNationalityId(updateUserRequest.getNationalityId()); // NationalityId kontrolü
             update(updateUserRequest, User.class);
-        } catch (DataAccessException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "", ex);
-        }
     }
 
     public GetUserResponse getByEmail(String email) {
-        try {
             User user = userRepository.findByEmail(email).orElse(null);
             return modelMapperService.forResponse().map(user, GetUserResponse.class);
-        } catch (DataAccessException ex) {
-            throw new ErrorConstantException(ERROR_GETTING_USER_BY_EMAIL);
-        } catch (Exception ex) {
-            throw new RuntimeException(UNEXPECTED_ERROR_GETTING_USER_BY_EMAIL);
-        }
     }
 
     @Override
     public Optional<User> findByEmail(String email) {
-        try {
             return userRepository.findByEmail(email);
-        } catch (DataAccessException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.ERROR_FINDING_USER_BY_EMAIL, ex);
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.UNEXPECTED_ERROR_FINDING_USER_BY_EMAIL, ex);
-        }
     }
 
     @Override
     public boolean existsByEmail(String email) {
-        try {
             return userRepository.existsByName(email);
-        } catch (DataAccessException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.ERROR_CHECKING_USER_EXISTS_BY_EMAIL, ex);
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.UNEXPECTED_ERROR_CHECKING_USER_EXISTS_BY_EMAIL, ex);
-        }
     }
 
     @Override
     public Optional<Role> findRoleById(int roleId) {
-        try {
             return roleRepository.findById(roleId);
-        } catch (DataAccessException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.ERROR_FINDING_ROLE_BY_ID, ex);
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.UNEXPECTED_ERROR_FINDING_ROLE_BY_ID, ex);
-        }
     }
 
     @Override
     public Optional<User> findById(int userId) {
-        try {
             return userRepository.findById(userId);
-        } catch (DataAccessException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.ERROR_FINDING_USER_BY_ID, ex);
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.UNEXPECTED_ERROR_FINDING_USER_BY_ID, ex);
-        }
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        try {
             return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(ApplicationConstants.NO_USER_FOUND));
-        } catch (UsernameNotFoundException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.ERROR_LOADING_USER_BY_USERNAME, ex);
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.UNEXPECTED_ERROR_LOADING_USER_BY_USERNAME, ex);
-        }
     }
 }

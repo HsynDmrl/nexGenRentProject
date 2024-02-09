@@ -1,9 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.auth;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
-import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.UnauthorizedException;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;

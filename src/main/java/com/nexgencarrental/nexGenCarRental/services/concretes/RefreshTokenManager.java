@@ -3,6 +3,7 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.InternalServerErrorException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.UnauthorizedException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.RefreshToken;
@@ -23,7 +24,9 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.FIND_REFRESH_TOKEN_ERROR;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.USERS_NOT_FOUND;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum.*;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum.TOKEN_GENERATION_ERROR;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.UnauthorizedEnum.EXPIRED_TOKEN;
 
 @Service
@@ -53,7 +56,7 @@ public class RefreshTokenManager implements RefreshTokenService {
     public RefreshToken createRefreshToken(int userId) {
         try {
             User user = userService.findById(userId)
-                    .orElseThrow(() -> new IllegalArgumentException(String.format(ApplicationConstants.USERS_NOT_FOUND + userId)));
+                    .orElseThrow(() -> new DataNotFoundException(USERS_NOT_FOUND));
 
             refreshTokenRepository.findByUser(user).ifPresent(refreshTokenRepository::delete);
 
@@ -63,10 +66,10 @@ public class RefreshTokenManager implements RefreshTokenService {
             refreshToken.setExpiryDate(Instant.now().plusMillis(jwtService.refreshtokenms()));
 
             return refreshTokenRepository.save(refreshToken);
-        } catch (IllegalArgumentException | DataAccessException ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
+        } catch (DataNotFoundException ex) {
+            throw new InternalServerErrorException(TOKEN_GENERATION_ERROR);
         } catch (Exception ex) {
-            throw new ErrorConstantException(CREATE_REFRESH_TOKEN_ERROR);
+            throw new InternalServerErrorException(TOKEN_GENERATION_ERROR);
         }
     }
 
@@ -74,12 +77,12 @@ public class RefreshTokenManager implements RefreshTokenService {
     public void deleteByUserId(int userId) {
         try {
             User user = userService.findById(userId)
-                    .orElseThrow(() -> new IllegalArgumentException(String.format(ApplicationConstants.USER_NOT_FOUND + userId)));
+                    .orElseThrow(() -> new DataNotFoundException(USERS_NOT_FOUND));
             refreshTokenRepository.deleteByUser(user);
-        } catch (IllegalArgumentException | DataAccessException ex) {
-            throw new UnauthorizedException(EXPIRED_TOKEN);
+        } catch (DataNotFoundException ex) {
+            throw new InternalServerErrorException(TOKEN_GENERATION_ERROR);
         } catch (Exception ex) {
-            throw new ErrorConstantException(DELETE_REFRESH_TOKEN_ERROR);
+            throw new InternalServerErrorException(TOKEN_GENERATION_ERROR);
         }
     }
 
@@ -88,13 +91,11 @@ public class RefreshTokenManager implements RefreshTokenService {
         try {
             if (token.getExpiryDate().isBefore(Instant.now())) {
                 refreshTokenRepository.delete(token);
-                throw new IllegalStateException(ApplicationConstants.REFRESH_TOKEN_EXPIRED);
+                throw new InternalServerErrorException(TOKEN_GENERATION_ERROR);
             }
             return token;
-        } catch (IllegalStateException | DataAccessException ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
         } catch (Exception ex) {
-            throw new ErrorConstantException(REFRESH_TOKEN_EXPIRED);
+            throw new InternalServerErrorException(TOKEN_GENERATION_ERROR);
         }
     }
 
@@ -103,7 +104,7 @@ public class RefreshTokenManager implements RefreshTokenService {
         try {
             Optional<RefreshToken> refreshTokenOpt = findByToken(refreshTokenValue);
             RefreshToken refreshToken = refreshTokenOpt.orElseThrow(() ->
-                    new IllegalStateException(ApplicationConstants.INVALID_REFRESH_TOKEN));
+                    new InternalServerErrorException(TOKEN_GENERATION_ERROR));
             refreshToken = verifyExpiration(refreshToken);
             User user = refreshToken.getUser();
 
@@ -118,10 +119,8 @@ public class RefreshTokenManager implements RefreshTokenService {
 
             return authResponse;
 
-        } catch (IllegalStateException | IllegalArgumentException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
-        } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
+        } catch (Exception ex) {
+            throw new InternalServerErrorException(TOKEN_GENERATION_ERROR);
         }
     }
 }

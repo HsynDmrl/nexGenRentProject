@@ -1,9 +1,11 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.InternalServerErrorException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -34,7 +36,8 @@ import java.util.*;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.USER_ALREADY_EXISTS;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ROLE_NOT_FOUND;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum.*;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.USER_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum.TOKEN_GENERATION_ERROR;
 
 @Service
 @AllArgsConstructor
@@ -89,38 +92,31 @@ public class AuthManager implements AuthService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        try {
-            Optional<User> optionalUser = userService.findByEmail(username);
-            User user = optionalUser.orElseThrow(() -> new UsernameNotFoundException(ApplicationConstants.USER_NOT_FOUND + " with email: " + username));
+    public UserDetails loadUserByUsername(String username) {
+        Optional<User> optionalUser = userService.findByEmail(username);
+        User user = optionalUser.orElseThrow(() -> new DataNotFoundException(USER_NOT_FOUND));
 
-            Set<GrantedAuthority> authorities = new HashSet<>();
-            authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
 
-            AuthResponse authResponse = createAuthResponse(user);
+        AuthResponse authResponse = createAuthResponse(user);
 
-            return new org.springframework.security.core.userdetails.User(
-                    user.getEmail(),
-                    user.getPassword(),
-                    true, true, true, true,
-                    authorities
-            );
-
-        } catch (UsernameNotFoundException ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
-        }
+        return new org.springframework.security.core.userdetails.User(
+                user.getEmail(),
+                user.getPassword(),
+                true, true, true, true,
+                authorities
+        );
     }
 
     private AuthResponse createAuthResponse(User user) {
+        AuthResponse authResponse = new AuthResponse();
         try {
-            AuthResponse authResponse = new AuthResponse();
             authResponse.setAccessToken(jwtService.generateToken(user.getUsername(), new HashMap<>()));
             authResponse.setRefreshToken(refreshTokenService.createRefreshToken(user.getId()).getToken());
-
-            return authResponse;
-
-        } catch (Exception ex) {
-            throw new ErrorConstantException(AUTH_RESPONSE_ERROR);
+        } catch (InternalServerErrorException ex) {
+            throw new InternalServerErrorException(TOKEN_GENERATION_ERROR);
         }
+        return authResponse;
     }
 }

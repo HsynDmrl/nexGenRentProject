@@ -40,16 +40,9 @@ public class AuthController {
     }
 
     @PostMapping(ApiPathConstants.REFRESH_TOKEN_URL)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AuthResponse> refreshAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
-        try {
             AuthResponse authResponse = refreshTokenService.refreshAccessToken(refreshTokenRequest.getRefreshToken());
             return ResponseEntity.ok(authResponse);
-        } catch (IllegalStateException | IllegalArgumentException ex) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage(), ex);
-        } catch (ResponseStatusException ex) {
-            throw ex; // Do not wrap ResponseStatusException again
-        } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
-        }
     }
 }

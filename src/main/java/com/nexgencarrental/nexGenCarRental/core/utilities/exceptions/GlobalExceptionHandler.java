@@ -58,8 +58,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ApiErrorResponse handleGenericException(Exception exception) {
-        return new ApiErrorResponse(HttpStatus.FORBIDDEN, 4030, ForbiddenEnum.USERS_ACCESS_DENIED.getErrorMessage());
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrorResponse handleCustomException(Exception exception) {
+        return new ApiErrorResponse(HttpStatus.BAD_REQUEST,4000,exception.getMessage());
     }
 }
