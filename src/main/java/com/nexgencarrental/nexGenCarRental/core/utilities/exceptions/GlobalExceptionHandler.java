@@ -35,7 +35,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ConflictException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     public ApiErrorResponse handleConflictException(ConflictException exception) {
-        System.out.println("burası confilit");
         return new ApiErrorResponse(HttpStatus.CONFLICT, exception.getConflictEnum().getErrorCode(), exception.getMessage());
     }
 

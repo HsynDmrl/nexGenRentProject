@@ -13,6 +13,8 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
+import com.nexgencarrental.nexGenCarRental.services.rules.auth.AuthBusinessRulesManager;
+import com.nexgencarrental.nexGenCarRental.services.rules.auth.AuthBusinessRulesService;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
@@ -39,6 +41,7 @@ import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.Error
 public class AuthManager implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
+    private final AuthBusinessRulesService authBusinessRulesService;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
     private final UserService userService;
@@ -46,7 +49,7 @@ public class AuthManager implements AuthService {
 
     @Override
     public void register(RegisterRequest request) {
-        try {
+        authBusinessRulesService.validateRegistration(request);
             if (userService.existsByEmail(request.getEmail())) {
                 throw new ConflictException(USER_ALREADY_EXISTS);
             }
@@ -67,43 +70,22 @@ public class AuthManager implements AuthService {
                     .build();
 
             userService.add(user);
-
-        } catch (EntityExistsException | EntityNotFoundException ex) {
-            throw new RuntimeException(ex.getMessage(), ex);
-        } catch (Exception ex) {
-            throw new ErrorConstantException(REGISTRATION_ERROR);
-        }
     }
 
     @Override
     public AuthResponse login(LoginRequest request) {
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(
-                            request.getEmail(),
-                            request.getPassword()
-                    )
-            );
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
 
-            User user = (User) authentication.getPrincipal();
+        User user = (User) authentication.getPrincipal();
+        String accessToken = jwtService.generateToken(user.getUsername(), Collections.singletonMap("userId", user.getId()));
+        String refreshToken = refreshTokenService.createRefreshToken(user.getId()).getToken();
 
-            Map<String, Object> claims = new HashMap<>();
-            claims.put("userId", user.getId());
-
-            String accessToken = jwtService.generateToken(user.getUsername(), claims);
-            String refreshToken = refreshTokenService.createRefreshToken(user.getId()).getToken();
-
-            AuthResponse authResponse = new AuthResponse();
-            authResponse.setAccessToken(accessToken);
-            authResponse.setRefreshToken(refreshToken);
-
-            return authResponse;
-
-        } catch (AuthenticationException ex) {
-            throw new AccessDeniedException(ApplicationConstants.INVALID_CREDENTIALS, ex);
-        } catch (Exception ex) {
-            throw new ErrorConstantException(LOGIN_ERROR);
-        }
+        return new AuthResponse(accessToken, refreshToken);
     }
 
     @Override

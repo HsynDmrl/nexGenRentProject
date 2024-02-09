@@ -1,6 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
@@ -14,6 +15,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserL
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.user.UserBusinessRulesService;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +25,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants.UNEXPECTED_ERROR_GETTING_USER_BY_EMAIL;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.DATA_CONFLICT;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum.ERROR_GETTING_USER_BY_EMAIL;
 
 @Service
@@ -46,11 +49,8 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
     public void add(User user) {
         try {
             userRepository.save(user);
-        } catch (DataAccessException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.ERROR_ADDING_USER, ex);
-        } catch (Exception ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ApplicationConstants.UNEXPECTED_ERROR_ADDING_USER, ex);
-        }
+        } catch (DataIntegrityViolationException ex) {
+            throw new ConflictException(DATA_CONFLICT);}
     }
 
     @Override

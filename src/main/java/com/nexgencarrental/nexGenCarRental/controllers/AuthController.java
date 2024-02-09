@@ -14,10 +14,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @RestController
@@ -29,27 +26,17 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping(ApiPathConstants.REGISTER_URL)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequest registerRequest) {
-        try {
             authService.register(registerRequest);
             return ResponseEntity.ok().build();
-        } catch (EntityExistsException | EntityNotFoundException ex) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, ex.getMessage(), ex);
-        } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
-        }
     }
 
     @PostMapping(ApiPathConstants.LOGIN_URL)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
-        try {
             AuthResponse authResponse = authService.login(loginRequest);
             return ResponseEntity.ok(authResponse);
-        } catch (AccessDeniedException ex) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ex.getMessage(), ex);
-        } catch (RuntimeException ex) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
-        }
     }
 
     @PostMapping(ApiPathConstants.REFRESH_TOKEN_URL)

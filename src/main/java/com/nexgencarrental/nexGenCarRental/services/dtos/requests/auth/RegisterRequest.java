@@ -13,7 +13,7 @@ public class RegisterRequest {
 
     @Size(min = 2, message = RegisterConstants.REGISTER_NAME_SIZE)
     @NotBlank(message = RegisterConstants.REGISTER_NAME_BLANK)
-//    @Pattern(regexp = "", message = RegisterConstants.REGISTER_NAME_PATTERN)
+//  @Pattern(regexp = "", message = RegisterConstants.REGISTER_NAME_PATTERN)
     private String name;
 
     @Size(min = 2, message = RegisterConstants.REGISTER_SURNAME_SIZE)

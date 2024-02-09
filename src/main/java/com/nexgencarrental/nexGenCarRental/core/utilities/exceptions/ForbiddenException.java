@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 public class ForbiddenException extends RuntimeException {
-    ForbiddenEnum forbiddenEnum;
+    private final ForbiddenEnum forbiddenEnum;
 
     public ForbiddenException(ForbiddenEnum forbiddenEnum) {
         super(forbiddenEnum.getErrorMessage());
