@@ -42,7 +42,7 @@ public class UsersController {
     @PutMapping(ApiPathConstants.UPDATE_USER)
     @ResponseStatus(HttpStatus.OK)
     public void update(@RequestBody @Valid UpdateUserRequest updateUserRequest) {
-        userService.update(updateUserRequest, User.class);
+        userService.customUpdate(updateUserRequest);
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_USER)
