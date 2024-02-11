@@ -30,17 +30,20 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
     public Class<A> requestType;
     public Class<U> updateRequestType;
 
+    protected T findEntityById(int id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(entityClass.getSimpleName() + " with ID " + id + " not found."));
+    }
+
     @Override
     public void delete(int id) {
-        T entity = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(entityClass.getSimpleName() + " with ID " + id + " not found."));
+        T entity = findEntityById(id);
         repository.delete(entity);
     }
 
     @Override
     public G getById(int id) {
-        T entity = repository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException(entityClass.getSimpleName() + " with ID " + id + " not found."));
+        T entity = findEntityById(id);
         return modelMapperService.forResponse().map(entity, responseType);
     }
 
@@ -59,6 +62,7 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
     @Override
     public void add(A request, Class<T> entityClass) {
         T entity = modelMapperService.forRequest().map(request, entityClass);
+
         if (entity instanceof Car) {
             Car carEntity = (Car) entity;
             carEntity.setPlate(carEntity.getPlate().replaceAll("\\s", ""));
@@ -79,10 +83,7 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
     @Override
     public void update(U updateRequest, Class<T> entityClass) {
         Integer entityId = (Integer) updateRequest.getClass().getMethod("getId").invoke(updateRequest);
-
-        T existingEntity = repository.findById(entityId)
-                .orElseThrow(() -> new EntityNotFoundException(entityClass.getSimpleName() + " with ID " + entityId + " not found."));
-
+        T existingEntity = findEntityById(entityId);
         T entity = modelMapperService.forRequest().map(updateRequest, entityClass);
 
         if (entity instanceof BaseEntity) {
@@ -90,7 +91,6 @@ public abstract class BaseManager<T, R extends JpaRepository<T, Integer>,
             BaseEntity updatedBaseEntity = (BaseEntity) entity;
             updatedBaseEntity.setCreatedDate(existingBaseEntity.getCreatedDate());
         }
-
         if (entity instanceof Car) {
             Car carEntity = (Car) entity;
             carEntity.setPlate(carEntity.getPlate().replaceAll("\\s", ""));
