@@ -5,6 +5,7 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserResponse;
 import jakarta.validation.Valid;
@@ -53,7 +54,7 @@ public class UsersController {
 
     @GetMapping(ApiPathConstants.GET_USER_BY_EMAIL)
     @ResponseStatus(HttpStatus.OK)
-    public GetUserResponse getByEmail(@RequestParam String email) {
+    public GetUserEmailResponse getByEmail(@RequestParam String email) {
         return userService.getByEmail(email);
     }
 }

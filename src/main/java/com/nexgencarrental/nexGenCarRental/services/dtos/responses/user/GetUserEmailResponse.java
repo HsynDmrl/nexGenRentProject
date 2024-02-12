@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetUserResponse {
+public class GetUserEmailResponse {
+
+    private int id;
 
     private String name;
 

@@ -5,6 +5,7 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserResponse;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,7 @@ public interface UserService extends BaseService<User, UserRepository, GetUserRe
 
     void customUpdate(UpdateUserRequest updateUserRequest);
 
-    GetUserResponse getByEmail(String email);
+    GetUserEmailResponse getByEmail(String email);
 
     Optional<User> findByEmail(String email);
 
