@@ -20,6 +20,7 @@ import java.util.List;
 public class InvoiceController {
     private final InvoiceService invoiceService;
 
+
     @GetMapping(ApiPathConstants.GET_ALL_INVOICES)
     @ResponseStatus(HttpStatus.OK)
     public List<GetInvoiceListResponse> getAll() {
