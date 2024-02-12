@@ -1,10 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
-import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -13,24 +11,19 @@ import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.user.UserBusinessRulesService;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants.UNEXPECTED_ERROR_GETTING_USER_BY_EMAIL;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.DATA_CONFLICT;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.USER_NOT_FOUND;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum.ERROR_GETTING_USER_BY_EMAIL;
 
 @Service
 public class UserManager extends BaseManager<User, UserRepository, GetUserResponse, GetUserListResponse,
@@ -76,9 +69,9 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
         }
     }
 
-    public GetUserResponse getByEmail(String email) {
+    public GetUserEmailResponse getByEmail(String email) {
             User user = userRepository.findByEmail(email).orElse(null);
-            return modelMapperService.forResponse().map(user, GetUserResponse.class);
+            return modelMapperService.forResponse().map(user, GetUserEmailResponse.class);
     }
 
     @Override
