@@ -3,6 +3,7 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.AddColorRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.DeleteColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.UpdateColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
@@ -45,8 +46,7 @@ public class ColorsController {
 
     @DeleteMapping(ApiPathConstants.DELETE_COLOR)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable int id) {
-        colorService.delete(id);
+    public void delete(@RequestBody @Valid DeleteColorRequest deleteColorRequest) {
+        colorService.customDelete(deleteColorRequest);
     }
-
 }

@@ -2,18 +2,18 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum;
-import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
-import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
-import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ErrorConstantException;
-import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.InternalServerErrorException;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.*;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
+import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RefreshTokenService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.UpdatePasswordRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.auth.AuthBusinessRulesManager;
 import com.nexgencarrental.nexGenCarRental.services.rules.auth.AuthBusinessRulesService;
@@ -27,6 +27,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,9 +36,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.USER_ALREADY_EXISTS;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ROLE_NOT_FOUND;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.USER_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.*;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum.TOKEN_GENERATION_ERROR;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.UnauthorizedEnum.INVALID_CREDENTIALS;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.UnauthorizedEnum.PASSWORD_ERROR;
 
 @Service
 @AllArgsConstructor
@@ -94,21 +96,14 @@ public class AuthManager implements AuthService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) {
-        Optional<User> optionalUser = userService.findByEmail(username);
-        User user = optionalUser.orElseThrow(() -> new DataNotFoundException(USER_NOT_FOUND));
+    public void updatePasswordForUser(UpdatePasswordRequest updatePasswordRequest) {
+        User user = userService.findByEmail(updatePasswordRequest.getEmail())
+                .orElseThrow(() -> new DataNotFoundException(ENTITY_NOT_FOUND));
 
-        Set<GrantedAuthority> authorities = new HashSet<>();
-        authorities.add(new SimpleGrantedAuthority(user.getRole().getName()));
-
-        AuthResponse authResponse = createAuthResponse(user);
-
-        return new org.springframework.security.core.userdetails.User(
-                user.getEmail(),
-                user.getPassword(),
-                true, true, true, true,
-                authorities
-        );
+        if (!passwordEncoder.matches(updatePasswordRequest.getOldPassword(), user.getPassword())) {
+            throw new UnauthorizedException(PASSWORD_ERROR);
+        }
+        userService.updateUserPassword(updatePasswordRequest);
     }
 
     private AuthResponse createAuthResponse(User user) {

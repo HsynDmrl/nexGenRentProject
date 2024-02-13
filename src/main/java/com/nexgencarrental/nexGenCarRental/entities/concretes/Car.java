@@ -30,6 +30,9 @@ public class Car extends BaseEntity {
     @Column(name = "image_path")
     private String imagePath;
 
+    @Column(name = "is_status")
+    private boolean isStatus;
+
     @Column(name = "gear_type")
     @Enumerated(EnumType.STRING)
     private GearType gearType;

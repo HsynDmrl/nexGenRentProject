@@ -6,6 +6,7 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.RefreshTokenServic
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RefreshTokenRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.UpdatePasswordRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
 import jakarta.persistence.EntityExistsException;
 import jakarta.persistence.EntityNotFoundException;
@@ -37,6 +38,12 @@ public class AuthController {
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
             AuthResponse authResponse = authService.login(loginRequest);
             return ResponseEntity.ok(authResponse);
+    }
+    @PostMapping(ApiPathConstants.UPDATE_PASSWORD_URL)
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> updatePassword(@RequestBody @Valid UpdatePasswordRequest updatePasswordRequest) {
+        authService.updatePasswordForUser(updatePasswordRequest);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping(ApiPathConstants.REFRESH_TOKEN_URL)

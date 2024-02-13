@@ -1,10 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.user;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.UserConstants;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -29,10 +26,15 @@ public class AddUserRequest {
     private String email;
 
     @NotBlank(message = UserConstants.NATIONALITY_BLANK)
+    @Size(min = 11, max = 11, message = "Nationality ID must be 11 characters long")
     //@Pattern(regexp = "\\d{11}", message = UserConstants.NATIONALITY_PATTERN)
     private String nationalityId;
 
+    @NotNull(message = UserConstants.NATIONALITY_BLANK)
+    private int roleId;
+
     @NotBlank(message = UserConstants.GSM_BLANK)
     //@Pattern(regexp = "\\d{11}", message = UserConstants.GSM_PATTERN)
+    @Size(min = 11, max = 11, message = "GSM must be 11 characters long")
     private String gsm;
 }

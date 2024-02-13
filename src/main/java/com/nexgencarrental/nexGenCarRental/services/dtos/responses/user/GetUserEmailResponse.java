@@ -19,6 +19,8 @@ public class GetUserEmailResponse {
 
     private String nationalityId;
 
+    private int roleId;
+
     private String gsm;
 
     private String roleName;

@@ -3,6 +3,8 @@ package com.nexgencarrental.nexGenCarRental.services.abstracts;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.UpdatePasswordRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
@@ -23,6 +25,7 @@ public interface UserService extends BaseService<User, UserRepository, GetUserRe
 
     GetUserEmailResponse getByEmail(String email);
 
+    void updateUserPassword(UpdatePasswordRequest updatePasswordRequest);
     Optional<User> findByEmail(String email);
 
     boolean existsByEmail(String email);
