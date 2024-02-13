@@ -22,6 +22,8 @@ public class GetCarListResponse {
 
     private String imagePath;
 
+    private boolean isStatus;
+
     private GearType gearType;
 
     private FuelType fuelType;

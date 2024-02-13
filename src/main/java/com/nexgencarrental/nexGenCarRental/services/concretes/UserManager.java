@@ -66,9 +66,9 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
         if (userToUpdate == null) {
             throw new DataNotFoundException(USER_NOT_FOUND);
         } else {
-            userToUpdate.setName(updateUserRequest.getName());
-            userToUpdate.setSurname(updateUserRequest.getSurname());
-            userToUpdate.setGsm(userToUpdate.getGsm());
+/*            userToUpdate.setName(updateUserRequest.getName());
+            userToUpdate.setSurname(updateUserRequest.getSurname());*/
+            //userToUpdate.setGsm(userToUpdate.getGsm());
             userToUpdate.setRole(userToUpdate.getRole());
             userToUpdate.setNationalityId(updateUserRequest.getNationalityId());
             userRepository.save(userToUpdate);

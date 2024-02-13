@@ -10,4 +10,5 @@ public interface CarBusinessRulesService {
     void checkIfModelIdChanged(int newModelId, int existingModelId);
     void checkIfColorIdChanged(int newColorId, int existingColorId);
     void checkIfPlateChanged(String newPlate, String existingPlate);
+    void deleteCarWithModel(int carId);
 }

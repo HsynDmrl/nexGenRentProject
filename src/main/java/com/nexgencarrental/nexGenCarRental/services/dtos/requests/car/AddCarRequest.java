@@ -34,6 +34,8 @@ public class AddCarRequest {
     @NotBlank(message = CarConstants.CAR_IMAGE_BLANK)
     private String imagePath;
 
+    private boolean isStatus;
+
     @NotNull(message = CarConstants.CAR_GEAR_NULL)
     private GearType gearType;
 

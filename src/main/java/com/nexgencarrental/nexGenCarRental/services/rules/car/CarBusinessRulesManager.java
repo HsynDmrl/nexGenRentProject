@@ -1,18 +1,26 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.car;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Model;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
+import com.nexgencarrental.nexGenCarRental.repositories.ModelRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.BRAND_NAME_ALREADY_EXISTS;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.DATA_CONFLICT;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
 
 @Service
 @AllArgsConstructor
 public class CarBusinessRulesManager implements CarBusinessRulesService {
     private CarRepository carRepository;
+    private final ModelRepository modelRepository;
+
 
     @Override
     public void existsByPlate(String plate) {
@@ -75,6 +83,23 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
     public void checkIfPlateChanged(String newPlate, String existingPlate) {
         if (!newPlate.equals(existingPlate)) {
             throw new ConflictException(DATA_CONFLICT);
+        }
+    }
+
+    @Override
+    public void deleteCarWithModel(int carId) {
+        Optional<Car> optionalCar = carRepository.findById(carId);
+        if (optionalCar.isPresent()) {
+            Car car = optionalCar.get();
+            Model model = car.getModel();
+            car.setModel(null);
+            carRepository.save(car); // Model referansını kaldırmak için
+            if (model != null) {
+                modelRepository.delete(model);
+            }
+            carRepository.delete(car);
+        } else {
+            throw new DataNotFoundException(ENTITY_NOT_FOUND);
         }
     }
 }

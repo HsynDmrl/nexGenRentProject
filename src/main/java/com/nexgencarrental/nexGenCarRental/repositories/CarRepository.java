@@ -7,5 +7,4 @@ import java.util.Optional;
 
 public interface CarRepository extends JpaRepository<Car, Integer> {
     boolean existsByPlate(String plate);
-    Optional<Car> findByPlate(String plate);
 }

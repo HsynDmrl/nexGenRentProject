@@ -37,11 +37,6 @@ public class UserBusinessRulesManager implements UserBusinessRulesService {
             throw new DataNotFoundException(USER_NOT_FOUND);
         }
 
-        if (!existingUser.getName().equals(updateUserRequest.getName())) {
-            if (userRepository.existsByName(updateUserRequest.getName())) {
-                throw new ConflictException(DATA_CONFLICT);
-            }
-        }
 
         if (!existingUser.getNationalityId().equals(updateUserRequest.getNationalityId())) {
             if (userRepository.existsByNationalityId(updateUserRequest.getNationalityId())) {
