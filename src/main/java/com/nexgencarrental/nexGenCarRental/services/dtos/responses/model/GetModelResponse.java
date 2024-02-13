@@ -12,5 +12,5 @@ public class GetModelResponse {
 
     private String name;
 
-    private String brandName;
+    private GetBrandListResponse brand;
 }
