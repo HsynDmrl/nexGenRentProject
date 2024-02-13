@@ -38,6 +38,7 @@ public class SecurityConfiguration {
                         .requestMatchers(SecurityConstants.WHITE_LIST_URLS).permitAll()
                         .requestMatchers("swagger-ui/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/users/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/users/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/getByEmail").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/brands/**").hasAuthority("ADMIN")

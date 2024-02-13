@@ -1,7 +1,9 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.user;
 
-public interface UserBusinessRulesService {
-    void existsByName(String name);
+import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
 
-    void existsByNationalityId(String name);
+public interface UserBusinessRulesService {
+    void checkAddUserRules(User user);
+    void checkUpdateUserRules(UpdateUserRequest updateUserRequest);
 }

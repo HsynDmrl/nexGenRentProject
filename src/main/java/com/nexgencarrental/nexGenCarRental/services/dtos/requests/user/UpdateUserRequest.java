@@ -24,14 +24,18 @@ public class UpdateUserRequest {
     //@Pattern(regexp = "^[A-Z][a-z]$", message = UserConstants.SURNAME_PATTERN)
     private String surname;
 
-    @NotBlank(message = UserConstants.EMAIL_BLANK)
+    /*@NotBlank(message = UserConstants.EMAIL_BLANK)
     @Email(message = UserConstants.EMAIL_FORMAT)
     //@Pattern(regexp = "[^@]+@[^\\.]+\\..+", message = UserConstants.EMAIL_PATTERN)
-    private String email;
+    private String email;*/
 
     @NotBlank(message = UserConstants.NATIONALITY_BLANK)
     //@Pattern(regexp = "\\d{11}", message = UserConstants.NATIONALITY_PATTERN)
     private String nationalityId;
+
+    @NotNull(message = UserConstants.NATIONALITY_BLANK)
+    //@Pattern(regexp = "\\d{11}", message = UserConstants.NATIONALITY_PATTERN)
+    private int roleId;
 
     @NotBlank(message = UserConstants.GSM_BLANK)
     //@Pattern(regexp = "\\d{11}", message = UserConstants.GSM_PATTERN)

@@ -19,5 +19,7 @@ public class GetUserResponse {
 
     private String gsm;
 
+    private int roleId;
+
     private String roleName;
 }

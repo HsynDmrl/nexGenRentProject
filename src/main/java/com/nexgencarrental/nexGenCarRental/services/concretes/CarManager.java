@@ -1,5 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
@@ -12,6 +14,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarLis
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.car.CarBusinessRulesService;
 import org.springframework.stereotype.Service;
+
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
 
 @Service
 public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, GetCarListResponse, AddCarRequest,
@@ -29,19 +33,22 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
         this.carBusinessRulesService = carBusinessRulesService;
     }
 
+    private void validateModelAndColorIds(int modelId, int colorId) {
+        modelService.getById(modelId);
+        colorService.getById(colorId);
+    }
     @Override
     public void customAdd(AddCarRequest addCarRequest) {
-        modelService.getById(addCarRequest.getModelId()); // Model id kontrolü
-        colorService.getById(addCarRequest.getColorId()); // Color id kontrolü
+        validateModelAndColorIds(addCarRequest.getModelId(), addCarRequest.getColorId());
         carBusinessRulesService.existsByPlate(addCarRequest.getPlate()); // PlateName kontrolü
         add(addCarRequest, Car.class);
     }
 
     @Override
     public void customUpdate(UpdateCarRequest updateCarRequest) {
-        modelService.getById(updateCarRequest.getModelId()); // Model id kontrolü
-        colorService.getById(updateCarRequest.getColorId()); // Color id kontrolü
-        carBusinessRulesService.existsByPlate(updateCarRequest.getPlate()); // PlateName kontrolü
+        validateModelAndColorIds(updateCarRequest.getModelId(), updateCarRequest.getColorId());
+        Car existingCar = repository.findById(updateCarRequest.getId()).orElseThrow(() -> new DataNotFoundException(ENTITY_NOT_FOUND));
+        //carBusinessRulesService.existsByPlate(updateCarRequest.getPlate()); // PlateName kontrolü
         update(updateCarRequest, Car.class);
     }
 }

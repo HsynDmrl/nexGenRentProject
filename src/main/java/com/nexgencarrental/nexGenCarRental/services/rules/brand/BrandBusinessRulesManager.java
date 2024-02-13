@@ -14,8 +14,15 @@ public class BrandBusinessRulesManager implements BrandBusinessRulesService {
     private final BrandRepository brandRepository;
 
     @Override
-    public void existsByName(String name) {
-        if (brandRepository.existsByName(name.trim().replaceAll("\\s", ""))) {
+    public void checkIfBrandNameExists(String name) {
+        if (brandRepository.existsByName(name.trim().replaceAll("\\s+", ""))) {
+            throw new ConflictException(BRAND_NAME_ALREADY_EXISTS);
+        }
+    }
+
+    @Override
+    public void checkIfBrandNameExistsOnUpdate(String name, int id) {
+        if (brandRepository.existsByNameAndIdNot(name.trim().replaceAll("\\s+", ""), id)) {
             throw new ConflictException(BRAND_NAME_ALREADY_EXISTS);
         }
     }

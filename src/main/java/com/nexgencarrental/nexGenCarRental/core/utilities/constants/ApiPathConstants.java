@@ -12,6 +12,7 @@ public final class ApiPathConstants {
     public static final String AUTH_BASE_URL = "/api/auth";
     public static final String REFRESH_TOKEN_URL = "/refresh-token";
     public static final String REGISTER_URL = "/register";
+    public static final String UPDATE_PASSWORD_URL = "/user-update";
     public static final String LOGIN_URL = "/login";
     public static final String BRANDS_BASE_URL = "/api/brands";
     public static final String GET_ALL_BRANDS = "/getAll";

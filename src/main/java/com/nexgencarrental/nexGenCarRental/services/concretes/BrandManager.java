@@ -26,13 +26,13 @@ public class BrandManager extends BaseManager<Brand, BrandRepository, GetBrandRe
 
     @Override
     public void customAdd(AddBrandRequest addBrandRequest) {
-        brandBusinessRulesService.existsByName(addBrandRequest.getName());
+        brandBusinessRulesService.checkIfBrandNameExists(addBrandRequest.getName());
         add(addBrandRequest, Brand.class);
     }
 
     @Override
     public void customUpdate(UpdateBrandRequest updateBrandRequest) {
-        brandBusinessRulesService.existsByName(updateBrandRequest.getName());
+        brandBusinessRulesService.checkIfBrandNameExistsOnUpdate(updateBrandRequest.getName(), updateBrandRequest.getId());
         update(updateBrandRequest, Brand.class);
     }
 }

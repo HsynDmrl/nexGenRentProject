@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.brand;
 
 public interface BrandBusinessRulesService {
-    void existsByName(String name);
+    void checkIfBrandNameExists(String name);
+    void checkIfBrandNameExistsOnUpdate(String name, int id);
 }
