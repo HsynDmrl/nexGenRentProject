@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.model;
 
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,5 +13,5 @@ public class GetModelListResponse {
 
     private String name;
 
-    private String brandName;
+    private GetBrandListResponse brand;
 }
