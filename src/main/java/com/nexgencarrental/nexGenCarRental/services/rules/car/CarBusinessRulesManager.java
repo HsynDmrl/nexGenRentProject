@@ -35,24 +35,21 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
 
     @Override
     public void deleteCarWithModel(int carId) {
+
         List<Rental> rentals = rentalRepository.findByCarId(carId);
 
         for (Rental rental : rentals) {
             rental.setCar(null);
             rentalRepository.save(rental);
         }
+
         Optional<Car> optionalCar = carRepository.findById(carId);
 
         if (optionalCar.isPresent()) {
             Car car = optionalCar.get();
-            Model model = car.getModel();
 
             car.setModel(null);
             carRepository.save(car);
-
-            if (model != null) {
-                modelRepository.delete(model);
-            }
 
             carRepository.delete(car);
         } else {
