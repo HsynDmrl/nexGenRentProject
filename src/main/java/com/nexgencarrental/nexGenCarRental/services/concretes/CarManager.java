@@ -56,7 +56,6 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
     public void customUpdate(UpdateCarRequest updateCarRequest) {
         validateModelAndColorIds(updateCarRequest.getModelId(), updateCarRequest.getColorId());
         Car existingCar = repository.findById(updateCarRequest.getId()).orElseThrow(() -> new DataNotFoundException(ENTITY_NOT_FOUND));
-        //carBusinessRulesService.existsByPlate(updateCarRequest.getPlate()); // PlateName kontrolü
         update(updateCarRequest, Car.class);
     }
 
@@ -81,5 +80,4 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
         // Düzenlenmiş parametrelerle sorguyu çağırın.
         return carRepository.findAvailableCarsByNames(searchPattern);
     }
-
 }

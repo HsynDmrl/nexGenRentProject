@@ -6,6 +6,7 @@ import com.nexgencarrental.nexGenCarRental.repositories.EmployeeRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.AddEmployeeRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.DeleteEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.UpdateEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeResponse;
@@ -16,12 +17,14 @@ import org.springframework.stereotype.Service;
 public class EmployeeManager extends BaseManager<Employee, EmployeeRepository, GetEmployeeResponse,
         GetEmployeeListResponse, AddEmployeeRequest, UpdateEmployeeRequest> implements EmployeeService {
     private final UserService userService;
+    private final EmployeeBusinessRulesService employeeBusinessRulesService;
 
     public EmployeeManager(EmployeeRepository repository, ModelMapperService modelMapperService,
-                           EmployeeBusinessRulesService employeeBusinessRulesService, UserService userService) {
+                           EmployeeBusinessRulesService employeeBusinessRulesService, UserService userService, EmployeeBusinessRulesService employeeBusinessRulesService1) {
         super(repository, modelMapperService, GetEmployeeResponse.class, GetEmployeeListResponse.class,
                 Employee.class, AddEmployeeRequest.class, UpdateEmployeeRequest.class);
         this.userService = userService;
+        this.employeeBusinessRulesService = employeeBusinessRulesService1;
     }
 
     @Override
@@ -34,5 +37,10 @@ public class EmployeeManager extends BaseManager<Employee, EmployeeRepository, G
     public void customUpdate(UpdateEmployeeRequest updateEmployeeRequest) {
         //userService.getById(updateEmployeeRequest.getUserId()); // User id kontrolü
         update(updateEmployeeRequest, Employee.class);
+    }
+
+    @Override
+    public void customDelete(DeleteEmployeeRequest deleteEmployeeRequest) {
+        employeeBusinessRulesService.deleteEmployee(deleteEmployeeRequest.getId(), true);
     }
 }

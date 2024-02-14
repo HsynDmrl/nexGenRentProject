@@ -12,6 +12,7 @@ import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.UpdatePasswordRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.DeleteUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
@@ -39,8 +40,8 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
     private final UserBusinessRulesService userBusinessRulesService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserManager(UserRepository repository, ModelMapperService modelMapperService, UserRepository userRepository, RoleRepository roleRepository, UserBusinessRulesService userBusinessRulesService,PasswordEncoder passwordEncoder) {
-        super(repository, modelMapperService, GetUserResponse.class, GetUserListResponse.class, User.class,
+    public UserManager(ModelMapperService modelMapperService, UserRepository userRepository, RoleRepository roleRepository, UserBusinessRulesService userBusinessRulesService,PasswordEncoder passwordEncoder) {
+        super(userRepository, modelMapperService, GetUserResponse.class, GetUserListResponse.class, User.class,
                 AddUserRequest.class, UpdateUserRequest.class);
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
@@ -73,6 +74,17 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
             userToUpdate.setNationalityId(updateUserRequest.getNationalityId());
             userRepository.save(userToUpdate);
         }
+    }
+
+    @Override
+    public void customDelete(DeleteUserRequest deleteUserRequest) {
+        int userId = deleteUserRequest.getId();
+        User userToDelete = userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException(USER_NOT_FOUND));
+
+        userBusinessRulesService.checkDeleteUserRules(userToDelete);
+
+        userRepository.delete(userToDelete);
     }
 
     public GetUserEmailResponse getByEmail(String email) {

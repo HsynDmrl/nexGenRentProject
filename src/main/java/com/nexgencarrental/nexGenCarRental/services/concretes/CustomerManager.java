@@ -6,6 +6,7 @@ import com.nexgencarrental.nexGenCarRental.repositories.CustomerRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CustomerService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.customer.AddCustomerRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.customer.DeleteCustomerRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.customer.UpdateCustomerRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerResponse;
@@ -36,5 +37,10 @@ public class CustomerManager extends BaseManager<Customer, CustomerRepository, G
     public void customUpdate(UpdateCustomerRequest updateCustomerRequest) {
         //userService.getById(updateCustomerRequest.getUserId()); // User id kontrolü
         update(updateCustomerRequest, Customer.class);
+    }
+
+    @Override
+    public void customDelete(DeleteCustomerRequest deleteCustomerRequest) {
+        customerBusinessRulesService.deleteCustomer(deleteCustomerRequest.getId(), true);
     }
 }

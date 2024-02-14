@@ -4,7 +4,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequ
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.UpdatePasswordRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
-import org.springframework.security.core.userdetails.UserDetails;
 
 public interface AuthService {
     void register(RegisterRequest request);

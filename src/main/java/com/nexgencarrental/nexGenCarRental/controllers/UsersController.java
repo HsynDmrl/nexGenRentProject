@@ -4,6 +4,7 @@ import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConst
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.DeleteUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
@@ -11,8 +12,10 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserR
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -34,11 +37,11 @@ public class UsersController {
         return userService.getById(id);
     }
 
-    @PostMapping(ApiPathConstants.ADD_USER)
+/*    @PostMapping(ApiPathConstants.ADD_USER)
     @ResponseStatus(code = HttpStatus.CREATED)
     public void add(@RequestBody @Valid AddUserRequest addUserRequest) {
         this.userService.add(addUserRequest, User.class);
-    }
+    }*/
 
     @PutMapping(ApiPathConstants.UPDATE_USER)
     @ResponseStatus(HttpStatus.OK)
@@ -48,8 +51,8 @@ public class UsersController {
 
     @DeleteMapping(ApiPathConstants.DELETE_USER)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable int id) {
-        userService.delete(id);
+    public void delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
+        userService.customDelete(deleteUserRequest);
     }
 
     @GetMapping(ApiPathConstants.GET_USER_BY_EMAIL)

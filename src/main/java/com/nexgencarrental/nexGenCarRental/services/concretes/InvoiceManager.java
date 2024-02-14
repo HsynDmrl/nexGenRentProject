@@ -5,6 +5,7 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.Invoice;
 import com.nexgencarrental.nexGenCarRental.repositories.InvoiceRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.InvoiceService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.invoice.AddInvoiceRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.invoice.DeleteInvoiceRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.invoice.UpdateInvoiceRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.invoice.GetInvoiceListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.invoice.GetInvoiceResponse;
@@ -37,6 +38,11 @@ public class InvoiceManager extends BaseManager<Invoice, InvoiceRepository, GetI
         Invoice invoice = modelMapperService.forRequest().map(updateInvoiceRequest, Invoice.class);
         invoiceBusinessRulesService.validateInvoice(invoice);
         repository.save(invoice);
+    }
+
+    @Override
+    public void customDelete(DeleteInvoiceRequest deleteInvoiceRequest) {
+        invoiceBusinessRulesService.checkDeleteInvoiceRules(deleteInvoiceRequest.getId());
     }
 
 }

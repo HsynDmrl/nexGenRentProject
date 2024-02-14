@@ -1,7 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum;
-import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Model;
 import com.nexgencarrental.nexGenCarRental.repositories.ModelRepository;
@@ -14,10 +12,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetMode
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.model.ModelBusinessRulesService;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
-
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
 
 @Service
 public class ModelManager extends BaseManager<Model, ModelRepository, GetModelResponse, GetModelListResponse,
@@ -47,8 +41,9 @@ public class ModelManager extends BaseManager<Model, ModelRepository, GetModelRe
         update(updateModelRequest, Model.class);
     }
 
+
     @Override
     public void customDelete(DeleteModelRequest deleteModelRequest) {
-        modelBusinessRulesService.deleteModel(deleteModelRequest.getId());
+        modelBusinessRulesService.deleteModel(deleteModelRequest.getId(), true);
     }
 }

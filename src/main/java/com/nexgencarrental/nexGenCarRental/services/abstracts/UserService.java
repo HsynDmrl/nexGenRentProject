@@ -3,9 +3,9 @@ package com.nexgencarrental.nexGenCarRental.services.abstracts;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.UpdatePasswordRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.DeleteUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
@@ -23,6 +23,8 @@ public interface UserService extends BaseService<User, UserRepository, GetUserRe
 
     void customUpdate(UpdateUserRequest updateUserRequest);
 
+    void customDelete(DeleteUserRequest deleteUserRequest);
+
     GetUserEmailResponse getByEmail(String email);
 
     void updateUserPassword(UpdatePasswordRequest updatePasswordRequest);
@@ -35,4 +37,5 @@ public interface UserService extends BaseService<User, UserRepository, GetUserRe
     Optional<User> findById(int userId);
 
     UserDetails loadUserByUsername(String username);
+
 }
