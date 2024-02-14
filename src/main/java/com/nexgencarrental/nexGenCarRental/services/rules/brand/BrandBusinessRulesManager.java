@@ -42,7 +42,8 @@ public class BrandBusinessRulesManager implements BrandBusinessRulesService {
             Brand brand = optionalBrand.get();
             List<Model> models = brand.getModels();
             for (Model model : models) {
-                modelRepository.delete(model);
+                model.setBrand(null);
+                modelRepository.save(model);
             }
             brandRepository.delete(brand);
         } else {

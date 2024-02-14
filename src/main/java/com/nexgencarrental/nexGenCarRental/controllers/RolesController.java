@@ -3,7 +3,9 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RoleService;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.DeleteColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.role.AddRoleRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.role.DeleteRoleRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.role.UpdateRoleRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.role.GetRoleListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.role.GetRoleResponse;
@@ -47,7 +49,7 @@ public class RolesController {
 
     @DeleteMapping(ApiPathConstants.DELETE_ROLE)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable int id) {
-        roleService.delete(id);
+    public void delete(@RequestBody @Valid DeleteRoleRequest deleteRoleRequest) {
+        roleService.customDelete(deleteRoleRequest);
     }
 }
