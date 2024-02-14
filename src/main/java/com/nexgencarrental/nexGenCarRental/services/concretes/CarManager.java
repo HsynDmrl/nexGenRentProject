@@ -18,6 +18,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarRes
 import com.nexgencarrental.nexGenCarRental.services.rules.car.CarBusinessRulesService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
@@ -28,13 +29,15 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
     private final ModelService modelService;
     private final ColorService colorService;
     private final CarBusinessRulesService carBusinessRulesService;
+    private final CarRepository carRepository;
 
     public CarManager(CarRepository repository, ModelMapperService modelMapperService, ModelService modelService,
-                      ColorService colorService, CarBusinessRulesService carBusinessRulesService) {
+                      ColorService colorService,CarRepository carRepository, CarBusinessRulesService carBusinessRulesService) {
         super(repository, modelMapperService, GetCarResponse.class, GetCarListResponse.class, Car.class,
                 AddCarRequest.class, UpdateCarRequest.class);
         this.modelService = modelService;
         this.colorService = colorService;
+        this.carRepository = carRepository;
         this.carBusinessRulesService = carBusinessRulesService;
     }
 
@@ -61,4 +64,22 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
     public void customDelete(DeleteCarRequest deleteCarRequest) {
         carBusinessRulesService.deleteCarWithModel(deleteCarRequest.getId());
     }
+
+    @Override
+    public List<Car> findAllEntityFilter(Integer brandId, Integer modelId, Double minDailyPrice, Double maxDailyPrice) {
+        return carRepository.findAllEntityFilter(brandId, modelId, minDailyPrice, maxDailyPrice);
+    }
+    @Override
+    public List<Car> findAvailableCarsByNames(String searchTerm) {
+        // Parametrenin `null` olup olmadığını kontrol edin ve
+        // büyük/küçük harf duyarlılığını önlemek için `toLowerCase()` metodunu kullanarak
+        // yüzde işaretleri (%) ile sarın.
+        String searchPattern = (searchTerm != null && !searchTerm.trim().isEmpty())
+                ? "%" + searchTerm.toLowerCase() + "%"
+                : null;
+
+        // Düzenlenmiş parametrelerle sorguyu çağırın.
+        return carRepository.findAvailableCarsByNames(searchPattern);
+    }
+
 }

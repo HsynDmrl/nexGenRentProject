@@ -9,6 +9,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarR
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 
+import java.util.List;
+
 public interface CarService extends BaseService<Car, CarRepository, GetCarResponse,
         GetCarListResponse, AddCarRequest, UpdateCarRequest> {
     void customAdd(AddCarRequest addColorRequest);
@@ -16,4 +18,7 @@ public interface CarService extends BaseService<Car, CarRepository, GetCarRespon
     void customUpdate(UpdateCarRequest updateColorRequest);
     void customDelete(DeleteCarRequest deleteCarRequest);
 
+    List<Car> findAllEntityFilter(Integer brandId, Integer modelId, Double minDailyPrice, Double maxDailyPrice);
+
+    List<Car> findAvailableCarsByNames(String searchTerm);
 }

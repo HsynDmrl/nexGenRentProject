@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class Model extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "model")
+    @JsonIgnore
     private List<Car> cars;
 
     @ManyToOne

@@ -1,5 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.entities.concretes;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -43,6 +45,7 @@ public class Car extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "model_id")
+    @JsonIgnoreProperties("cars")
     private Model model;
 
     @ManyToOne
