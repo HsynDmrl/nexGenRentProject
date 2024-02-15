@@ -3,7 +3,6 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.InvoiceService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.invoice.AddInvoiceRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.invoice.DeleteInvoiceRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.invoice.UpdateInvoiceRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.invoice.GetInvoiceListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.invoice.GetInvoiceResponse;
@@ -46,7 +45,7 @@ public class InvoiceController {
 
     @DeleteMapping(ApiPathConstants.DELETE_INVOICE)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestBody @Valid DeleteInvoiceRequest deleteInvoiceRequest) {
-        invoiceService.customDelete(deleteInvoiceRequest);
+    public void delete(@PathVariable int id) {
+        invoiceService.customDelete(id);
     }
 }

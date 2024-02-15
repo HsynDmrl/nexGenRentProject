@@ -21,4 +21,5 @@ public class GetRentalResponse {
     private int carId;
     private int customerId;
     private int employeeId;
+    private int invoiceId;
 }

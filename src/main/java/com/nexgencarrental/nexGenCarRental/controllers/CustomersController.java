@@ -3,7 +3,6 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CustomerService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.customer.AddCustomerRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.customer.DeleteCustomerRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.customer.UpdateCustomerRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerResponse;
@@ -46,7 +45,7 @@ public class CustomersController {
 
     @DeleteMapping(ApiPathConstants.DELETE_CUSTOMER)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestBody @Valid DeleteCustomerRequest deleteCustomerRequest) {
-        customerService.customDelete(deleteCustomerRequest);
+    public void delete(@PathVariable int id) {
+        customerService.customDelete(id);
     }
 }

@@ -5,7 +5,6 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.Invoice;
 import com.nexgencarrental.nexGenCarRental.repositories.InvoiceRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.InvoiceService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.invoice.AddInvoiceRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.invoice.DeleteInvoiceRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.invoice.UpdateInvoiceRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.invoice.GetInvoiceListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.invoice.GetInvoiceResponse;
@@ -33,14 +32,16 @@ public class InvoiceManager extends BaseManager<Invoice, InvoiceRepository, GetI
 
     @Override
     public void customUpdate(UpdateInvoiceRequest updateInvoiceRequest) {
-        Invoice invoice = modelMapperService.forRequest().map(updateInvoiceRequest, Invoice.class);
-        invoiceBusinessRulesService.validateInvoice(invoice);
-        repository.save(invoice);
+        Invoice existingInvoice = modelMapperService.forRequest().map(updateInvoiceRequest, Invoice.class);
+
+        invoiceBusinessRulesService.validateInvoice(existingInvoice);
+
+        repository.save(existingInvoice);
     }
 
     @Override
-    public void customDelete(DeleteInvoiceRequest deleteInvoiceRequest) {
-        invoiceBusinessRulesService.checkDeleteInvoiceRules(deleteInvoiceRequest.getId());
+    public void customDelete(int id) {
+        invoiceBusinessRulesService.checkDeleteInvoiceRules(id);
     }
 
 }

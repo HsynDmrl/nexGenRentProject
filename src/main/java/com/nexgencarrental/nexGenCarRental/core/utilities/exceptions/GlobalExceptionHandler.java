@@ -40,6 +40,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({
             EntityNotFoundException.class,
+            DataNotFoundException.class
     })
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiErrorResponse handleNotFound(Exception exception) {
@@ -60,6 +61,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrorResponse handleCustomException(Exception exception) {
-        return new ApiErrorResponse(HttpStatus.BAD_REQUEST,4000,exception.getMessage());
+        return new ApiErrorResponse(HttpStatus.BAD_REQUEST, 4000, exception.getMessage());
     }
 }

@@ -3,7 +3,6 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BrandService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.AddBrandRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.DeleteBrandRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.UpdateBrandRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
@@ -46,8 +45,8 @@ public class BrandsController {
 
     @DeleteMapping(ApiPathConstants.DELETE_BRAND)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestBody @Valid DeleteBrandRequest deleteBrandRequest) {
-        brandService.customDelete(deleteBrandRequest);
+    public void delete(@PathVariable int id) {
+        brandService.customDelete(id);
     }
 }
 

@@ -2,7 +2,6 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.DeleteUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
@@ -41,8 +40,8 @@ public class UsersController {
 
     @DeleteMapping(ApiPathConstants.DELETE_USER)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestBody @Valid DeleteUserRequest deleteUserRequest) {
-        userService.customDelete(deleteUserRequest);
+    public void delete(@RequestParam int id) {
+        userService.customDelete(id);
     }
 
     @GetMapping(ApiPathConstants.GET_USER_BY_EMAIL)

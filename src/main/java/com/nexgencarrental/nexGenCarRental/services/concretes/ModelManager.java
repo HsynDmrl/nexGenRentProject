@@ -6,7 +6,6 @@ import com.nexgencarrental.nexGenCarRental.repositories.ModelRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BrandService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ModelService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.AddModelRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.DeleteModelRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.UpdateModelRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
@@ -43,7 +42,7 @@ public class ModelManager extends BaseManager<Model, ModelRepository, GetModelRe
 
 
     @Override
-    public void customDelete(DeleteModelRequest deleteModelRequest) {
-        modelBusinessRulesService.deleteModel(deleteModelRequest.getId(), true);
+    public void customDelete(int id) {
+        modelBusinessRulesService.deleteModel(id, true);
     }
 }

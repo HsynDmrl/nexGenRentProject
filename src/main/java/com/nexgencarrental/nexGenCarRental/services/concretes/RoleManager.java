@@ -7,7 +7,6 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.repositories.RoleRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RoleService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.role.AddRoleRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.role.DeleteRoleRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.role.UpdateRoleRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.role.GetRoleListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.role.GetRoleResponse;
@@ -24,17 +23,14 @@ public class RoleManager extends BaseManager<Role, RoleRepository, GetRoleRespon
     }
 
     @Override
-    public void customDelete(DeleteRoleRequest deleteRoleRequest) {
-        int roleId = deleteRoleRequest.getId();
-        Role roleToDelete = repository.findById(roleId)
+    public void customDelete(int id) {
+        Role roleToDelete = repository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(ROLE_NOT_FOUND));
 
-        // Kullanıcıların rol alanlarını null olarak ayarla
         for (User user : roleToDelete.getUsers()) {
             user.setRole(null);
         }
 
-        // Rolü sil
         repository.delete(roleToDelete);
     }
 }

@@ -13,4 +13,5 @@ public class GetInvoiceResponse {
     private Float totalPrice;
     private Float discountRate;
     private Float taxRate;
+    private int rentalId;
 }

@@ -8,7 +8,6 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.CustomerService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.DeleteRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalListResponse;
@@ -79,7 +78,7 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
     }
 
     @Override
-    public void customDelete(DeleteRentalRequest deleteRentalRequest) {
-        rentalBusinessRulesService.validateDeleteRentalRequest(deleteRentalRequest.getId());
+    public void customDelete(int rentalId) {
+        rentalBusinessRulesService.validateDeleteRentalRequest(rentalId);
     }
 }

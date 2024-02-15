@@ -37,7 +37,7 @@ public final class ApiPathConstants {
     public static final String ADD_CUSTOMER = "/add";
     public static final String UPDATE_CUSTOMER = "/update";
     public static final String DELETE_CUSTOMER = "/{id}";
-    public static final String EMPLOYEES_BASE_URL = "/api/employess"; // Burada "employess" olması gerekirken "employees" olmalı, yazım hatası var.
+    public static final String EMPLOYEES_BASE_URL = "/api/employees";
     public static final String GET_ALL_EMPLOYEES = "/getAll";
     public static final String GET_EMPLOYEE_BY_ID = "/{id}";
     public static final String ADD_EMPLOYEE = "/add";
@@ -77,8 +77,6 @@ public final class ApiPathConstants {
     public static final String DELETE_INVOICE = "/{id}";
     public static final String ADMIN_BASE_URL = "/admin";
     public static final String UPDATE_ADMIN = "/update";
-
-
 
 
 }
