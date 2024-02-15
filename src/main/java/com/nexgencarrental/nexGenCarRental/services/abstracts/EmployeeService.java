@@ -2,7 +2,6 @@ package com.nexgencarrental.nexGenCarRental.services.abstracts;
 
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
 import com.nexgencarrental.nexGenCarRental.repositories.EmployeeRepository;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.DeleteCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.AddEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.DeleteEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.UpdateEmployeeRequest;
@@ -13,5 +12,6 @@ public interface EmployeeService extends BaseService<Employee, EmployeeRepositor
     void customAdd(AddEmployeeRequest addEmployeeRequest);
 
     void customUpdate(UpdateEmployeeRequest updateEmployeeRequest);
+
     void customDelete(DeleteEmployeeRequest deleteEmployeeRequest);
 }

@@ -3,7 +3,6 @@ package com.nexgencarrental.nexGenCarRental.services.rules.car;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Model;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.ModelRepository;
@@ -14,9 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.BRAND_NAME_ALREADY_EXISTS;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.DATA_CONFLICT;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.PLATE_ALREADY_EXISTS;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.NO_CARS_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -29,7 +27,7 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
     @Override
     public void existsByPlate(String plate) {
         if (carRepository.existsByPlate(plate.trim().replaceAll("\\s", ""))) {
-            throw new ConflictException(DATA_CONFLICT);
+            throw new ConflictException(PLATE_ALREADY_EXISTS);
         }
     }
 
@@ -53,7 +51,7 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
 
             carRepository.delete(car);
         } else {
-            throw new DataNotFoundException(ENTITY_NOT_FOUND);
+            throw new DataNotFoundException(NO_CARS_FOUND);
         }
     }
 }

@@ -4,19 +4,19 @@ import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoun
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
 import com.nexgencarrental.nexGenCarRental.repositories.EmployeeRepository;
-import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.NO_EMPLOYEE_FOUND;
 
 @Service
 @AllArgsConstructor
 public class EmployeeBusinessRulesManager implements EmployeeBusinessRulesService {
     private final EmployeeRepository employeeRepository;
+
     @Override
     public void deleteEmployee(int employeeId, boolean nullifyReferences) {
 
@@ -31,7 +31,7 @@ public class EmployeeBusinessRulesManager implements EmployeeBusinessRulesServic
             }
             employeeRepository.delete(employee);
         } else {
-            throw new DataNotFoundException(ENTITY_NOT_FOUND);
+            throw new DataNotFoundException(NO_EMPLOYEE_FOUND);
         }
     }
 }

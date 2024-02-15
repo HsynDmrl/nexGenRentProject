@@ -42,4 +42,6 @@ public class UpdateRentalRequest {
     @Positive(message = RentalConstants.EMPLOYEE_ID_POSITIVE)
     @NotNull(message = RentalConstants.EMPLOYEE_ID_NULL)
     private int employeeId;
+
+    private int invoiceId;
 }

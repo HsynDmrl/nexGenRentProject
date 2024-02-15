@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface CarRepository extends JpaRepository<Car, Integer> {
     boolean existsByPlate(String plate);
@@ -22,8 +21,6 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             @Param("modelId") Integer modelId,
             @Param("minDailyPrice") Double minDailyPrice,
             @Param("maxDailyPrice") Double maxDailyPrice);
-
-
 
 
     @Query("SELECT c FROM Car c WHERE " +

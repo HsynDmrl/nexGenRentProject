@@ -1,7 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.rental;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationConstants;
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
@@ -22,7 +21,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ROLE_NOT_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -74,15 +72,12 @@ public class RentalBusinessRulesManager implements RentalBusinessRulesService {
         Rental rental = rentalRepository.findById(rentalId)
                 .orElseThrow(() -> new DataNotFoundException(ENTITY_NOT_FOUND));
 
-        // Rental varlığını sil
         rentalRepository.delete(rental);
 
-        // Rental ile ilişkili Car, Customer ve Employee varlıklarını kontrol et
         Car car = rental.getCar();
         Customer customer = rental.getCustomer();
         Employee employee = rental.getEmployee();
 
-        // Car, Customer ve Employee varlıklarının durumunu güncelle
         if (car != null) {
             car.getRentals().remove(rental);
             carRepository.save(car);

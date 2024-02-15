@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.COLOR_NAME_ALREADY_EXISTS;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.NO_COLOR_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -42,7 +42,7 @@ public class ColorBusinessRulesManager implements ColorBusinessRulesService {
             }
             colorRepository.delete(color);
         } else {
-            throw new DataNotFoundException(ENTITY_NOT_FOUND);
+            throw new DataNotFoundException(NO_COLOR_FOUND);
         }
     }
 }

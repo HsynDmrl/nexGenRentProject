@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddRoleRequest {
 
-    @Size(min = 2, message = RoleConstants.ADD_ROLE_NAME_SIZE)
+    //@Size(min = 2, message = RoleConstants.ADD_ROLE_NAME_SIZE)
     @NotBlank(message = RoleConstants.ROLE_NAME_BLANK)
-    @Pattern(regexp = "^[A-Z][a-z]$", message = RoleConstants.ROLE_NAME_PATTERN)
+    //@Pattern(regexp = "^[A-Z][a-z]$", message = RoleConstants.ROLE_NAME_PATTERN)
     private String name;
 }

@@ -2,7 +2,6 @@ package com.nexgencarrental.nexGenCarRental.services.abstracts;
 
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
 import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.DeleteBrandRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.DeleteRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
@@ -14,5 +13,6 @@ public interface RentalService extends BaseService<Rental, RentalRepository, Get
     void customAdd(AddRentalRequest addRentalRequest);
 
     void customUpdate(UpdateRentalRequest updateRentalRequest);
+
     void customDelete(DeleteRentalRequest deleteRentalRequest);
 }

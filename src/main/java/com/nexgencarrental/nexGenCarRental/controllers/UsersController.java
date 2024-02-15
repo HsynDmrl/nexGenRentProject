@@ -1,9 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.DeleteUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
@@ -12,10 +10,8 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserR
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -36,12 +32,6 @@ public class UsersController {
     public GetUserResponse getById(int id) {
         return userService.getById(id);
     }
-
-/*    @PostMapping(ApiPathConstants.ADD_USER)
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public void add(@RequestBody @Valid AddUserRequest addUserRequest) {
-        this.userService.add(addUserRequest, User.class);
-    }*/
 
     @PutMapping(ApiPathConstants.UPDATE_USER)
     @ResponseStatus(HttpStatus.OK)

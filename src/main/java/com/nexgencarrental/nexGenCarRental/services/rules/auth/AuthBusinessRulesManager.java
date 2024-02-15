@@ -8,6 +8,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequ
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.USER_ALREADY_EXISTS;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.USER_NOT_FOUND;
 
@@ -15,6 +16,7 @@ import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataN
 @AllArgsConstructor
 public class AuthBusinessRulesManager implements AuthBusinessRulesService {
     private final UserService userService;
+
     @Override
     public void validateRegistration(RegisterRequest request) {
         if (userService.existsByEmail(request.getEmail())) {

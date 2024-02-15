@@ -32,4 +32,6 @@ public class UpdateInvoiceRequest {
     @DecimalMin(value = "0.0", message = InvoiceConstants.INVOICE_TAX_DISCOUNT_MIN)
     @DecimalMax(value = "100.0", message = InvoiceConstants.INVOICE_TAX_DISCOUNT_MAX)
     private Float taxRate;
+
+    private int rentalId;
 }

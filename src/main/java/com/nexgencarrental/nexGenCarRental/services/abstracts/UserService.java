@@ -28,6 +28,7 @@ public interface UserService extends BaseService<User, UserRepository, GetUserRe
     GetUserEmailResponse getByEmail(String email);
 
     void updateUserPassword(UpdatePasswordRequest updatePasswordRequest);
+
     Optional<User> findByEmail(String email);
 
     boolean existsByEmail(String email);
