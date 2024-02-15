@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.MODEL_NAME_ALREADY_EXISTS;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.NO_MODEL_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -27,7 +27,7 @@ public class ModelBusinessRulesManager implements ModelBusinessRulesService {
     }
 
     @Override
-    public void deleteModel(int modelId,boolean nullifyCars) {
+    public void deleteModel(int modelId, boolean nullifyCars) {
         Optional<Model> optionalModel = modelRepository.findById(modelId);
         if (optionalModel.isPresent()) {
             Model model = optionalModel.get();
@@ -39,7 +39,7 @@ public class ModelBusinessRulesManager implements ModelBusinessRulesService {
             }
             modelRepository.delete(model);
         } else {
-            throw new DataNotFoundException(ENTITY_NOT_FOUND);
+            throw new DataNotFoundException(NO_MODEL_FOUND);
         }
     }
 }

@@ -7,5 +7,6 @@ public interface RentalBusinessRulesService {
     void validateAddRentalRequest(AddRentalRequest addRentalRequest);
 
     void validateUpdateRentalRequest(UpdateRentalRequest updateRentalRequest);
+
     void validateDeleteRentalRequest(int rentalId);
 }

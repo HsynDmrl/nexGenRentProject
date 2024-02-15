@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.customer;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
@@ -10,12 +11,20 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.CUSTOMER_ALREADY_EXISTS;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.NO_CUSTOMER_FOUND;
 
 @Service
 @AllArgsConstructor
 public class CustomerBusinessRulesManager implements CustomerBusinessRulesService {
     private final CustomerRepository customerRepository;
+
+    @Override
+    public void checkIfCustomerExists(int customerId) {
+        if (customerRepository.existsById(customerId)) {
+            throw new ConflictException(CUSTOMER_ALREADY_EXISTS);
+        }
+    }
 
     @Override
     public void deleteCustomer(int customerId, boolean nullifyReferences) {
@@ -31,7 +40,7 @@ public class CustomerBusinessRulesManager implements CustomerBusinessRulesServic
             }
             customerRepository.delete(customer);
         } else {
-            throw new DataNotFoundException(ENTITY_NOT_FOUND);
+            throw new DataNotFoundException(NO_CUSTOMER_FOUND);
         }
     }
 }

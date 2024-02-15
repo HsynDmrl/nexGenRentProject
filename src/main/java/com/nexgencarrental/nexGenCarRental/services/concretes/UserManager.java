@@ -40,7 +40,7 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
     private final UserBusinessRulesService userBusinessRulesService;
     private final PasswordEncoder passwordEncoder;
 
-    public UserManager(ModelMapperService modelMapperService, UserRepository userRepository, RoleRepository roleRepository, UserBusinessRulesService userBusinessRulesService,PasswordEncoder passwordEncoder) {
+    public UserManager(ModelMapperService modelMapperService, UserRepository userRepository, RoleRepository roleRepository, UserBusinessRulesService userBusinessRulesService, PasswordEncoder passwordEncoder) {
         super(userRepository, modelMapperService, GetUserResponse.class, GetUserListResponse.class, User.class,
                 AddUserRequest.class, UpdateUserRequest.class);
         this.userRepository = userRepository;
@@ -67,10 +67,9 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
         if (userToUpdate == null) {
             throw new DataNotFoundException(USER_NOT_FOUND);
         } else {
-/*            userToUpdate.setName(updateUserRequest.getName());
-            userToUpdate.setSurname(updateUserRequest.getSurname());*/
-            //userToUpdate.setGsm(userToUpdate.getGsm());
-            userToUpdate.setRole(userToUpdate.getRole());
+            userToUpdate.setName(updateUserRequest.getName());
+            userToUpdate.setSurname(updateUserRequest.getSurname());
+            userToUpdate.setGsm(updateUserRequest.getGsm());
             userToUpdate.setNationalityId(updateUserRequest.getNationalityId());
             userRepository.save(userToUpdate);
         }
@@ -88,8 +87,8 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
     }
 
     public GetUserEmailResponse getByEmail(String email) {
-            User user = userRepository.findByEmail(email).orElse(null);
-            return modelMapperService.forResponse().map(user, GetUserEmailResponse.class);
+        User user = userRepository.findByEmail(email).orElse(null);
+        return modelMapperService.forResponse().map(user, GetUserEmailResponse.class);
     }
 
     @Override
@@ -107,26 +106,26 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
 
     @Override
     public Optional<User> findByEmail(String email) {
-            return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
 
     @Override
     public boolean existsByEmail(String email) {
-            return userRepository.existsByName(email);
+        return userRepository.existsByName(email);
     }
 
     @Override
     public Optional<Role> findRoleById(int roleId) {
-            return roleRepository.findById(roleId);
+        return roleRepository.findById(roleId);
     }
 
     @Override
     public Optional<User> findById(int userId) {
-            return userRepository.findById(userId);
+        return userRepository.findById(userId);
     }
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-            return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(ApplicationConstants.NO_USER_FOUND));
+        return userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException(ApplicationConstants.NO_USER_FOUND));
     }
 }

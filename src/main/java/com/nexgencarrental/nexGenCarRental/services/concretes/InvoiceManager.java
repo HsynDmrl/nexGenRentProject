@@ -12,8 +12,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.invoice.GetIn
 import com.nexgencarrental.nexGenCarRental.services.rules.invoice.InvoiceBusinessRulesService;
 import org.springframework.stereotype.Service;
 
-import jakarta.persistence.EntityNotFoundException;
-
 @Service
 public class InvoiceManager extends BaseManager<Invoice, InvoiceRepository, GetInvoiceResponse, GetInvoiceListResponse,
         AddInvoiceRequest, UpdateInvoiceRequest> implements InvoiceService {

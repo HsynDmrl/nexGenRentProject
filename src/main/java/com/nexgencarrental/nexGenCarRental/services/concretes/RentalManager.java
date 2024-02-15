@@ -1,14 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
-import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
-import com.nexgencarrental.nexGenCarRental.repositories.CustomerRepository;
-import com.nexgencarrental.nexGenCarRental.repositories.EmployeeRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CustomerService;
@@ -25,8 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
 
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
-
 @Service
 public class RentalManager extends BaseManager<Rental, RentalRepository, GetRentalResponse, GetRentalListResponse,
         AddRentalRequest, UpdateRentalRequest> implements RentalService {
@@ -34,6 +25,7 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
     private final CustomerService customerService;
     private final EmployeeService employeeService;
     private final RentalBusinessRulesService rentalBusinessRulesService;
+
     public RentalManager(RentalRepository repository, ModelMapperService modelMapperService,
                          CarService carService, CustomerService customerService, EmployeeService employeeService,
                          RentalBusinessRulesService rentalBusinessRulesService) {

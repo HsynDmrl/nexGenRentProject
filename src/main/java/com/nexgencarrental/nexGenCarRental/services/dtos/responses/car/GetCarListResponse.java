@@ -2,6 +2,8 @@ package com.nexgencarrental.nexGenCarRental.services.dtos.responses.car;
 
 import com.nexgencarrental.nexGenCarRental.entities.concretes.FuelType;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.GearType;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,8 +30,8 @@ public class GetCarListResponse {
 
     private FuelType fuelType;
 
-    private String modelName;
+    private GetModelListResponse model;
 
-    private String colorName;
+    private GetColorListResponse color;
 
 }

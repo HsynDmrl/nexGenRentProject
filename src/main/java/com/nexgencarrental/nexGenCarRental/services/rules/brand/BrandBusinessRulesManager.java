@@ -21,6 +21,7 @@ import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataN
 public class BrandBusinessRulesManager implements BrandBusinessRulesService {
     private final BrandRepository brandRepository;
     private final ModelRepository modelRepository;
+
     @Override
     public void checkIfBrandNameExists(String name) {
         if (brandRepository.existsByName(name.trim().replaceAll("\\s+", ""))) {

@@ -2,7 +2,6 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.DeleteColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.DeleteRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
@@ -48,6 +47,7 @@ public class RentalsController {
     @DeleteMapping(ApiPathConstants.DELETE_RENTAL)
     @ResponseStatus(HttpStatus.OK)
     public void delete(@RequestBody @Valid DeleteRentalRequest deleteRentalRequest) {
-        rentalService.customDelete(deleteRentalRequest);}
+        rentalService.customDelete(deleteRentalRequest);
+    }
 
 }

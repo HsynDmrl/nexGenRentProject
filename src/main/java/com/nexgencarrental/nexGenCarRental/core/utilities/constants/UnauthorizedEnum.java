@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum UnauthorizedEnum {
     INVALID_CREDENTIALS(4011, "Invalid username or password."),
-    PASSWORD_ERROR(4010,"Invalid old password."),
+    PASSWORD_ERROR(4010, "Invalid old password."),
     EXPIRED_TOKEN(4012, "The authentication token has expired."),
     MISSING_TOKEN(4013, "Authentication token is missing.");
 

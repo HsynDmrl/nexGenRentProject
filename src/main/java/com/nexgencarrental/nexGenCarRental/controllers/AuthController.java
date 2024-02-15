@@ -8,15 +8,11 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RefreshTo
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.UpdatePasswordRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
-import jakarta.persistence.EntityExistsException;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping(ApiPathConstants.AUTH_BASE_URL)
@@ -29,16 +25,17 @@ public class AuthController {
     @PostMapping(ApiPathConstants.REGISTER_URL)
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequest registerRequest) {
-            authService.register(registerRequest);
-            return ResponseEntity.ok().build();
+        authService.register(registerRequest);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping(ApiPathConstants.LOGIN_URL)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AuthResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
-            AuthResponse authResponse = authService.login(loginRequest);
-            return ResponseEntity.ok(authResponse);
+        AuthResponse authResponse = authService.login(loginRequest);
+        return ResponseEntity.ok(authResponse);
     }
+
     @PostMapping(ApiPathConstants.UPDATE_PASSWORD_URL)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> updatePassword(@RequestBody @Valid UpdatePasswordRequest updatePasswordRequest) {
@@ -49,7 +46,7 @@ public class AuthController {
     @PostMapping(ApiPathConstants.REFRESH_TOKEN_URL)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AuthResponse> refreshAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
-            AuthResponse authResponse = refreshTokenService.refreshAccessToken(refreshTokenRequest.getRefreshToken());
-            return ResponseEntity.ok(authResponse);
+        AuthResponse authResponse = refreshTokenService.refreshAccessToken(refreshTokenRequest.getRefreshToken());
+        return ResponseEntity.ok(authResponse);
     }
 }

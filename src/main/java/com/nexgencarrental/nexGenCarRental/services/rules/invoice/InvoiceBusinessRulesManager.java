@@ -1,7 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.invoice;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum;
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.ConflictException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Invoice;
@@ -10,10 +8,8 @@ import com.nexgencarrental.nexGenCarRental.repositories.InvoiceRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.NO_INVOICE_ALREADY_EXISTS;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.NO_INVOICE_FOUND;
 
 @Service
 @AllArgsConstructor
@@ -31,7 +27,7 @@ public class InvoiceBusinessRulesManager implements InvoiceBusinessRulesService 
     public void checkDeleteInvoiceRules(int invoiceId) {
 
         Invoice invoiceToDelete = invoiceRepository.findById(invoiceId)
-                .orElseThrow(() -> new DataNotFoundException(ENTITY_NOT_FOUND));
+                .orElseThrow(() -> new DataNotFoundException(NO_INVOICE_FOUND));
 
         Rental rental = invoiceToDelete.getRental();
         if (rental != null) {

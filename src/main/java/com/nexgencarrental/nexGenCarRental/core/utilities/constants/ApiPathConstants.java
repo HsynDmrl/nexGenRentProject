@@ -2,7 +2,6 @@ package com.nexgencarrental.nexGenCarRental.core.utilities.constants;
 
 public final class ApiPathConstants {
 
-    // Private constructor ile dışarıdan örneklenmesi engelleniyor.
     private ApiPathConstants() {
         throw new IllegalStateException("Utility class");
     }
@@ -76,6 +75,10 @@ public final class ApiPathConstants {
     public static final String ADD_INVOICE = "/add";
     public static final String UPDATE_INVOICE = "/update";
     public static final String DELETE_INVOICE = "/{id}";
+    public static final String ADMIN_BASE_URL = "/admin";
+    public static final String UPDATE_ADMIN = "/update";
+
+
 
 
 }

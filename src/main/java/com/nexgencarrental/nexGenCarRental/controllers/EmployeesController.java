@@ -2,7 +2,6 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.DeleteColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.AddEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.DeleteEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.UpdateEmployeeRequest;

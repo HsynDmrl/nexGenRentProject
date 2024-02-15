@@ -39,4 +39,6 @@ public class AddRentalRequest {
     @NotNull(message = RentalConstants.EMPLOYEE_ID_NULL)
     private int employeeId;
 
+    private int invoiceId;
+
 }

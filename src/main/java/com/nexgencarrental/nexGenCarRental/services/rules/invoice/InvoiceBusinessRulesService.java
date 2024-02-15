@@ -4,5 +4,6 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.Invoice;
 
 public interface InvoiceBusinessRulesService {
     void validateInvoice(Invoice invoice);
+
     void checkDeleteInvoiceRules(int invoiceId);
 }

@@ -5,5 +5,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterR
 
 public interface AuthBusinessRulesService {
     void validateRegistration(RegisterRequest request);
+
     void validateLogin(LoginRequest loginRequest);
 }
