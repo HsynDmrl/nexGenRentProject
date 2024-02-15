@@ -3,7 +3,6 @@ package com.nexgencarrental.nexGenCarRental.services.abstracts;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Brand;
 import com.nexgencarrental.nexGenCarRental.repositories.BrandRepository;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.AddBrandRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.DeleteBrandRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.brand.UpdateBrandRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
@@ -14,5 +13,5 @@ public interface BrandService extends BaseService<Brand, BrandRepository, GetBra
 
     void customUpdate(UpdateBrandRequest updateBrandRequest);
 
-    void customDelete(DeleteBrandRequest deleteBrandRequest);
+    void customDelete(int id);
 }

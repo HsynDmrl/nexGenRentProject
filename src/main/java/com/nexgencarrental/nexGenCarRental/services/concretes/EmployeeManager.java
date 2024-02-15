@@ -6,7 +6,6 @@ import com.nexgencarrental.nexGenCarRental.repositories.EmployeeRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.AddEmployeeRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.DeleteEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.UpdateEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeResponse;
@@ -40,7 +39,7 @@ public class EmployeeManager extends BaseManager<Employee, EmployeeRepository, G
     }
 
     @Override
-    public void customDelete(DeleteEmployeeRequest deleteEmployeeRequest) {
-        employeeBusinessRulesService.deleteEmployee(deleteEmployeeRequest.getId(), true);
+    public void customDelete(int id) {
+        employeeBusinessRulesService.deleteEmployee(id, true);
     }
 }

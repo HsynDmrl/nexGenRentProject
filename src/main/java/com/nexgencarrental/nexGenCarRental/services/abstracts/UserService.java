@@ -5,7 +5,6 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.UpdatePasswordRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.DeleteUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
@@ -23,7 +22,7 @@ public interface UserService extends BaseService<User, UserRepository, GetUserRe
 
     void customUpdate(UpdateUserRequest updateUserRequest);
 
-    void customDelete(DeleteUserRequest deleteUserRequest);
+    void customDelete(int id);
 
     GetUserEmailResponse getByEmail(String email);
 

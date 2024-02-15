@@ -22,4 +22,5 @@ public class GetRentalListResponse {
     private String carModelName;
     private String customerName;
     private String employeeName;
+    private int invoiceId;
 }

@@ -3,7 +3,6 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.AddEmployeeRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.DeleteEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.employee.UpdateEmployeeRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeResponse;
@@ -46,7 +45,7 @@ public class EmployeesController {
 
     @DeleteMapping(ApiPathConstants.DELETE_EMPLOYEE)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@RequestBody @Valid DeleteEmployeeRequest deleteEmployeeRequest) {
-        employeeService.customDelete(deleteEmployeeRequest);
+    public void delete(@PathVariable int id) {
+        employeeService.customDelete(id);
     }
 }

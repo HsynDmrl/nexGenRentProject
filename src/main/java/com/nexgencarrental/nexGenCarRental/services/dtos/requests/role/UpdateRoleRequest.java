@@ -1,7 +1,9 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.role;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.RoleConstants;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

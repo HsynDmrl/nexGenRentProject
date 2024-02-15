@@ -5,7 +5,6 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.Color;
 import com.nexgencarrental.nexGenCarRental.repositories.ColorRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.AddColorRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.DeleteColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.color.UpdateColorRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
@@ -37,7 +36,7 @@ public class ColorManager extends BaseManager<Color, ColorRepository, GetColorRe
     }
 
     @Override
-    public void customDelete(DeleteColorRequest deleteColorRequest) {
-        colorBusinessRulesService.deleteColorWithCars(deleteColorRequest.getId());
+    public void customDelete(int id) {
+        colorBusinessRulesService.deleteColorWithCars(id);
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ConflictEnum.BRAND_NAME_ALREADY_EXISTS;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.NO_BRAND_FOUND;
 
 
 @Service
@@ -48,7 +48,7 @@ public class BrandBusinessRulesManager implements BrandBusinessRulesService {
             }
             brandRepository.delete(brand);
         } else {
-            throw new DataNotFoundException(ENTITY_NOT_FOUND);
+            throw new DataNotFoundException(NO_BRAND_FOUND);
         }
     }
 }

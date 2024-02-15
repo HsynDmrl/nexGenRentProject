@@ -8,7 +8,6 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ModelService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.DeleteCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
@@ -57,8 +56,8 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
     }
 
     @Override
-    public void customDelete(DeleteCarRequest deleteCarRequest) {
-        carBusinessRulesService.deleteCarWithModel(deleteCarRequest.getId());
+    public void customDelete(int id) {
+        carBusinessRulesService.deleteCarWithModel(id);
     }
 
     @Override

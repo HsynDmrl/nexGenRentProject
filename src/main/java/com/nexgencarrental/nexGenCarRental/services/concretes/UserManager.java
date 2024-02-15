@@ -12,7 +12,6 @@ import com.nexgencarrental.nexGenCarRental.repositories.UserRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.UpdatePasswordRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.AddUserRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.DeleteUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.user.UpdateUserRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserEmailResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.user.GetUserListResponse;
@@ -76,9 +75,8 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
     }
 
     @Override
-    public void customDelete(DeleteUserRequest deleteUserRequest) {
-        int userId = deleteUserRequest.getId();
-        User userToDelete = userRepository.findById(userId)
+    public void customDelete(int id) {
+        User userToDelete = userRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException(USER_NOT_FOUND));
 
         userBusinessRulesService.checkDeleteUserRules(userToDelete);
