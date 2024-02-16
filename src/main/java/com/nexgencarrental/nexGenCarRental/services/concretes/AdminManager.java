@@ -28,7 +28,7 @@ public class AdminManager implements AdminService {
         Role role = roleRepository.findById(roleId)
                 .orElseThrow(() -> new DataNotFoundException(ROLE_NOT_FOUND));
 
-        if (user.getRole().getId() == roleId) {
+        if (user.getRole() != null && user.getRole().getId() == roleId) {
             throw new ConflictException(NO_ROLE_ALREADY_EXISTS);
         }
 

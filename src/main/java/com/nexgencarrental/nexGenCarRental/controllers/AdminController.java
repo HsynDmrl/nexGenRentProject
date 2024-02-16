@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class AdminController {
     private final AdminService adminService;
 
-    @PutMapping("/update/{userId}/{newRoleId}") // UPDATE_ADMIN sabitini doğrudan buraya entegre ediyoruz
+    @PutMapping("/update/{userId}/{newRoleId}")
     @ResponseStatus(HttpStatus.OK)
     public void updateUserRole(@PathVariable int userId, @PathVariable int newRoleId) {
         adminService.updateUserRole(userId, newRoleId);
