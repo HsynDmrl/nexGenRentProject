@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -53,5 +54,8 @@ public class Car extends BaseEntity {
 
     @OneToMany(mappedBy = "car")
     private List<Rental> rentals;
+
+    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
+    private List<CarImg> images = new ArrayList<>(); // Bir arabanın birden fazla resmi olabilir.
 
 }
