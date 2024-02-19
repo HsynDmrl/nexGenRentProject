@@ -16,7 +16,8 @@ public final class SecurityConstants {
             "/v2/api-docs",
             "/api/auth/**",
             "/api/auth/login",
-            "/api/auth/register"
+            "/api/auth/register",
+            "/api/auth/refresh-token",
     };
 
     public static final String[] USER_URLS = {
