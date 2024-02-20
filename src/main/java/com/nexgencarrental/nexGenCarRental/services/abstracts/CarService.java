@@ -6,7 +6,9 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequ
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface CarService extends BaseService<Car, CarRepository, GetCarResponse,
@@ -20,4 +22,7 @@ public interface CarService extends BaseService<Car, CarRepository, GetCarRespon
     List<Car> findAllEntityFilter(Integer brandId, Integer modelId, Double minDailyPrice, Double maxDailyPrice);
 
     List<Car> findAvailableCarsByNames(String searchTerm);
+
+    Car createCarWithImages(AddCarRequest request, List<MultipartFile> images) throws IOException;
+
 }

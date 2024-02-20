@@ -1,6 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.user;
 
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.base.GetBaseResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetUserResponse extends GetBaseResponse {
+public class GetUserResponse {
 
     private String name;
 

@@ -7,6 +7,9 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -49,5 +52,8 @@ public class AddCarRequest {
     @PositiveOrZero(message = CarConstants.CAR_COLOR_ID_POSITIVE)
     @NotNull(message = CarConstants.CAR_COLOR_ID_NULL)
     private int colorId;
+
+   /* // Fotoğraflar için yeni alan
+    private List<MultipartFile> images;*/
 
 }

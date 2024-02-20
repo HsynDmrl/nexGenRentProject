@@ -1,6 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental;
 
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.base.GetBaseListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +9,8 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetRentalListResponse extends GetBaseListResponse {
+public class GetRentalListResponse {
+    private int id;
     private LocalDate startDate;
     private LocalDate endDate;
     private LocalDate returnDate;

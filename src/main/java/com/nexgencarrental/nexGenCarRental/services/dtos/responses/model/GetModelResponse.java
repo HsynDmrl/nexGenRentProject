@@ -1,8 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.model;
 
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.base.GetBaseResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandListResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,8 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetModelResponse extends GetBaseResponse {
+public class GetModelResponse {
+    private int id;
+
     private String name;
 
-    private GetBrandResponse brand;
+    private GetBrandListResponse brand;
 }

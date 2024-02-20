@@ -2,7 +2,6 @@ package com.nexgencarrental.nexGenCarRental.services.dtos.responses.car;
 
 import com.nexgencarrental.nexGenCarRental.entities.concretes.FuelType;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.GearType;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.base.GetBaseResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
-public class GetCarResponse extends GetBaseResponse {
+public class GetCarResponse {
     private double kilometer;
 
     private short year;
