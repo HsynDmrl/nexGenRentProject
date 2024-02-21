@@ -2,6 +2,7 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.InternalServerErrorException;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.UnauthorizedException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.RefreshToken;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
@@ -20,6 +21,7 @@ import java.util.UUID;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.*;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum.REFRESH_TOKEN_CREATION_ERROR;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum.TOKEN_GENERATION_ERROR;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.UnauthorizedEnum.EXPIRED_TOKEN;
 
 @Service
 public class RefreshTokenManager implements RefreshTokenService {
@@ -114,7 +116,7 @@ public class RefreshTokenManager implements RefreshTokenService {
         } catch (DataNotFoundException ex) {
             throw new DataNotFoundException(REFRESH_TOKEN_NOT_FOUND);
         } catch (Exception ex) {
-            throw new InternalServerErrorException(TOKEN_GENERATION_ERROR);
+            throw new UnauthorizedException(EXPIRED_TOKEN);
         }
     }
 }

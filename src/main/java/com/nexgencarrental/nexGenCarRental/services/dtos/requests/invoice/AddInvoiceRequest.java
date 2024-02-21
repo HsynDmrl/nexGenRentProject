@@ -11,14 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AddInvoiceRequest {
 
-    @NotBlank(message = InvoiceConstants.INVOICE_NO_BLANK)
-    @Pattern(regexp = "\\d{10}", message = InvoiceConstants.INVOICE_NO_PATTERN)
-    private String invoiceNo;
-
-    @NotNull(message = InvoiceConstants.INVOICE_TOTAL_NULL)
-    @Positive(message = InvoiceConstants.INVOICE_TOTAL_POSITIVE)
-    private Float totalPrice;
-
     @NotNull(message = InvoiceConstants.INVOICE_DISCOUNT_NULL)
     @DecimalMin(value = "0.0", message = InvoiceConstants.INVOICE_DECIMAL_DISCOUNT_MIN)
     @DecimalMax(value = "100.0", message = InvoiceConstants.INVOICE_DECIMAL_DISCOUNT_MAX)
