@@ -31,6 +31,8 @@ public class UpdateRentalRequest {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
+    private double totalPrice;
+
     @Positive(message = RentalConstants.COLOR_ID_POSITIVE)
     @NotNull(message = RentalConstants.COLOR_ID_NULL)
     private int carId;
@@ -42,6 +44,4 @@ public class UpdateRentalRequest {
     @Positive(message = RentalConstants.EMPLOYEE_ID_POSITIVE)
     @NotNull(message = RentalConstants.EMPLOYEE_ID_NULL)
     private int employeeId;
-
-    private int invoiceId;
 }

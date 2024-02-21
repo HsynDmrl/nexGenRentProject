@@ -36,7 +36,6 @@ public class ModelManager extends BaseManager<Model, ModelRepository, GetModelRe
     @Override
     public void customUpdate(UpdateModelRequest updateModelRequest) {
         brandService.getById(updateModelRequest.getBrandId()); // Brand id kontrolü
-        modelBusinessRulesService.existsByName(updateModelRequest.getName()); // ModelName kontrolü
         update(updateModelRequest, Model.class);
     }
 

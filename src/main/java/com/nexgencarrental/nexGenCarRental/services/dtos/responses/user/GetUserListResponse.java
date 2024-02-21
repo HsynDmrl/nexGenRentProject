@@ -1,6 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.user;
 
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.base.GetBaseListResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.role.GetRoleListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,5 +20,5 @@ public class GetUserListResponse extends GetBaseListResponse {
 
     private String gsm;
 
-    private String roleName;
+    private GetRoleListResponse role;
 }
