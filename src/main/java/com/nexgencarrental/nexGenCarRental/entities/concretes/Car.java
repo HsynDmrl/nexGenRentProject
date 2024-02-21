@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Car extends BaseEntity {
+//test mustafa
 
     @Column(name = "kilometer")
     private double kilometer;

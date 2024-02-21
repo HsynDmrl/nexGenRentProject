@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddUserRequest {
+
     @Size(min = 2, message = UserConstants.NAME_SIZE)
     @NotBlank(message = UserConstants.NAME_BLANK)
     // @Pattern(regexp = "^[A-Z][a-z]$", message = UserConstants.NAME_PATTERN)
