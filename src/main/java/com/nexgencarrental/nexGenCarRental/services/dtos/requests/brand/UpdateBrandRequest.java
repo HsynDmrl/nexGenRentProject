@@ -5,6 +5,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @AllArgsConstructor
@@ -20,5 +21,5 @@ public class UpdateBrandRequest {
     private String name;
 
     @NotBlank(message = BrandConstants.BRAND_LOGO_BLANK)
-    private String logoPath;
+    private MultipartFile logoFile;
 }

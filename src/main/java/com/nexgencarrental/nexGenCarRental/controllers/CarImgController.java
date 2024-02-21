@@ -24,7 +24,7 @@ public class CarImgController {
         this.carImgService = carImgService;
     }
 
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> uploadCarImage(
             @RequestParam("carId") int carId,
             @RequestParam("image") MultipartFile image) {
