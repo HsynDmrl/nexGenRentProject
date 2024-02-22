@@ -1,7 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.abstracts;
 
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Color;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarRequest;
@@ -25,7 +24,7 @@ public interface CarService extends BaseService<Car, CarRepository, GetCarRespon
 
     List<Car> findAvailableCarsByNames(String searchTerm);
 
-    Car createCarWithImages(AddCarRequest request, List<MultipartFile> images) throws IOException;
+    GetCarFilterResponse createCarWithImages(AddCarRequest request, List<MultipartFile> images) throws IOException;
 
     GetCarFilterResponse convertToGetCarFilterResponse(Car car);
 

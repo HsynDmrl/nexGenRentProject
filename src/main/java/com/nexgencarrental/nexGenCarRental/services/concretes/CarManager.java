@@ -21,7 +21,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarRes
 import com.nexgencarrental.nexGenCarRental.services.rules.car.CarBusinessRulesService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -100,7 +99,7 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
     }
 
     @Override
-    public Car createCarWithImages(AddCarRequest request, List<MultipartFile> images) throws IOException {
+    public GetCarFilterResponse createCarWithImages(AddCarRequest request, List<MultipartFile> images) throws IOException {
         // Car entity'sini AddCarRequest'ten gelen bilgilerle oluşturma ve kaydetme
         Car car = new Car();
         car.setKilometer(request.getKilometer());
@@ -109,7 +108,8 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
         car.setPlate(request.getPlate());
         car.setGearType(request.getGearType());
         car.setFuelType(request.getFuelType());
-        car.setStatus(request.isStatus()); // isStatus() metodu boolean türündeki getter metodudur.
+        car.setStatus(request.isStatus());
+
         // Model ve Color entity'lerini ayarlama
         Model model = modelRepository.findById(request.getModelId())
                 .orElseThrow(() -> new EntityNotFoundException("Model not found"));
@@ -124,11 +124,11 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
         if (images != null) {
             for (MultipartFile image : images) {
                 carImgService.uploadCarImage(image, savedCar.getId());
-                // Eğer CarImg entity'nizde Car referansı tutuyorsanız, bu referansı burada ayarlayabilirsiniz.
             }
         }
 
-        return savedCar;
+        // CarDTO'ya dönüştürme
+        return modelMapperService.forResponse().map(savedCar, GetCarFilterResponse.class);
     }
 
 

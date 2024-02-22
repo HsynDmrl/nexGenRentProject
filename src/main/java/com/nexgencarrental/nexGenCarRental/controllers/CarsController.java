@@ -6,6 +6,7 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarFilterResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 import jakarta.validation.Valid;
@@ -62,7 +63,7 @@ public class CarsController {
         try {
             AddCarRequest carRequest = objectMapper.readValue(carString, AddCarRequest.class); // String'i AddCarRequest'e çevir
             List<MultipartFile> imageList = images != null ? images : new ArrayList<>();
-            Car savedCar = carService.createCarWithImages(carRequest, imageList);
+            GetCarFilterResponse savedCar = carService.createCarWithImages(carRequest, imageList);
             return ResponseEntity.ok().body(savedCar);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
