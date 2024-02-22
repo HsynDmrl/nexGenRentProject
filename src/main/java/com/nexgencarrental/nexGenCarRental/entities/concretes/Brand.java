@@ -26,7 +26,6 @@ public class Brand extends BaseEntity {
     private String logoPath;
 
     @OneToMany(mappedBy = "brand")
-    @JsonIgnoreProperties("brand")
     private List<Model> models;
 
 

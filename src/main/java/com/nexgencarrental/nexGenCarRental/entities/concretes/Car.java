@@ -16,7 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Car extends BaseEntity {
-//test mustafa
 
     @Column(name = "kilometer")
     private double kilometer;
@@ -46,7 +45,6 @@ public class Car extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "model_id")
-    @JsonIgnoreProperties("cars")
     private Model model;
 
     @ManyToOne

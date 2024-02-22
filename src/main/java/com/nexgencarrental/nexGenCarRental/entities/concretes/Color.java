@@ -23,6 +23,5 @@ public class Color extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "color")
-    @JsonBackReference
     private List<Car> cars;
 }
