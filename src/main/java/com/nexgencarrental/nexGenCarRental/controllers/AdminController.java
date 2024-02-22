@@ -15,5 +15,6 @@ public class AdminController {
     @ResponseStatus(HttpStatus.OK)
     public void updateUserRole(@PathVariable int userId, @PathVariable int newRoleId) {
         adminService.updateUserRole(userId, newRoleId);
+
     }
 }
