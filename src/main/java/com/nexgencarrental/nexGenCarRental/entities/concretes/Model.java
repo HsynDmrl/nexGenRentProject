@@ -19,7 +19,6 @@ public class Model extends BaseEntity {
     private String name;
 
     @OneToMany(mappedBy = "model")
-    @JsonIgnore
     private List<Car> cars;
 
     @ManyToOne

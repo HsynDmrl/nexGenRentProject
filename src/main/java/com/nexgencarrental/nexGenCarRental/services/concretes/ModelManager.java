@@ -7,6 +7,7 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.BrandService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.ModelService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.AddModelRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.model.UpdateModelRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelFilterResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.model.ModelBusinessRulesService;
@@ -43,5 +44,14 @@ public class ModelManager extends BaseManager<Model, ModelRepository, GetModelRe
     @Override
     public void customDelete(int id) {
         modelBusinessRulesService.deleteModel(id, true);
+    }
+
+    @Override
+    public GetModelFilterResponse convertToGetModelFilterResponse(Model model) {
+        GetModelFilterResponse response = new GetModelFilterResponse();
+        response.setId(model.getId());
+        response.setName(model.getName());
+        response.setBrandName(model.getBrand().getName()); // Eğer Model DTO'sunda marka bilgisi varsa
+        return response;
     }
 }
