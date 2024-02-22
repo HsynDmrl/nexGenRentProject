@@ -150,5 +150,4 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
         return response;
     }
 
-
 }
