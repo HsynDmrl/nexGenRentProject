@@ -26,7 +26,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CarsController {
     private final CarService carService;
-    private final ObjectMapper objectMapper; // JSON nesnelerini işlemek için ObjectMapper
+    private final ObjectMapper objectMapper;
 
     @GetMapping(ApiPathConstants.GET_ALL_CARS)
     @ResponseStatus(HttpStatus.OK)
@@ -39,36 +39,19 @@ public class CarsController {
     public GetCarResponse getById(@PathVariable int id) {
         return carService.getById(id);
     }
-
-    @PostMapping(ApiPathConstants.ADD_CAR)
-    @ResponseStatus(code = HttpStatus.CREATED)
-    public void add(@RequestBody @Valid AddCarRequest addCarRequest) {
-        this.carService.customAdd(addCarRequest);
+    @PostMapping(value = ApiPathConstants.ADD_CAR, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> add(
+            @RequestPart("car") String carString,
+            @RequestPart(name = "images", required = false) List<MultipartFile> images) throws IOException {
+            AddCarRequest carRequest = objectMapper.readValue(carString, AddCarRequest.class);
+            GetCarFilterResponse savedCar = carService.customAdd(carRequest, images);
+            return ResponseEntity.ok().body(savedCar);
     }
 
     @PutMapping(ApiPathConstants.UPDATE_CAR)
     @ResponseStatus(HttpStatus.OK)
     public void update(@Valid @RequestBody UpdateCarRequest updateCarRequest) {
         carService.customUpdate(updateCarRequest);
-    }
-
-    // CarsController.java içinde
-
-    // CarsController.java içinde
-
-    @PostMapping(value = "/addCarWithImages", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<?> addCarWithImages(
-            @RequestPart("car") String carString, // car nesnesini String olarak al
-            @RequestPart(name = "images", required = false) List<MultipartFile> images) {
-        try {
-            AddCarRequest carRequest = objectMapper.readValue(carString, AddCarRequest.class); // String'i AddCarRequest'e çevir
-            List<MultipartFile> imageList = images != null ? images : new ArrayList<>();
-            GetCarFilterResponse savedCar = carService.createCarWithImages(carRequest, imageList);
-            return ResponseEntity.ok().body(savedCar);
-        } catch (IOException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Araç ve resimler eklenirken bir hata oluştu: " + e.getMessage());
-        }
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_CAR)

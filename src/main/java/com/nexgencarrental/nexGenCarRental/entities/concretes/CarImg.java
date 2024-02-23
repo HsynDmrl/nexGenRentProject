@@ -20,5 +20,5 @@ public class CarImg extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "car_id")
-    private Car car; // CarImage, Car ile bir çoktan bire ilişki içindedir.
+    private Car car;
 }

@@ -20,6 +20,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarLis
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.car.CarBusinessRulesService;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,11 +35,6 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
     private final ModelService modelService;
     private final ColorService colorService;
     private final CarBusinessRulesService carBusinessRulesService;
-    private final CarRepository carRepository;
-    private final CarImgRepository carImgRepository; // CarImgRepository'yi ekleyin
-    private final CarImgService carImgService;
-    private final ColorRepository colorRepository;
-    private final ModelRepository modelRepository;
 
 
     public CarManager(CarRepository carRepository, ModelMapperService modelMapperService,
@@ -49,11 +45,6 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
         this.modelService = modelService;
         this.colorService = colorService;
         this.carBusinessRulesService = carBusinessRulesService;
-        this.carRepository = carRepository;
-        this.carImgRepository = carImgRepository; // CarImgRepository'yi başlatın
-        this.carImgService = carImgService;
-        this.colorRepository=colorRepository;
-        this.modelRepository=modelRepository;
     }
 
     private void validateModelAndColorIds(int modelId, int colorId) {
@@ -62,10 +53,15 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
     }
 
     @Override
-    public void customAdd(AddCarRequest addCarRequest) {
+    @SneakyThrows
+    public GetCarFilterResponse customAdd(AddCarRequest addCarRequest, List<MultipartFile> images){
+
         validateModelAndColorIds(addCarRequest.getModelId(), addCarRequest.getColorId());
-        carBusinessRulesService.existsByPlate(addCarRequest.getPlate()); // PlateName kontrolü
-        add(addCarRequest, Car.class);
+        carBusinessRulesService.existsByPlate(addCarRequest.getPlate());
+        Car savedCar = carBusinessRulesService.saveCar(addCarRequest);
+        carBusinessRulesService.uploadCarImages(images, savedCar.getId());
+
+        return modelMapperService.forResponse().map(savedCar, GetCarFilterResponse.class);
     }
 
     @Override
@@ -79,75 +75,4 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
     public void customDelete(int id) {
         carBusinessRulesService.deleteCarWithModel(id);
     }
-
-    @Override
-    public List<Car> getAllEntityFilter(Integer brandId, Integer modelId, Short year, Integer colorId,String gearType, String fuelType, Double minDailyPrice, Double maxDailyPrice) {
-        return carRepository.findAllEntityFilter(brandId, modelId, year, colorId,gearType,fuelType, minDailyPrice, maxDailyPrice);
-    }
-
-    @Override
-    public List<Car> findAvailableCarsByNames(String searchTerm) {
-        // Parametrenin `null` olup olmadığını kontrol edin ve
-        // büyük/küçük harf duyarlılığını önlemek için `toLowerCase()` metodunu kullanarak
-        // yüzde işaretleri (%) ile sarın.
-        String searchPattern = (searchTerm != null && !searchTerm.trim().isEmpty())
-                ? "%" + searchTerm.toLowerCase() + "%"
-                : null;
-
-        // Düzenlenmiş parametrelerle sorguyu çağırın.
-        return carRepository.findAvailableCarsByNames(searchPattern);
-    }
-
-    @Override
-    public GetCarFilterResponse createCarWithImages(AddCarRequest request, List<MultipartFile> images) throws IOException {
-        // Car entity'sini AddCarRequest'ten gelen bilgilerle oluşturma ve kaydetme
-        Car car = new Car();
-        car.setKilometer(request.getKilometer());
-        car.setYear(request.getYear());
-        car.setDailyPrice(request.getDailyPrice());
-        car.setPlate(request.getPlate());
-        car.setGearType(request.getGearType());
-        car.setFuelType(request.getFuelType());
-        car.setStatus(request.isStatus());
-
-        // Model ve Color entity'lerini ayarlama
-        Model model = modelRepository.findById(request.getModelId())
-                .orElseThrow(() -> new EntityNotFoundException("Model not found"));
-        Color color = colorRepository.findById(request.getColorId())
-                .orElseThrow(() -> new EntityNotFoundException("Color not found"));
-        car.setModel(model);
-        car.setColor(color);
-
-        Car savedCar = carRepository.save(car);
-
-        // Resimleri işleme ve CarImg entity'lerini kaydetme
-        if (images != null) {
-            for (MultipartFile image : images) {
-                carImgService.uploadCarImage(image, savedCar.getId());
-            }
-        }
-
-        // CarDTO'ya dönüştürme
-        return modelMapperService.forResponse().map(savedCar, GetCarFilterResponse.class);
-    }
-
-
-    @Override
-    public GetCarFilterResponse convertToGetCarFilterResponse(Car car) {
-        GetCarFilterResponse response = new GetCarFilterResponse();
-        response.setId(car.getId());
-        response.setKilometer(car.getKilometer());
-        response.setYear(car.getYear());
-        response.setDailyPrice(car.getDailyPrice());
-        response.setPlate(car.getPlate());
-        response.setImagePath(car.getImagePath());
-        response.setStatus(car.isStatus());
-        response.setGearType(car.getGearType().name());
-        response.setFuelType(car.getFuelType().name());
-        response.setModelName(car.getModel().getName());
-        response.setColorName(car.getColor().getName());
-        response.setBrandName(car.getModel().getBrand().getName());
-        return response;
-    }
-
 }

@@ -20,6 +20,9 @@ public final class ApiPathConstants {
     public static final String UPDATE_BRAND = "/update";
     public static final String DELETE_BRAND = "/{id}";
     public static final String CAR_BASE_URL = "/api/cars";
+    public static final String SEARCH_BASE_URL = "/api/search";
+    public static final String CAR_FILTER_URL = "/api/filter";
+    public static final String CAR_SEARCH_URL = "/api/search";
     public static final String GET_ALL_CARS = "/getAll";
     public static final String GET_CAR_BY_ID = "/{id}"; // Path variable kullandığımız için formatı koruyoruz.
     public static final String ADD_CAR = "/add";

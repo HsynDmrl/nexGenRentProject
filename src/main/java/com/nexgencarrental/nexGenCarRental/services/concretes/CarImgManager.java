@@ -7,10 +7,16 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.CarImg;
 import com.nexgencarrental.nexGenCarRental.repositories.CarImgRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarImgService;
+import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.carImg.AddCarImgRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.carImg.UpdateCarImgRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.carImg.GetCarImgListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.carImg.GetCarImgResponse;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +43,8 @@ public class CarImgManager implements CarImgService {
 
     @Override
     @Transactional
-    public GetCarImgResponse uploadCarImage(MultipartFile file, int carId) throws IOException {
+     @SneakyThrows
+    public GetCarImgResponse uploadCarImage(MultipartFile file, int carId) {
         // Cloudinary'e dosyayı yükleme
         Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
         // Yükleme sonucundan resim URL'sini ve public ID'yi alın
@@ -63,7 +70,8 @@ public class CarImgManager implements CarImgService {
 
     @Override
     @Transactional
-    public GetCarImgResponse updateCarImage(MultipartFile file, int carImgId) throws IOException {
+    @SneakyThrows
+    public GetCarImgResponse updateCarImage(MultipartFile file, int carImgId){
         CarImg existingCarImg = carImgRepository.findById(carImgId)
                 .orElseThrow(() -> new IllegalArgumentException("Image not found for ID: " + carImgId));
 
