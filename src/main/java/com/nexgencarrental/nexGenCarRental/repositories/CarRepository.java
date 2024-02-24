@@ -1,6 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.repositories;
 
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.FuelType;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.GearType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,8 +27,8 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             @Param("modelId") Integer modelId,
             @Param("year") Short year,
             @Param("colorId") Integer colorId,
-            @Param("gearType") String gearType,
-            @Param("fuelType") String fuelType,
+            @Param("gearType") GearType gearType,
+            @Param("fuelType") FuelType fuelType,
             @Param("minDailyPrice") Double minDailyPrice,
             @Param("maxDailyPrice") Double maxDailyPrice);
 

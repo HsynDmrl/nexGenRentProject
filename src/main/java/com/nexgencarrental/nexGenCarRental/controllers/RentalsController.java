@@ -54,5 +54,4 @@ public class RentalsController {
     public void delete(@PathVariable int id) {
         rentalService.customDelete(id);
     }
-
 }

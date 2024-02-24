@@ -1,5 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
@@ -15,11 +18,18 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarRes
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.rental.RentalBusinessRulesService;
+import jakarta.persistence.EntityNotFoundException;
+import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.method.annotation.MethodArgumentConversionNotSupportedException;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.DATE_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum.LOGIN_ERROR;
 
 @Service
 public class RentalManager extends BaseManager<Rental, RentalRepository, GetRentalResponse, GetRentalListResponse,
@@ -106,8 +116,20 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
     public void customDelete(int rentalId) {
         rentalBusinessRulesService.validateDeleteRentalRequest(rentalId);
     }
+
     @Override
     public List<Car> findAvailableByDates(LocalDate startDate, LocalDate endDate) {
-        return repository.findAvailableByDates(startDate, endDate);
+
+        if (startDate == null || endDate == null) {
+            throw new IllegalStateException(String.valueOf(LOGIN_ERROR));
+        }
+
+        List<Car> availableCars = repository.findAvailableByDates(startDate, endDate);
+
+        if (availableCars.isEmpty()) {
+            throw new DataNotFoundException(DATE_NOT_FOUND);
+        }
+
+        return availableCars;
     }
 }
