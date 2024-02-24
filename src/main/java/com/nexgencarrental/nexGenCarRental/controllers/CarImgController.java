@@ -29,12 +29,12 @@ public class CarImgController {
             return new ResponseEntity<>(newCarImg, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{carImgId}")
+    @PutMapping(value = "/{carImgId}/update", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> updateCarImage(
             @PathVariable("carImgId") int carImgId,
             @RequestParam("image") MultipartFile image) {
-            GetCarImgResponse updatedCarImg = carImgService.updateCarImage(image, carImgId);
-            return ResponseEntity.ok(updatedCarImg);
+        GetCarImgResponse updatedCarImg = carImgService.updateCarImage(image, carImgId);
+        return ResponseEntity.ok(updatedCarImg);
     }
 
     @DeleteMapping("/{carImgId}")
