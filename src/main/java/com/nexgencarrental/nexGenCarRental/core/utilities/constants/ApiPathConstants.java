@@ -55,9 +55,12 @@ public final class ApiPathConstants {
     public static final String DELETE_MODEL = "/{id}";
     public static final String RENTALS_BASE_URL = "/api/rentals";
     public static final String GET_ALL_RENTALS = "/getAll";
+    public static final String GET_ALL_ADMIN_RENTALS = "/getAdminAll";
     public static final String GET_RENTAL_BY_ID = "/{id}";
+    public static final String GET_RENTAL_ADMIN_BY_ID = "/admin/{id}";
     public static final String ADD_RENTAL = "/add";
     public static final String ADD_RENTAL_ADMIN = "/admin/add";
+    public static final String UPDATE_RENTAL_ADMIN = "/admin/update";
     public static final String UPDATE_RENTAL = "/update";
     public static final String DELETE_RENTAL = "/{id}";
 

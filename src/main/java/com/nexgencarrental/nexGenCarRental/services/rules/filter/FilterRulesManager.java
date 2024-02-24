@@ -42,7 +42,7 @@ public class FilterRulesManager implements FilterRulesService {
     public List<Car> getAllEntityFilter(Integer brandId, Integer modelId, Short year,
                                         Integer colorId, GearType gearType, FuelType fuelType, Double minDailyPrice, Double maxDailyPrice) {
 
-        if (brandId == null) {
+        /*if (brandId == null) {
             throw new DataNotFoundException(NO_BRAND_FOUND);
         }
         if (modelId == null) {
@@ -62,14 +62,13 @@ public class FilterRulesManager implements FilterRulesService {
         }
         if (minDailyPrice == null || maxDailyPrice == null) {
             throw new DataNotFoundException(RANGE_NOT_FOUND);
-        }
+        }*/
 
         List<Car> filteredCars = carRepository.findAllEntityFilter(brandId, modelId, year, colorId, gearType, fuelType, minDailyPrice, maxDailyPrice);
 
-        if (filteredCars.isEmpty()) {
+        /*if (filteredCars.isEmpty()) {
             throw new DataNotFoundException(NO_FILTER_CAR);
-        }
-
+        }*/
         return filteredCars;
     }
 

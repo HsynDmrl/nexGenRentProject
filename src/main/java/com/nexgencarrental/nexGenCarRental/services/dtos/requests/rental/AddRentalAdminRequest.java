@@ -29,7 +29,13 @@ public class AddRentalAdminRequest {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate endDate;
 
+    private double startKilometer;
+
+    private Double endKilometer;
+
     private double totalPrice;
+
+    private double discount;
 
     @Positive(message = RentalConstants.COLOR_ID_POSITIVE)
     @NotNull(message = RentalConstants.COLOR_ID_NULL)
@@ -42,4 +48,6 @@ public class AddRentalAdminRequest {
     @Positive(message = RentalConstants.EMPLOYEE_ID_POSITIVE)
     @NotNull(message = RentalConstants.EMPLOYEE_ID_NULL)
     private int employeeId;
+
+    private int invoicesId;
 }
