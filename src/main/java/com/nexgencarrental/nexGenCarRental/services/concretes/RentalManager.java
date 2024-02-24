@@ -7,6 +7,7 @@ import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CustomerService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalAdminRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
@@ -15,6 +16,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRen
 import com.nexgencarrental.nexGenCarRental.services.rules.rental.RentalBusinessRulesService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 @Service
@@ -49,6 +51,27 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
 
         addRental.setStartKilometer(carId.getKilometer());
         addRental.setTotalPrice(carId.getDailyPrice() * ChronoUnit.DAYS.between(addRentalRequest.getStartDate(), addRentalRequest.getEndDate()));
+        addRental.setEndKilometer(null);
+        addRental.setReturnDate(null);
+
+        repository.save(addRental);
+    }
+
+    @Override
+    public void rentalAdminAdd(AddRentalAdminRequest addRentalAdminRequest) {
+        carService.getById(addRentalAdminRequest.getCarId()); // Car id kontrolü
+        customerService.getById(addRentalAdminRequest.getCustomerId()); // Customer id kontrolü
+        employeeService.getById(addRentalAdminRequest.getEmployeeId()); // Employee id kontrolü
+
+        rentalBusinessRulesService.validateAdminRentalRequest(addRentalAdminRequest);
+
+        Rental addRental = modelMapperService.forRequest().map(addRentalAdminRequest, Rental.class);
+
+        GetCarResponse carInfo = carService.getById(addRentalAdminRequest.getCarId());
+        double dailyPrice = carInfo.getDailyPrice();
+
+        addRental.setStartKilometer(carInfo.getKilometer());
+        addRental.setTotalPrice(dailyPrice * ChronoUnit.DAYS.between(addRentalAdminRequest.getStartDate(), addRentalAdminRequest.getEndDate()));
         addRental.setEndKilometer(null);
         addRental.setReturnDate(null);
 

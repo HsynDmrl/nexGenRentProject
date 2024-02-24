@@ -56,6 +56,7 @@ public final class ApiPathConstants {
     public static final String GET_ALL_RENTALS = "/getAll";
     public static final String GET_RENTAL_BY_ID = "/{id}";
     public static final String ADD_RENTAL = "/add";
+    public static final String ADD_RENTAL_ADMIN = "/admin/add";
     public static final String UPDATE_RENTAL = "/update"; // Not: "/update" yoluna path variable eklenecekse bu sabite de eklenmeli.
     public static final String DELETE_RENTAL = "/{id}";
 

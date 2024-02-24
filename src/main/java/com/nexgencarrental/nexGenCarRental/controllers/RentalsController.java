@@ -2,6 +2,7 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalAdminRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalListResponse;
@@ -29,6 +30,11 @@ public class RentalsController {
     @ResponseStatus(HttpStatus.OK)
     public GetRentalResponse getById(@PathVariable int id) {
         return rentalService.getById(id);
+    }
+    @PostMapping(ApiPathConstants.ADD_RENTAL_ADMIN)
+    @ResponseStatus(code = HttpStatus.CREATED)
+    public void adminAdd(@RequestBody @Valid AddRentalAdminRequest addRentalAdminRequest) {
+        rentalService.rentalAdminAdd(addRentalAdminRequest);
     }
 
     @PostMapping(ApiPathConstants.ADD_RENTAL)
