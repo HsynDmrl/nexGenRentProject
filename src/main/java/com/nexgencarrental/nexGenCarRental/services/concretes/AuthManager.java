@@ -5,14 +5,17 @@ import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoun
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.InternalServerErrorException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.UnauthorizedException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;
+import com.nexgencarrental.nexGenCarRental.services.abstracts.CustomerService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RefreshTokenService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.UserService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.LoginRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.RegisterRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.auth.UpdatePasswordRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.customer.AddCustomerRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.auth.AuthResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.auth.AuthBusinessRulesService;
 import lombok.AllArgsConstructor;
@@ -41,6 +44,7 @@ public class AuthManager implements AuthService {
     private final RefreshTokenService refreshTokenService;
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final CustomerService customerService;
 
     @Override
     public void register(RegisterRequest request) {
@@ -50,7 +54,7 @@ public class AuthManager implements AuthService {
             throw new ConflictException(USER_ALREADY_EXISTS);
         }
 
-        Role userRole = userService.findRoleById(request.getRoleId())
+        Role userRole = userService.findRoleByName("USER")
                 .orElseThrow(() -> new DataNotFoundException(ROLE_NOT_FOUND));
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
@@ -66,6 +70,11 @@ public class AuthManager implements AuthService {
                 .build();
 
         userService.add(user);
+
+        AddCustomerRequest addCustomerRequest = new AddCustomerRequest();
+        addCustomerRequest.setUserId(user.getId());
+
+        customerService.customAdd(addCustomerRequest);
     }
 
     @Override

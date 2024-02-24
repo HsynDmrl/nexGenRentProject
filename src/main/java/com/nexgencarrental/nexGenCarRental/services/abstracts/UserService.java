@@ -33,6 +33,7 @@ public interface UserService extends BaseService<User, UserRepository, GetUserRe
     boolean existsByEmail(String email);
 
     Optional<Role> findRoleById(int roleId);
+    Optional<Role> findRoleByName(String roleName);
 
     Optional<User> findById(int userId);
 

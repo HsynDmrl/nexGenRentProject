@@ -118,6 +118,11 @@ public class UserManager extends BaseManager<User, UserRepository, GetUserRespon
     }
 
     @Override
+    public Optional<Role> findRoleByName(String roleName) {
+        return roleRepository.findByName(roleName);
+    }
+
+    @Override
     public Optional<User> findById(int userId) {
         return userRepository.findById(userId);
     }

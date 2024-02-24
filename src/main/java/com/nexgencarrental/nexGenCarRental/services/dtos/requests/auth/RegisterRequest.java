@@ -41,7 +41,7 @@ public class RegisterRequest {
 //    @Pattern(regexp = "", message = RegisterConstants.REGISTER_PASSWORD_PATTERN)
     private String password;
 
-    @NotNull(message = RegisterConstants.REGISTER_ROLE_BLANK)
+/*    @NotNull(message = RegisterConstants.REGISTER_ROLE_BLANK)
 //    @Positive(message = RegisterConstants.REGISTER_ROLE_ID_POSITIVE)
-    private Integer roleId;
+    private Integer roleId;*/
 }
