@@ -1,6 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
 import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class RentalManager extends BaseManager<Rental, RentalRepository, GetRentalResponse, GetRentalListResponse,
@@ -103,5 +105,9 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
     @Override
     public void customDelete(int rentalId) {
         rentalBusinessRulesService.validateDeleteRentalRequest(rentalId);
+    }
+    @Override
+    public List<Car> findAvailableByDates(LocalDate startDate, LocalDate endDate) {
+        return repository.findAvailableByDates(startDate, endDate);
     }
 }
