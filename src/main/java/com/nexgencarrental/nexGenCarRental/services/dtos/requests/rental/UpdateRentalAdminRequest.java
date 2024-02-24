@@ -1,7 +1,15 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.RentalConstants;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.UserConstants;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Invoice;
+import jakarta.persistence.Column;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
@@ -17,7 +25,10 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddRentalAdminRequest {
+public class UpdateRentalAdminRequest {
+    @Positive(message = RentalConstants.UPDATE_RENTAL_ID_POSITIVE)
+    @NotNull(message = RentalConstants.RENTAL_ID_NULL)
+    private int id;
 
     @NotNull(message = RentalConstants.START_DATE_NULL)
     @FutureOrPresent(message = RentalConstants.START_DATE_FUTURE)

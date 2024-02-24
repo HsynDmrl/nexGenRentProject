@@ -6,6 +6,7 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.*;
 import com.nexgencarrental.nexGenCarRental.repositories.*;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalAdminRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalAdminRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -47,6 +48,15 @@ public class RentalBusinessRulesManager implements RentalBusinessRulesService {
     @Override
     public void validateAdminRentalRequest(AddRentalAdminRequest addRentalAdminRequest) {
         validateRentalDates(addRentalAdminRequest.getStartDate(), addRentalAdminRequest.getEndDate());
+
+        if (addRentalAdminRequest.getEndKilometer() != null && addRentalAdminRequest.getEndKilometer() < addRentalAdminRequest.getStartKilometer()) {
+            throw new IllegalArgumentException("End kilometer cannot be less than start kilometer");
+        }
+    }
+
+    @Override
+    public void validateAdminRentalRequest(UpdateRentalAdminRequest updateRentalAdminRequest) {
+
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.BrandService;
@@ -36,30 +37,22 @@ public class BrandsController {
     }
 
     @PostMapping(value = "/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<?> add(
             @RequestPart("addBrandRequest") String addBrandRequestString,
-            @RequestPart("logoFile") MultipartFile logoFile) {
-        try {
-            // JSON String'ini AddBrandRequest nesnesine dönüştürün
+            @RequestPart("logoFile") MultipartFile logoFile) throws JsonProcessingException {
             AddBrandRequest addBrandRequest = new ObjectMapper().readValue(addBrandRequestString, AddBrandRequest.class);
-
             brandService.customAdd(addBrandRequest, logoFile);
             return ResponseEntity.ok("Brand successfully added with logo.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add brand: " + e.getMessage());
-        }
     }
 
     @PutMapping(value=ApiPathConstants.UPDATE_BRAND,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> update(@RequestPart("updateBrandRequest") @Valid String updateBrandRequestString,
-                                    @RequestPart("logoFile") MultipartFile logoFile) {
-        try {
+                                    @RequestPart("logoFile") MultipartFile logoFile) throws JsonProcessingException {
             UpdateBrandRequest updateBrandRequest = new ObjectMapper().readValue(updateBrandRequestString, UpdateBrandRequest.class);
             brandService.customUpdate(updateBrandRequest, logoFile);
             return ResponseEntity.ok("Brand successfully updated with new logo.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to update brand: " + e.getMessage());
-        }
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_BRAND)

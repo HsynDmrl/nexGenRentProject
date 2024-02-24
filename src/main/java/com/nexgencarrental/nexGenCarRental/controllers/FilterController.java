@@ -3,6 +3,8 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.FuelType;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.GearType;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarFilterResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.filter.FilterRulesService;
@@ -30,8 +32,8 @@ public class FilterController {
             @RequestParam(required = false) Integer modelId,
             @RequestParam(required = false) Short year,
             @RequestParam(required = false) Integer colorId,
-            @RequestParam(required = false) String gearType,
-            @RequestParam(required = false) String fuelType,
+            @RequestParam(required = false) GearType gearType,
+            @RequestParam(required = false) FuelType fuelType,
             @RequestParam(required = false) Double minDailyPrice,
             @RequestParam(required = false) Double maxDailyPrice) {
 

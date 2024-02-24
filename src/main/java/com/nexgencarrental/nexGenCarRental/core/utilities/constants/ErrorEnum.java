@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum ErrorEnum {
     LOGIN_ERROR(5005, "login.error"),
+    DATE_ERROR(5020, "Enter a valid date"),
     AUTH_RESPONSE_ERROR(5006, "auth.response.error"),
+    SEARCH_RESPONSE_ERROR(5007,"The search term cannot be empty."),
     REFRESH_TOKEN_EXPIRED(5014, "Refresh token was expired."),
     DELETE_REFRESH_TOKEN_ERROR(5013, "Error during deleting refresh tokens by user id"),
     CREATE_REFRESH_TOKEN_ERROR(5012, "Error during creating refresh token"),

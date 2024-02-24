@@ -55,6 +55,6 @@ public class Car extends BaseEntity {
     private List<Rental> rentals;
 
     @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
-    private List<CarImg> images = new ArrayList<>(); // Bir arabanın birden fazla resmi olabilir.
+    private List<CarImg> images = new ArrayList<>();
 
 }

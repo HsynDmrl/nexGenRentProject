@@ -20,12 +20,12 @@ public final class ApiPathConstants {
     public static final String UPDATE_BRAND = "/update";
     public static final String DELETE_BRAND = "/{id}";
     public static final String CAR_BASE_URL = "/api/cars";
-    public static final String SEARCH_BASE_URL = "/api/search";
-    public static final String CAR_FILTER_URL = "/api/filter";
-    public static final String RENTAL_SEARCH_BY_DATES_URL = "/api/rental/filter";
-    public static final String CAR_SEARCH_URL = "/api/search";
+    public static final String SEARCH_BASE_URL = "/api";
+    public static final String CAR_FILTER_URL = "/filter";
+    public static final String RENTAL_SEARCH_BY_DATES_URL = "/rental/filter";
+    public static final String CAR_SEARCH_URL = "/search";
     public static final String GET_ALL_CARS = "/getAll";
-    public static final String GET_CAR_BY_ID = "/{id}"; // Path variable kullandığımız için formatı koruyoruz.
+    public static final String GET_CAR_BY_ID = "/{id}";
     public static final String ADD_CAR = "/add";
     public static final String UPDATE_CAR = "/update";
     public static final String DELETE_CAR = "/{id}";
@@ -55,10 +55,13 @@ public final class ApiPathConstants {
     public static final String DELETE_MODEL = "/{id}";
     public static final String RENTALS_BASE_URL = "/api/rentals";
     public static final String GET_ALL_RENTALS = "/getAll";
+    public static final String GET_ALL_ADMIN_RENTALS = "/getAdminAll";
     public static final String GET_RENTAL_BY_ID = "/{id}";
+    public static final String GET_RENTAL_ADMIN_BY_ID = "/admin/{id}";
     public static final String ADD_RENTAL = "/add";
     public static final String ADD_RENTAL_ADMIN = "/admin/add";
-    public static final String UPDATE_RENTAL = "/update"; // Not: "/update" yoluna path variable eklenecekse bu sabite de eklenmeli.
+    public static final String UPDATE_RENTAL_ADMIN = "/admin/update";
+    public static final String UPDATE_RENTAL = "/update";
     public static final String DELETE_RENTAL = "/{id}";
 
     public static final String ROLES_BASE_URL = "/api/roles";
@@ -80,8 +83,6 @@ public final class ApiPathConstants {
     public static final String ADD_INVOICE = "/add";
     public static final String UPDATE_INVOICE = "/update";
     public static final String DELETE_INVOICE = "/{id}";
-    public static final String ADMIN_BASE_URL = "/admin";
-    public static final String UPDATE_ADMIN = "/update";
 
 
 }

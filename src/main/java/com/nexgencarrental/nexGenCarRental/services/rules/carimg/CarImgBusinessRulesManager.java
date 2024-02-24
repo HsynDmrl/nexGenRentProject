@@ -7,6 +7,7 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.CarImg;
 import com.nexgencarrental.nexGenCarRental.repositories.CarImgRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.carImg.GetCarImgResponse;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
@@ -27,7 +28,12 @@ public class CarImgBusinessRulesManager implements CarImgBusinessRulesService {
     @Override
     @Transactional
     public GetCarImgResponse uploadCarImage(MultipartFile file, int carId) {
-        Car car = carRepository.findById(carId).orElseThrow(() -> new IllegalArgumentException("Car not found for ID: " + carId));
+
+        if (file.isEmpty()) {
+            throw new IllegalArgumentException("Dosya boş olamaz.");
+        }
+
+        Car car = carRepository.findById(carId).orElseThrow(() -> new EntityNotFoundException("Car not found for ID: " + carId));
 
         CarImg carImg = new CarImg();
         carImg.setCar(car);
@@ -40,7 +46,7 @@ public class CarImgBusinessRulesManager implements CarImgBusinessRulesService {
     @Transactional
     public GetCarImgResponse updateCarImage(MultipartFile file, int carImgId) {
         CarImg existingCarImg = carImgRepository.findById(carImgId)
-                .orElseThrow(() -> new IllegalArgumentException("Image not found for ID: " + carImgId));
+                .orElseThrow(() -> new EntityNotFoundException("Image not found for ID: " + carImgId));
 
         CarImg updatedCarImg = carImgRepository.save(existingCarImg);
 
@@ -51,7 +57,7 @@ public class CarImgBusinessRulesManager implements CarImgBusinessRulesService {
     @Transactional
     public void deleteCarImage(int carImgId) {
         CarImg carImg = carImgRepository.findById(carImgId)
-                .orElseThrow(() -> new IllegalArgumentException("Image not found with ID: " + carImgId));
+                .orElseThrow(() -> new EntityNotFoundException("Image not found with ID: " + carImgId));
 
         carImgRepository.delete(carImg);
     }
