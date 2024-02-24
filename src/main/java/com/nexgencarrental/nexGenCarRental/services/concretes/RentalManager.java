@@ -1,12 +1,14 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
+import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
 import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CustomerService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.EmployeeService;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.RentalService;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalAdminRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
@@ -15,7 +17,9 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRen
 import com.nexgencarrental.nexGenCarRental.services.rules.rental.RentalBusinessRulesService;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 
 @Service
 public class RentalManager extends BaseManager<Rental, RentalRepository, GetRentalResponse, GetRentalListResponse,
@@ -56,6 +60,27 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
     }
 
     @Override
+    public void rentalAdminAdd(AddRentalAdminRequest addRentalAdminRequest) {
+        carService.getById(addRentalAdminRequest.getCarId()); // Car id kontrolü
+        customerService.getById(addRentalAdminRequest.getCustomerId()); // Customer id kontrolü
+        employeeService.getById(addRentalAdminRequest.getEmployeeId()); // Employee id kontrolü
+
+        rentalBusinessRulesService.validateAdminRentalRequest(addRentalAdminRequest);
+
+        Rental addRental = modelMapperService.forRequest().map(addRentalAdminRequest, Rental.class);
+
+        GetCarResponse carInfo = carService.getById(addRentalAdminRequest.getCarId());
+        double dailyPrice = carInfo.getDailyPrice();
+
+        addRental.setStartKilometer(carInfo.getKilometer());
+        addRental.setTotalPrice(dailyPrice * ChronoUnit.DAYS.between(addRentalAdminRequest.getStartDate(), addRentalAdminRequest.getEndDate()));
+        addRental.setEndKilometer(null);
+        addRental.setReturnDate(null);
+
+        repository.save(addRental);
+    }
+
+    @Override
     public void customUpdate(UpdateRentalRequest updateRentalRequest) {
         getById(updateRentalRequest.getId()); // Rental id kontrolü
         carService.getById(updateRentalRequest.getCarId()); // Car id kontrolü
@@ -80,5 +105,9 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
     @Override
     public void customDelete(int rentalId) {
         rentalBusinessRulesService.validateDeleteRentalRequest(rentalId);
+    }
+    @Override
+    public List<Car> findAvailableByDates(LocalDate startDate, LocalDate endDate) {
+        return repository.findAvailableByDates(startDate, endDate);
     }
 }

@@ -4,6 +4,7 @@ import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApplicationC
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.*;
 import com.nexgencarrental.nexGenCarRental.repositories.*;
+import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalAdminRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
 import lombok.AllArgsConstructor;
@@ -26,23 +27,31 @@ public class RentalBusinessRulesManager implements RentalBusinessRulesService {
     private final EmployeeRepository employeeRepository;
     private final CustomerRepository customerRepository;
     private final RentalRepository rentalRepository;
-
-    public void validateAddRentalRequest(AddRentalRequest addRentalRequest) {
+    public void validateRentalDates(LocalDate startDate, LocalDate endDate) {
         // Başlangıç tarihi kontrolü
-        if (addRentalRequest.getStartDate().isBefore(LocalDate.now())) {
+        if (startDate.isBefore(LocalDate.now())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ApplicationConstants.START_DATE_BEFORE_TODAY + LocalDate.now());
         }
 
         // Bitiş tarihi kontrolü
-        if (addRentalRequest.getEndDate().isBefore(addRentalRequest.getStartDate())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ApplicationConstants.END_DATE_BEFORE_START_DATE + addRentalRequest.getStartDate());
+        if (endDate.isBefore(startDate)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ApplicationConstants.END_DATE_BEFORE_START_DATE + startDate);
         }
 
         // Kiralama süresi kontrolü
-        if (ChronoUnit.DAYS.between(addRentalRequest.getStartDate(), addRentalRequest.getEndDate()) > 25
-                || 0 == ChronoUnit.DAYS.between(addRentalRequest.getStartDate(), addRentalRequest.getEndDate())) {
+        if (ChronoUnit.DAYS.between(startDate, endDate) > 25
+                || 0 == ChronoUnit.DAYS.between(startDate, endDate)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ApplicationConstants.RENTAL_MIN_MAX_DAYS);
         }
+    }
+    @Override
+    public void validateAdminRentalRequest(AddRentalAdminRequest addRentalAdminRequest) {
+        validateRentalDates(addRentalAdminRequest.getStartDate(), addRentalAdminRequest.getEndDate());
+    }
+
+    @Override
+    public void validateAddRentalRequest(AddRentalRequest addRentalRequest) {
+        validateRentalDates(addRentalRequest.getStartDate(), addRentalRequest.getEndDate());
     }
 
     public void validateUpdateRentalRequest(UpdateRentalRequest updateRentalRequest) {

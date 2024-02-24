@@ -8,6 +8,7 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarFil
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorFilterResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
+import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 
 public interface ColorService extends BaseService<Color, ColorRepository, GetColorResponse,
         GetColorListResponse, AddColorRequest, UpdateColorRequest> {

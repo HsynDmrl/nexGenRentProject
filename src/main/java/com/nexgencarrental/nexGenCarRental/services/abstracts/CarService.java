@@ -1,7 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.abstracts;
 
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Color;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarRequest;
@@ -15,18 +14,9 @@ import java.util.List;
 
 public interface CarService extends BaseService<Car, CarRepository, GetCarResponse,
         GetCarListResponse, AddCarRequest, UpdateCarRequest> {
-    void customAdd(AddCarRequest addColorRequest);
+    GetCarFilterResponse customAdd(AddCarRequest addCarRequest, List<MultipartFile> images);
 
-    void customUpdate(UpdateCarRequest updateColorRequest);
+    void customUpdate(UpdateCarRequest updateCarRequest);
 
     void customDelete(int id);
-
-    List<Car> getAllEntityFilter (Integer brandId, Integer modelId, Short year, Integer colorId,String gearType, String fuelType, Double minDailyPrice, Double maxDailyPrice);
-
-    List<Car> findAvailableCarsByNames(String searchTerm);
-
-    Car createCarWithImages(AddCarRequest request, List<MultipartFile> images) throws IOException;
-
-    GetCarFilterResponse convertToGetCarFilterResponse(Car car);
-
 }

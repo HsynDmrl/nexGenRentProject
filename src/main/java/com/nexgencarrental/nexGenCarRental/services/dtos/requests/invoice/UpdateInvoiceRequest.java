@@ -15,6 +15,10 @@ public class UpdateInvoiceRequest {
     @NotNull(message = InvoiceConstants.INVOICE_ID_NULL)
     private int id;
 
+    @NotBlank(message = InvoiceConstants.INVOICE_NO_BLANK)
+    @Pattern(regexp = "\\d{10}", message = InvoiceConstants.INVOICE_NO_PATTERN)
+    private String invoiceNo;
+
     @NotNull(message = InvoiceConstants.INVOICE_DISCOUNT_NULL)
     @DecimalMin(value = "0.0", message = InvoiceConstants.INVOICE_DECIMAL_DISCOUNT_MIN)
     @DecimalMax(value = "100.0", message = InvoiceConstants.INVOICE_DECIMAL_DISCOUNT_MAX)
