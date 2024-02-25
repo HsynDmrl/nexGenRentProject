@@ -3,7 +3,9 @@ package com.nexgencarrental.nexGenCarRental.repositories;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.FuelType;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.GearType;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -38,4 +40,11 @@ public interface CarRepository extends JpaRepository<Car, Integer> {
             "LOWER(c.model.brand.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
             "LOWER(c.model.name) LIKE LOWER(CONCAT('%', :searchTerm, '%')))")
     List<Car> findAvailableCarsByNames(@Param("searchTerm") String searchTerm);
+
+    @Modifying
+    @Transactional
+    @Query("UPDATE Car c SET c.imagePath = :imagePath WHERE c.id = :carId")
+    void updateImagePath(
+            @Param("carId") int carId,
+            @Param("imagePath") String imagePath);
 }
