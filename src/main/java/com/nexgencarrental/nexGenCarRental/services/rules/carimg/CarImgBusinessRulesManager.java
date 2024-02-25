@@ -2,6 +2,8 @@ package com.nexgencarrental.nexGenCarRental.services.rules.carimg;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum;
+import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.CarImg;
 import com.nexgencarrental.nexGenCarRental.repositories.CarImgRepository;
@@ -19,24 +21,32 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
+
 @Service
 @AllArgsConstructor
 public class CarImgBusinessRulesManager implements CarImgBusinessRulesService {
     private final CarRepository carRepository;
     private final CarImgRepository carImgRepository;
+    private final Cloudinary cloudinary;
 
     @Override
     @Transactional
+    @SneakyThrows
     public GetCarImgResponse uploadCarImage(MultipartFile file, int carId) {
 
-        if (file.isEmpty()) {
-            throw new IllegalArgumentException("Dosya boş olamaz.");
-        }
-
-        Car car = carRepository.findById(carId).orElseThrow(() -> new EntityNotFoundException("Car not found for ID: " + carId));
+        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+        String imageUrl = (String) uploadResult.get("url");
+        String publicId = (String) uploadResult.get("public_id");
 
         CarImg carImg = new CarImg();
+        carImg.setImageUrl(imageUrl);
+        carImg.setPublicId(publicId);
+
+        Car car = new Car();
+        car.setId(carId);
         carImg.setCar(car);
+
         CarImg savedCarImg = carImgRepository.save(carImg);
 
         return new GetCarImgResponse(savedCarImg.getId(), savedCarImg.getImageUrl(), savedCarImg.getCar().getId(), savedCarImg.getPublicId());
@@ -44,9 +54,20 @@ public class CarImgBusinessRulesManager implements CarImgBusinessRulesService {
 
     @Override
     @Transactional
+    @SneakyThrows
     public GetCarImgResponse updateCarImage(MultipartFile file, int carImgId) {
+
+        Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+        String imageUrl = (String) uploadResult.get("url");
+        String publicId = (String) uploadResult.get("public_id");
+
+
         CarImg existingCarImg = carImgRepository.findById(carImgId)
-                .orElseThrow(() -> new EntityNotFoundException("Image not found for ID: " + carImgId));
+                .orElseThrow(() -> new DataNotFoundException(ENTITY_NOT_FOUND));
+
+
+        existingCarImg.setImageUrl(imageUrl);
+        existingCarImg.setPublicId(publicId);
 
         CarImg updatedCarImg = carImgRepository.save(existingCarImg);
 
@@ -57,7 +78,7 @@ public class CarImgBusinessRulesManager implements CarImgBusinessRulesService {
     @Transactional
     public void deleteCarImage(int carImgId) {
         CarImg carImg = carImgRepository.findById(carImgId)
-                .orElseThrow(() -> new EntityNotFoundException("Image not found with ID: " + carImgId));
+                .orElseThrow(() -> new DataNotFoundException(ENTITY_NOT_FOUND));
 
         carImgRepository.delete(carImg);
     }
