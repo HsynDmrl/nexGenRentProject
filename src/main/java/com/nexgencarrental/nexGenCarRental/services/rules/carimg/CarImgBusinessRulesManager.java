@@ -43,11 +43,14 @@ public class CarImgBusinessRulesManager implements CarImgBusinessRulesService {
         carImg.setImageUrl(imageUrl);
         carImg.setPublicId(publicId);
 
-        Car car = new Car();
-        car.setId(carId);
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new DataNotFoundException(ENTITY_NOT_FOUND));
         carImg.setCar(car);
 
         CarImg savedCarImg = carImgRepository.save(carImg);
+
+        car.setImagePath(imageUrl);
+        carRepository.save(car);
 
         return new GetCarImgResponse(savedCarImg.getId(), savedCarImg.getImageUrl(), savedCarImg.getCar().getId(), savedCarImg.getPublicId());
     }
