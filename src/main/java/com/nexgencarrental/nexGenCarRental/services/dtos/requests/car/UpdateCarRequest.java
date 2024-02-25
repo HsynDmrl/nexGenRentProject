@@ -34,8 +34,8 @@ public class UpdateCarRequest {
     @NotBlank(message = CarConstants.CAR_PLATE_BLANK)
     private String plate;
 
-    @NotBlank(message = CarConstants.CAR_IMAGE_BLANK)
-    private String imagePath;
+/*    @NotBlank(message = CarConstants.CAR_IMAGE_BLANK)
+    private String imagePath;*/
 
     private boolean isStatus;
 
