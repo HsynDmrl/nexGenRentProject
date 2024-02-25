@@ -65,18 +65,19 @@ public class BrandManager extends BaseManager<Brand, BrandRepository, GetBrandRe
         Brand brand = brandRepository.findById(updateBrandRequest.getId())
                 .orElseThrow(() -> new RuntimeException("Brand not found with ID: " + updateBrandRequest.getId()));
 
-        String logoUrl = null;
-        try {
-            // Cloudinary üzerinden dosya yükleme
-            Map uploadResult = cloudinaryService.uploader().upload(logoFile.getBytes(), ObjectUtils.emptyMap());
-            logoUrl = (String) uploadResult.get("url");
-        } catch (IOException e) {
-            // Hata yönetimi
-            e.printStackTrace();
+        if (logoFile != null && !logoFile.isEmpty()) {
+            String logoUrl = null;
+            try {
+                Map uploadResult = cloudinaryService.uploader().upload(logoFile.getBytes(), ObjectUtils.emptyMap());
+                logoUrl = (String) uploadResult.get("url");
+            } catch (IOException e) {
+                // Hata yönetimi
+                e.printStackTrace();
+            }
+            brand.setLogoPath(logoUrl);
         }
 
         brand.setName(updateBrandRequest.getName());
-        brand.setLogoPath(logoUrl);
 
         brandRepository.save(brand);
     }

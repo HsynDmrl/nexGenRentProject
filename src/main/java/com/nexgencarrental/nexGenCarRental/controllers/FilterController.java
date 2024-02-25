@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping(ApiPathConstants.CAR_BASE_URL)
+@RequestMapping(ApiPathConstants.FILTER_BASE_URL)
 @AllArgsConstructor
 public class FilterController {
 

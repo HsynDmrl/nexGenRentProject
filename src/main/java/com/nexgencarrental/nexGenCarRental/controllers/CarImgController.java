@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.controllers;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarImgService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.carImg.AddCarImgRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.carImg.UpdateCarImgRequest;
@@ -16,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/carimgs")
+@RequestMapping(ApiPathConstants.CARIMG_BASE_URL)
 @AllArgsConstructor
 public class CarImgController {
     private final CarImgService carImgService;
