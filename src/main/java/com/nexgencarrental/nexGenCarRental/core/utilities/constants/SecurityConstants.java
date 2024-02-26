@@ -14,10 +14,10 @@ public final class SecurityConstants {
             "/webjars/**",
             "/v3/api-docs/**",
             "/v2/api-docs",
-            "/api/auth/**",
-            "/api/auth/login",
-            "/api/auth/register",
-            "/api/auth/refresh-token",
+            "/api/v1/auth/**",
+            "/api/v1/auth/login",
+            "/api/v1/auth/register",
+            "/api/v1/auth/refresh-token",
     };
 
     public static final String[] USER_URLS = {
