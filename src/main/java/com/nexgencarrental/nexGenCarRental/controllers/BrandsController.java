@@ -41,18 +41,18 @@ public class BrandsController {
     public ResponseEntity<?> add(
             @RequestPart("addBrandRequest") String addBrandRequestString,
             @RequestPart("logoFile") MultipartFile logoFile) throws JsonProcessingException {
-            AddBrandRequest addBrandRequest = new ObjectMapper().readValue(addBrandRequestString, AddBrandRequest.class);
-            brandService.customAdd(addBrandRequest, logoFile);
-            return ResponseEntity.ok("Brand successfully added with logo.");
+        AddBrandRequest addBrandRequest = new ObjectMapper().readValue(addBrandRequestString, AddBrandRequest.class);
+        brandService.customAdd(addBrandRequest, logoFile);
+        return ResponseEntity.ok("Brand successfully added with logo.");
     }
 
-    @PutMapping(value=ApiPathConstants.UPDATE_BRAND,consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(value = ApiPathConstants.UPDATE_BRAND, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<?> update(@RequestPart("updateBrandRequest") @Valid String updateBrandRequestString,
                                     @RequestPart("logoFile") MultipartFile logoFile) throws JsonProcessingException {
-            UpdateBrandRequest updateBrandRequest = new ObjectMapper().readValue(updateBrandRequestString, UpdateBrandRequest.class);
-            brandService.customUpdate(updateBrandRequest, logoFile);
-            return ResponseEntity.ok("Brand successfully updated with new logo.");
+        UpdateBrandRequest updateBrandRequest = new ObjectMapper().readValue(updateBrandRequestString, UpdateBrandRequest.class);
+        brandService.customUpdate(updateBrandRequest, logoFile);
+        return ResponseEntity.ok("Brand successfully updated with new logo.");
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_BRAND)

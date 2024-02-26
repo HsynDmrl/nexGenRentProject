@@ -1,6 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental;
 
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.brand.GetBrandResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.invoice.GetInvoiceResponse;

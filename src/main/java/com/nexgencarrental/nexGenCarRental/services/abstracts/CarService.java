@@ -9,14 +9,12 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarLis
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface CarService extends BaseService<Car, CarRepository, GetCarResponse,
         GetCarListResponse, AddCarRequest, UpdateCarRequest> {
     GetCarFilterResponse customAdd(AddCarRequest addCarRequest, List<MultipartFile> images);
-
-    void customUpdate(UpdateCarRequest updateCarRequest);
+    GetCarFilterResponse customUpdate(UpdateCarRequest updateCarRequest, List<MultipartFile> images);
 
     void customDelete(int id);
 }

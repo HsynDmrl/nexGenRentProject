@@ -1,12 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.car;
 
-import com.nexgencarrental.nexGenCarRental.entities.concretes.FuelType;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.GearType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @Data

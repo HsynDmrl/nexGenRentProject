@@ -2,7 +2,6 @@ package com.nexgencarrental.nexGenCarRental.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ApiPathConstants;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarRequest;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -39,19 +37,24 @@ public class CarsController {
     public GetCarResponse getById(@PathVariable int id) {
         return carService.getById(id);
     }
+
     @PostMapping(value = ApiPathConstants.ADD_CAR, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> add(
             @RequestPart("car") String carString,
             @RequestPart(name = "images", required = false) List<MultipartFile> images) throws IOException {
-            AddCarRequest carRequest = objectMapper.readValue(carString, AddCarRequest.class);
-            GetCarFilterResponse savedCar = carService.customAdd(carRequest, images);
-            return ResponseEntity.ok().body(savedCar);
+        AddCarRequest carRequest = objectMapper.readValue(carString, AddCarRequest.class);
+        GetCarFilterResponse savedCar = carService.customAdd(carRequest, images);
+        return ResponseEntity.ok().body(savedCar);
     }
 
-    @PutMapping(ApiPathConstants.UPDATE_CAR)
+    @PutMapping(value = ApiPathConstants.UPDATE_CAR, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public void update(@Valid @RequestBody UpdateCarRequest updateCarRequest) {
-        carService.customUpdate(updateCarRequest);
+    public ResponseEntity<?> update(
+            @RequestPart("car") String updateCarString,
+            @RequestPart(name = "images", required = false) List<MultipartFile> images) throws IOException {
+        UpdateCarRequest updateCarRequest = objectMapper.readValue(updateCarString, UpdateCarRequest.class);
+        carService.customUpdate(updateCarRequest, images);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(ApiPathConstants.DELETE_CAR)

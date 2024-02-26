@@ -28,6 +28,7 @@ public class RentalBusinessRulesManager implements RentalBusinessRulesService {
     private final EmployeeRepository employeeRepository;
     private final CustomerRepository customerRepository;
     private final RentalRepository rentalRepository;
+
     public void validateRentalDates(LocalDate startDate, LocalDate endDate) {
         // Başlangıç tarihi kontrolü
         if (startDate.isBefore(LocalDate.now())) {
@@ -45,6 +46,7 @@ public class RentalBusinessRulesManager implements RentalBusinessRulesService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ApplicationConstants.RENTAL_MIN_MAX_DAYS);
         }
     }
+
     @Override
     public void validateAdminRentalRequest(AddRentalAdminRequest addRentalAdminRequest) {
         validateRentalDates(addRentalAdminRequest.getStartDate(), addRentalAdminRequest.getEndDate());

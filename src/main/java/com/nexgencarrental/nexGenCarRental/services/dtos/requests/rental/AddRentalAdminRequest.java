@@ -1,7 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental;
 
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.RentalConstants;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Invoice;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
 @AllArgsConstructor

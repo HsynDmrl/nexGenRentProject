@@ -40,7 +40,7 @@ public class UsersController {
 
     @DeleteMapping(ApiPathConstants.DELETE_USER)
     @ResponseStatus(HttpStatus.OK)
-    public void delete(@PathVariable  int id) {
+    public void delete(@PathVariable int id) {
         userService.customDelete(id);
     }
 

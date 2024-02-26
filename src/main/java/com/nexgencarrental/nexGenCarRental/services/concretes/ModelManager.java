@@ -29,14 +29,14 @@ public class ModelManager extends BaseManager<Model, ModelRepository, GetModelRe
 
     @Override
     public void customAdd(AddModelRequest addModelRequest) {
-        brandService.getById(addModelRequest.getBrandId()); // Brand id kontrolü
-        modelBusinessRulesService.existsByName(addModelRequest.getName()); // ModelName kontrolü
+        brandService.getById(addModelRequest.getBrandId());
+        modelBusinessRulesService.existsByName(addModelRequest.getName());
         add(addModelRequest, Model.class);
     }
 
     @Override
     public void customUpdate(UpdateModelRequest updateModelRequest) {
-        brandService.getById(updateModelRequest.getBrandId()); // Brand id kontrolü
+        brandService.getById(updateModelRequest.getBrandId());
         update(updateModelRequest, Model.class);
     }
 
@@ -51,7 +51,7 @@ public class ModelManager extends BaseManager<Model, ModelRepository, GetModelRe
         GetModelFilterResponse response = new GetModelFilterResponse();
         response.setId(model.getId());
         response.setName(model.getName());
-        response.setBrandName(model.getBrand().getName()); // Eğer Model DTO'sunda marka bilgisi varsa
+        response.setBrandName(model.getBrand().getName());
         return response;
     }
 }

@@ -1,12 +1,8 @@
 package com.nexgencarrental.nexGenCarRental.services.concretes;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum;
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.mappers.ModelMapperService;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Employee;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Rental;
 import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarService;
@@ -18,17 +14,11 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.AddRent
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalAdminRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateRentalRequest;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.customer.GetCustomerResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.employee.GetEmployeeResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalAdminListResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalAdminResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.rental.GetRentalResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.rental.RentalBusinessRulesService;
-import jakarta.persistence.EntityNotFoundException;
-import org.apache.coyote.BadRequestException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.method.annotation.MethodArgumentConversionNotSupportedException;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -36,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.DATE_NOT_FOUND;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum.LOGIN_ERROR;
 
 @Service
@@ -77,9 +66,9 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
 
     @Override
     public void customAdd(AddRentalRequest addRentalRequest) {
-        carService.getById(addRentalRequest.getCarId()); // Car id kontrolü
-        customerService.getById(addRentalRequest.getCustomerId()); // Customer id kontrolü
-        employeeService.getById(addRentalRequest.getEmployeeId()); // Employee id kontrolü
+        carService.getById(addRentalRequest.getCarId());
+        customerService.getById(addRentalRequest.getCustomerId());
+        employeeService.getById(addRentalRequest.getEmployeeId());
 
         rentalBusinessRulesService.validateAddRentalRequest(addRentalRequest);
 
@@ -96,9 +85,9 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
 
     @Override
     public void rentalAdminAdd(AddRentalAdminRequest addRentalAdminRequest) {
-        carService.getById(addRentalAdminRequest.getCarId()); // Car id kontrolü
-        customerService.getById(addRentalAdminRequest.getCustomerId()); // Customer id kontrolü
-        employeeService.getById(addRentalAdminRequest.getEmployeeId()); // Employee id kontrolü
+        carService.getById(addRentalAdminRequest.getCarId());
+        customerService.getById(addRentalAdminRequest.getCustomerId());
+        employeeService.getById(addRentalAdminRequest.getEmployeeId());
 
         rentalBusinessRulesService.validateAdminRentalRequest(addRentalAdminRequest);
 
@@ -120,9 +109,9 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
 
     @Override
     public void rentalAdminUpdate(UpdateRentalAdminRequest updateRentalAdminRequest) {
-        carService.getById(updateRentalAdminRequest.getCarId()); // Car id kontrolü
-        customerService.getById(updateRentalAdminRequest.getCustomerId()); // Customer id kontrolü
-        employeeService.getById(updateRentalAdminRequest.getEmployeeId()); // Employee id kontrolü
+        carService.getById(updateRentalAdminRequest.getCarId());
+        customerService.getById(updateRentalAdminRequest.getCustomerId());
+        employeeService.getById(updateRentalAdminRequest.getEmployeeId());
 
         rentalBusinessRulesService.validateAdminRentalRequest(updateRentalAdminRequest);
 
@@ -144,18 +133,17 @@ public class RentalManager extends BaseManager<Rental, RentalRepository, GetRent
 
     @Override
     public void customUpdate(UpdateRentalRequest updateRentalRequest) {
-        getById(updateRentalRequest.getId()); // Rental id kontrolü
-        carService.getById(updateRentalRequest.getCarId()); // Car id kontrolü
-        customerService.getById(updateRentalRequest.getCustomerId()); // Customer id kontrolü
-        employeeService.getById(updateRentalRequest.getEmployeeId()); // Employee id kontrolü
+        getById(updateRentalRequest.getId());
+        carService.getById(updateRentalRequest.getCarId());
+        customerService.getById(updateRentalRequest.getCustomerId());
+        employeeService.getById(updateRentalRequest.getEmployeeId());
 
         rentalBusinessRulesService.validateUpdateRentalRequest(updateRentalRequest);
 
         Rental addRental = modelMapperService.forRequest().map(updateRentalRequest, Rental.class);
 
-        GetCarResponse carId = carService.getById(updateRentalRequest.getCarId()); // Araç kilometresi otomatik olarak id'den alır.
+        GetCarResponse carId = carService.getById(updateRentalRequest.getCarId());
 
-        // totalPrice kontrolü
         addRental.setTotalPrice(carId.getDailyPrice() * ChronoUnit.DAYS.between(updateRentalRequest.getStartDate(), updateRentalRequest.getEndDate()));
         addRental.setStartKilometer(carId.getKilometer());
         addRental.setEndKilometer(null);

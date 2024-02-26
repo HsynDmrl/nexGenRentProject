@@ -7,7 +7,10 @@ import java.util.List;
 
 public interface CarImgBusinessRulesService {
     GetCarImgResponse uploadCarImage(MultipartFile file, int carId);
+
     GetCarImgResponse updateCarImage(MultipartFile file, int carImgId);
+
     void deleteCarImage(int carImgId);
+
     List<GetCarImgResponse> getCarImagesByCarId(int carId);
 }

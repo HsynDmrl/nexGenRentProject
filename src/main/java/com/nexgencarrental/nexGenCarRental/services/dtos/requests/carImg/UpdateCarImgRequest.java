@@ -15,14 +15,9 @@ public class UpdateCarImgRequest {
     @Positive(message = "ID must be positive")
     private int id;
 
-    @NotBlank(message = "Public ID must not be blank")
-    private String publicId; // Cloudinary tarafından verilen resmin unique public ID'si
+/*    @NotBlank(message = "Public ID must not be blank")
+    private String publicId; // Cloudinary tarafından verilen resmin unique public ID'si*/
 
     @NotNull(message = "File must not be null")
-    private MultipartFile file; // Yeni resim dosyası
-
-    // Diğer gerekebilecek alanlar...
-
-    // Lombok @Data zaten constructor, getter, ve setter metotlarını sağlar.
-
+    private MultipartFile file;
 }

@@ -19,11 +19,13 @@ public interface RentalService extends BaseService<Rental, RentalRepository, Get
     void customAdd(AddRentalRequest addRentalRequest);
 
     void rentalAdminAdd(AddRentalAdminRequest addRentalAdminRequest);
+
     void rentalAdminUpdate(UpdateRentalAdminRequest updateRentalAdminRequest);
 
     void customUpdate(UpdateRentalRequest updateRentalRequest);
 
     void customDelete(int id);
+
     List<Car> findAvailableByDates(LocalDate startDate, LocalDate endDate);
 
     List<GetRentalAdminListResponse> getAdminAll();

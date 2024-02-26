@@ -25,7 +25,7 @@ public class BrandManager extends BaseManager<Brand, BrandRepository, GetBrandRe
         AddBrandRequest, UpdateBrandRequest> implements BrandService {
     private final BrandRepository brandRepository;
     private final BrandBusinessRulesService brandBusinessRulesService;
-    private final Cloudinary cloudinaryService; // CloudinaryService enjekte edildi
+    private final Cloudinary cloudinaryService;
 
 
     @Autowired
@@ -35,19 +35,18 @@ public class BrandManager extends BaseManager<Brand, BrandRepository, GetBrandRe
                 AddBrandRequest.class, UpdateBrandRequest.class);
         this.brandBusinessRulesService = brandBusinessRulesService;
         this.cloudinaryService = cloudinaryService;
-        this.brandRepository = brandRepository; // BrandRepository nesnesini atayın
+        this.brandRepository = brandRepository;
     }
+
     @Override
     public void customAdd(AddBrandRequest addBrandRequest, MultipartFile logoFile) {
         brandBusinessRulesService.checkIfBrandNameExists(addBrandRequest.getName());
 
         String logoUrl = null;
         try {
-            // Cloudinary üzerinden dosya yükleme
             Map uploadResult = cloudinaryService.uploader().upload(logoFile.getBytes(), ObjectUtils.emptyMap());
             logoUrl = (String) uploadResult.get("url");
         } catch (IOException e) {
-            // Hata yönetimi
             e.printStackTrace();
         }
 
@@ -71,7 +70,6 @@ public class BrandManager extends BaseManager<Brand, BrandRepository, GetBrandRe
                 Map uploadResult = cloudinaryService.uploader().upload(logoFile.getBytes(), ObjectUtils.emptyMap());
                 logoUrl = (String) uploadResult.get("url");
             } catch (IOException e) {
-                // Hata yönetimi
                 e.printStackTrace();
             }
             brand.setLogoPath(logoUrl);

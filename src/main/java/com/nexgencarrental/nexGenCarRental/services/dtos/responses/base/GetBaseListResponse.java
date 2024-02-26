@@ -1,7 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.responses.base;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DatabaseConstants;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

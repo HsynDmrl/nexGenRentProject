@@ -15,9 +15,6 @@ import com.nexgencarrental.nexGenCarRental.services.rules.invoice.InvoiceBusines
 import com.nexgencarrental.nexGenCarRental.services.rules.invoice.InvoiceBusinessRulesService;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.Random;
-
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.NO_INVOICE_FOUND;
 
@@ -56,29 +53,21 @@ public class InvoiceManager extends BaseManager<Invoice, InvoiceRepository, GetI
 
     @Override
     public void customUpdate(UpdateInvoiceRequest updateInvoiceRequest) {
-        // Güncellenecek faturayı veritabanından id'ye göre bul
         Invoice existingInvoice = repository.findById(updateInvoiceRequest.getId())
                 .orElseThrow(() -> new DataNotFoundException(NO_INVOICE_FOUND));
 
-        // Rental bilgisini al
         Rental rental = existingInvoice.getRental();
         if (rental == null) {
             throw new DataNotFoundException(ENTITY_NOT_FOUND);
         }
-
-        // Güncelleme isteğiyle gelen bilgilerle mevcut fatura nesnesini güncelle
         existingInvoice.setTotalPrice((float) rental.getTotalPrice());
         existingInvoice.setDiscountRate(updateInvoiceRequest.getDiscountRate());
         existingInvoice.setTaxRate(updateInvoiceRequest.getTaxRate());
-        // Diğer güncelleme işlemleri buraya eklenebilir
 
-        // Mevcut fatura numarasını korumak için mevcut numarayı kullanarak güncellemeyi sağla
         if (updateInvoiceRequest.getInvoiceNo() != null && !updateInvoiceRequest.getInvoiceNo().isEmpty()) {
             existingInvoice.setInvoiceNo(updateInvoiceRequest.getInvoiceNo());
         }
-
-        // Güncellenmiş faturayı kaydet
-        repository.save(existingInvoice);;
+        repository.save(existingInvoice);
     }
 
     @Override

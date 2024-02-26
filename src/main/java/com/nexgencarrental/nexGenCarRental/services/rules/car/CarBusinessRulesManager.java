@@ -11,12 +11,7 @@ import com.nexgencarrental.nexGenCarRental.repositories.ColorRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.ModelRepository;
 import com.nexgencarrental.nexGenCarRental.repositories.RentalRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarImgService;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.ColorService;
-import com.nexgencarrental.nexGenCarRental.services.abstracts.ModelService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.AddCarRequest;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarFilterResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.color.GetColorResponse;
-import com.nexgencarrental.nexGenCarRental.services.dtos.responses.model.GetModelResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -36,6 +31,7 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
     private CarImgService carImgService;
     private ModelRepository modelRepository;
     private ColorRepository colorRepository;
+
     @Override
     public Car saveCar(AddCarRequest addCarRequest) {
         Car car = new Car();
@@ -63,11 +59,16 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
             throw new ConflictException(PLATE_ALREADY_EXISTS);
         }
     }
+
     @Override
     public void uploadCarImages(List<MultipartFile> images, int carId) {
         if (images != null) {
-            for (MultipartFile image : images) {
-                carImgService.uploadCarImage(image, carId);
+            carImgService.deleteCarImage(carId);
+
+            if (images != null) {
+                for (MultipartFile image : images) {
+                    carImgService.uploadCarImage(image, carId);
+                }
             }
         }
     }
