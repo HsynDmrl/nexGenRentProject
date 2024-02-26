@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.InvoiceConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.RentalConstants;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -17,7 +18,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class UpdateRentalRequest {
 
-    @Positive(message = RentalConstants.UPDATE_RENTAL_ID_POSITIVE)
+    @Positive(message = RentalConstants.RENTAL_ID_POSITIVE)
     @NotNull(message = RentalConstants.RENTAL_ID_NULL)
     private int id;
 
@@ -45,5 +46,7 @@ public class UpdateRentalRequest {
     @NotNull(message = RentalConstants.EMPLOYEE_ID_NULL)
     private int employeeId;
 
+    @Positive(message = InvoiceConstants.ID_POSITIVE)
+    @NotNull(message = InvoiceConstants.INVOICE_ID_NULL)
     private int invoicesId;
 }

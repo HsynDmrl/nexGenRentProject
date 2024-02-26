@@ -31,9 +31,6 @@ public class AddCarRequest {
     @NotBlank(message = CarConstants.CAR_PLATE_BLANK)
     private String plate;
 
-/*    @NotBlank(message = CarConstants.CAR_IMAGE_BLANK)
-    private String imagePath;*/
-
     private boolean isStatus;
 
     @NotNull(message = CarConstants.CAR_GEAR_NULL)

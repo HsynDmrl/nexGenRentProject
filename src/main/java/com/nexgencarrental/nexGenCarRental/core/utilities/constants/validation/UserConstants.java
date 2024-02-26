@@ -10,10 +10,11 @@ public class UserConstants {
     public static final String SURNAME_BLANK = ("Surname cannot be blank");
     public static final String SURNAME_PATTERN = ("Enter upper case followed by lower case.'Surname'");
     public static final String EMAIL_BLANK = ("E-mail cannot be blank");
-    public static final String EMAIL_FORMAT = ("Invalid e-mail format");
-    public static final String EMAIL_PATTERN = ("Invalid e-mail format. It must contain @ and at least one dot.");
+    public static final String EMAIL_FORMAT = ("Invalid e-mail format. It must contain @ and at least one dot.");
     public static final String NATIONALITY_BLANK = ("Nationality ID cannot be blank");
     public static final String NATIONALITY_PATTERN = ("Invalid National ID format. It must be an 11-digit number.");
+    public static final String NATIONALITY_SIZE = ("Nationality ID must be 11 characters long");
     public static final String GSM_BLANK = ("GSM cannot be blank");
     public static final String GSM_PATTERN = ("Invalid GSM format. It must be a 10-digit number.");
+    public static final String GSM_SIZE = ("GSM must be 11 characters long");
 }

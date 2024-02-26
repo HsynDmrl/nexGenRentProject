@@ -4,6 +4,7 @@ public final class ApplicationConstants {
     private ApplicationConstants() {
         throw new IllegalStateException("Utility class");
     }
+
     public static final String NO_ENTITIES_FOUND = "NO_ENTITIES_FOUND";
 
     public static final String NO_USER_FOUND = "NO_USER_FOUND";

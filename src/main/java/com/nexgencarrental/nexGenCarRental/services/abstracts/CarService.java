@@ -14,6 +14,7 @@ import java.util.List;
 public interface CarService extends BaseService<Car, CarRepository, GetCarResponse,
         GetCarListResponse, AddCarRequest, UpdateCarRequest> {
     GetCarFilterResponse customAdd(AddCarRequest addCarRequest, List<MultipartFile> images);
+
     GetCarFilterResponse customUpdate(UpdateCarRequest updateCarRequest, List<MultipartFile> images);
 
     void customDelete(int id);

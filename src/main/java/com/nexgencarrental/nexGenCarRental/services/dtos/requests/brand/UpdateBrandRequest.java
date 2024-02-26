@@ -15,7 +15,7 @@ public class UpdateBrandRequest {
     private int id;
 
     @Size(min = 2, message = BrandConstants.BRAND_NAME_SIZE)
-    @Pattern(regexp = "^[A-Z][a-z]{1,13}$", message = BrandConstants.BRAND_NAME_PATTERN)
+    @Pattern(regexp = "^[A-ZÇĞİÖŞÜ][a-zçğıöşü]{1,13}$", message = BrandConstants.BRAND_NAME_PATTERN)
     @NotBlank(message = BrandConstants.BRAND_NAME_BLANK)
     private String name;
 

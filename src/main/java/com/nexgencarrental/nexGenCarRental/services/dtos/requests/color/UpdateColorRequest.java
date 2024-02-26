@@ -15,7 +15,7 @@ public class UpdateColorRequest {
     private int id;
 
     @Size(min = 2, message = ColorConstants.COLOR_NAME_SIZE)
-    @Pattern(regexp = "^[A-Z][a-z]{1,13}$", message = ColorConstants.COLOR_NAME_PATTERN)
-    @NotBlank(message = "Name cannot be blank")
+    @Pattern(regexp = "^[A-ZÇĞİÖŞÜ][a-zçğıöşü]{1,13}$", message = ColorConstants.COLOR_NAME_PATTERN)
+    @NotBlank(message = ColorConstants.COLOR_NOT_BLANK)
     private String name;
 }
