@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface FilterRulesService {
     List<Car> findAvailableCarsByNames(String searchTerm);
-    List<Car> getAllEntityFilter (Integer brandId, Integer modelId, Short year,
-                                  Integer colorId, GearType gearType, FuelType fuelType, Double minDailyPrice, Double maxDailyPrice);
+
+    List<Car> getAllEntityFilter(Integer brandId, Integer modelId, Short year,
+                                 Integer colorId, GearType gearType, FuelType fuelType, Double minDailyPrice, Double maxDailyPrice);
+
     GetCarFilterResponse convertToGetCarFilterResponse(Car car);
 }

@@ -5,7 +5,6 @@ import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoun
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.InternalServerErrorException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.UnauthorizedException;
 import com.nexgencarrental.nexGenCarRental.core.utilities.services.JwtService;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.Customer;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Role;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.User;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.AuthService;

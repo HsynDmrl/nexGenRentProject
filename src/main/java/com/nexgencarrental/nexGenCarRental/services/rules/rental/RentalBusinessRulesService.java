@@ -7,7 +7,9 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental.UpdateR
 
 public interface RentalBusinessRulesService {
     void validateAddRentalRequest(AddRentalRequest addRentalRequest);
+
     void validateAdminRentalRequest(AddRentalAdminRequest addRentalAdminRequest);
+
     void validateAdminRentalRequest(UpdateRentalAdminRequest updateRentalAdminRequest);
 
     void validateUpdateRentalRequest(UpdateRentalRequest updateRentalRequest);

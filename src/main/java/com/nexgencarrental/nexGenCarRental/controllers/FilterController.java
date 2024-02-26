@@ -25,6 +25,7 @@ public class FilterController {
 
     private final FilterRulesService filterRulesService;
     private final RentalService rentalService;
+
     @GetMapping(ApiPathConstants.CAR_FILTER_URL)
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<GetCarFilterResponse>> getByFilter(

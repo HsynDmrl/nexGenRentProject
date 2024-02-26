@@ -11,8 +11,9 @@ import java.util.List;
 
 public interface RentalRepository extends JpaRepository<Rental, Integer> {
     List<Rental> findByCarId(int carId);
+
     @Query("SELECT DISTINCT r.car FROM Rental r WHERE r.startDate <= :endDate AND r.endDate >= :startDate AND r.car.isStatus = true")
     List<Car> findAvailableByDates(
             @Param("startDate") LocalDate startDate,
-            @Param("endDate") LocalDate endDate);;
+            @Param("endDate") LocalDate endDate);
 }

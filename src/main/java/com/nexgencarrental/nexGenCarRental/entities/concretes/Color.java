@@ -1,6 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.entities.concretes;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.nexgencarrental.nexGenCarRental.entities.abstracts.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

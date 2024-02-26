@@ -1,6 +1,5 @@
 package com.nexgencarrental.nexGenCarRental.services.rules.filter;
 
-import com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.ErrorEnum;
 import com.nexgencarrental.nexGenCarRental.core.utilities.exceptions.DataNotFoundException;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.Car;
@@ -8,19 +7,19 @@ import com.nexgencarrental.nexGenCarRental.entities.concretes.FuelType;
 import com.nexgencarrental.nexGenCarRental.entities.concretes.GearType;
 import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarFilterResponse;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.*;
+import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.ENTITY_NOT_FOUND;
 
 @Service
 @AllArgsConstructor
 public class FilterRulesManager implements FilterRulesService {
 
     private CarRepository carRepository;
+
     @Override
     public List<Car> findAvailableCarsByNames(String searchTerm) {
         String searchPattern = (searchTerm != null && !searchTerm.trim().isEmpty())

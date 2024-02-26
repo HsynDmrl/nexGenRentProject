@@ -27,16 +27,19 @@ public class RentalsController {
     public List<GetRentalListResponse> getAll() {
         return rentalService.getAll();
     }
+
     @GetMapping(ApiPathConstants.GET_RENTAL_BY_ID)
     @ResponseStatus(HttpStatus.OK)
     public GetRentalResponse getById(@PathVariable int id) {
         return rentalService.getById(id);
     }
+
     @GetMapping(ApiPathConstants.GET_ALL_ADMIN_RENTALS)
     @ResponseStatus(HttpStatus.OK)
     public List<GetRentalAdminListResponse> getAdminAll() {
         return rentalService.getAdminAll();
     }
+
     @GetMapping(ApiPathConstants.GET_RENTAL_ADMIN_BY_ID)
     @ResponseStatus(HttpStatus.OK)
     public GetRentalResponse getByAdminId(@PathVariable int id) {

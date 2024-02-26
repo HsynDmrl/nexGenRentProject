@@ -2,23 +2,17 @@ package com.nexgencarrental.nexGenCarRental.services.concretes;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import com.nexgencarrental.nexGenCarRental.entities.concretes.CarImg;
-import com.nexgencarrental.nexGenCarRental.repositories.CarImgRepository;
-import com.nexgencarrental.nexGenCarRental.repositories.CarRepository;
 import com.nexgencarrental.nexGenCarRental.services.abstracts.CarImgService;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.carImg.GetCarImgResponse;
 import com.nexgencarrental.nexGenCarRental.services.rules.carimg.CarImgBusinessRulesService;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -41,7 +35,7 @@ public class CarImgManager implements CarImgService {
     @Override
     @Transactional
     @SneakyThrows
-    public GetCarImgResponse updateCarImage(MultipartFile file, int carImgId){
+    public GetCarImgResponse updateCarImage(MultipartFile file, int carImgId) {
 
         Map uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.asMap("resource_type", "auto"));
         String imageUrl = (String) uploadResult.get("url");

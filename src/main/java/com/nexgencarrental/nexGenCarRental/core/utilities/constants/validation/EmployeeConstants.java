@@ -6,6 +6,6 @@ public class EmployeeConstants {
     public static final String EMPLOYEE_SALARY = ("Salary cannot be null");
 
     public static final String ID_POSITIVE = ("Id field cannot be less than 0.");
-    public static final String USER_ID = ("");
+    public static final String USER_ID = ("User ID cannot be null");
 
 }

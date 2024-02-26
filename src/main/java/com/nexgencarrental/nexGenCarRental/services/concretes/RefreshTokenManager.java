@@ -20,7 +20,6 @@ import java.util.UUID;
 
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.DataNotFoundEnum.*;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum.REFRESH_TOKEN_CREATION_ERROR;
-import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.InternalServerEnum.TOKEN_GENERATION_ERROR;
 import static com.nexgencarrental.nexGenCarRental.core.utilities.constants.UnauthorizedEnum.EXPIRED_TOKEN;
 
 @Service
