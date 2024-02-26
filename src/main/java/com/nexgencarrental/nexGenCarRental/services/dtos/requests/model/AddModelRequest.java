@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class AddModelRequest {
 
     @Size(min = 2, message = ModelConstants.MODELS_NAME_SIZE)
-    @Pattern(regexp = "^[A-Z][a-z0-9]{0,13}$", message = ModelConstants.MODEL_NAME_PATTERN)
+    @Pattern(regexp = "^[A-ZÇĞİÖŞÜ][a-zçğıöşü0-9]{1,13}$", message = ModelConstants.MODEL_NAME_PATTERN)
     @NotBlank(message = ModelConstants.MODEL_NAME_BLANK)
     private String name;
 

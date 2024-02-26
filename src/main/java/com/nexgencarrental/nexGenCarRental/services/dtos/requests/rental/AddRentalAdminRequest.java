@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.rental;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.InvoiceConstants;
 import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.RentalConstants;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.FutureOrPresent;
@@ -47,5 +48,7 @@ public class AddRentalAdminRequest {
     @NotNull(message = RentalConstants.EMPLOYEE_ID_NULL)
     private int employeeId;
 
+    @Positive(message = InvoiceConstants.ID_POSITIVE)
+    @NotNull(message = InvoiceConstants.INVOICE_ID_NULL)
     private int invoicesId;
 }

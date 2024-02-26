@@ -21,18 +21,18 @@ public final class SecurityConstants {
     };
 
     public static final String[] USER_URLS = {
-            "/api/users/**",
-            "/api/users/getByEmail"
+            "/api/v1/users/**",
+            "/api/v1/users/getByEmail"
     };
 
     public static final String[] ADMIN_URLS = {
-            "/api/brands/**",
-            "/api/colors/**"
+            "/api/v1/brands/**",
+            "/api/v1/colors/**"
     };
 
 
     public static final String[] AUTHENTICATED_URLS = {
-            "/api/**"
+            "/api/v1/**"
     };
 
     public static final String BEARER_AUTH_SCHEME_NAME = "bearerAuth";

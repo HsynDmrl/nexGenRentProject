@@ -1,5 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.carImg;
 
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.CarImgConstants;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,15 +13,10 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AddCarImgRequest {
-    @NotBlank(message = "Image path cannot be blank")
-    @NotNull(message = "File cannot be null")
+    @NotBlank(message = CarImgConstants.CARIMG_NOT_BLANK)
+    @NotNull(message = CarImgConstants.CARIMG_NOT_NULL)
     private MultipartFile file;
 
-    @NotNull(message = "Car ID cannot be null")
-    private int carId; // Araba ID'si
-
-    // Cloudinary'den veya yükleme işleminden sonraki URL ve public ID'i tutmak için alanlar gerekirse buraya eklenebilir
-
-    // Constructor, getters ve setters
-    // Lombok kullanıyorsanız, @Data otomatik olarak bu metodları sağlayacaktır.
+    @NotNull(message = CarImgConstants.CARIMG_NOT_ID)
+    private int carId;
 }

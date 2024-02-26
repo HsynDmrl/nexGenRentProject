@@ -1,7 +1,7 @@
 package com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation;
 
 public class RentalConstants {
-    public static final String UPDATE_RENTAL_ID_POSITIVE = ("Id cannot be less than 0");
+    public static final String RENTAL_ID_POSITIVE = ("Id cannot be less than 0");
     public static final String RENTAL_ID_NULL = ("Rental ID cannot be null");
     public static final String START_DATE_NULL = ("Start date cannot be null");
     public static final String START_DATE_FUTURE = ("");

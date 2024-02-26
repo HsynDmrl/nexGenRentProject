@@ -14,12 +14,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RegisterRequest {
 
-    @Size(min = 2 , max = 40 , message = RegisterConstants.REGISTER_NAME_SIZE)
+    @Size(min = 2, max = 30, message = RegisterConstants.REGISTER_NAME_SIZE)
     @NotBlank(message = RegisterConstants.REGISTER_NAME_BLANK)
     @Pattern(regexp = "^[A-ZÇĞİÖŞÜ][a-zçğıöşü]+(\\s[A-ZÇĞİÖŞÜ][a-zçğıöşü]+)*$", message = RegisterConstants.REGISTER_NAME_PATTERN)
     private String name;
 
-    @Size(min = 2,max = 40 , message = RegisterConstants.REGISTER_SURNAME_SIZE)
+    @Size(min = 2, max = 20, message = RegisterConstants.REGISTER_SURNAME_SIZE)
     @NotBlank(message = RegisterConstants.REGISTER_SURNAME_BLANK)
     @Pattern(regexp = "^[A-ZÇĞİÖŞÜ][a-zçğıöşü]+$", message = RegisterConstants.REGISTER_SURNAME_PATTERN)
     private String surname;
@@ -33,10 +33,10 @@ public class RegisterRequest {
     private String gsm;
 
     @NotBlank(message = RegisterConstants.REGISTER_EMAIL_BLANK)
-    @Email(message = RegisterConstants.REGISTER_EMAIL_FORMAT)
+    @Email(message = RegisterConstants.REGISTER_EMAIL_PATTERN)
     private String email;
 
     @NotBlank(message = RegisterConstants.REGISTER_PASSWORD_BLANK)
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[A-Z]).{8,16}$" , message = RegisterConstants.REGISTER_PASSWORD_PATTERN)
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[A-Z]).{8,16}$", message = RegisterConstants.REGISTER_PASSWORD_PATTERN)
     private String password;
 }

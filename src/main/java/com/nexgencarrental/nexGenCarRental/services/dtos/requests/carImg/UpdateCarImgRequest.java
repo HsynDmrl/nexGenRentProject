@@ -1,6 +1,6 @@
 package com.nexgencarrental.nexGenCarRental.services.dtos.requests.carImg;
 
-import jakarta.validation.constraints.NotBlank;
+import com.nexgencarrental.nexGenCarRental.core.utilities.constants.validation.CarImgConstants;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -12,12 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateCarImgRequest {
-    @Positive(message = "ID must be positive")
+    @Positive(message = CarImgConstants.CARIMG_ID_POSITIVE)
     private int id;
 
-/*    @NotBlank(message = "Public ID must not be blank")
-    private String publicId; // Cloudinary tarafından verilen resmin unique public ID'si*/
-
-    @NotNull(message = "File must not be null")
+    @NotNull(message = CarImgConstants.CARIMG_NOT_NULL)
     private MultipartFile file;
 }

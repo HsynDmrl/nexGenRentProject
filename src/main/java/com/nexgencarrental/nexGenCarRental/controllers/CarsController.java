@@ -8,7 +8,6 @@ import com.nexgencarrental.nexGenCarRental.services.dtos.requests.car.UpdateCarR
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarFilterResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarListResponse;
 import com.nexgencarrental.nexGenCarRental.services.dtos.responses.car.GetCarResponse;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
