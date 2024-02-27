@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                         .requestMatchers("swagger-ui/**").permitAll()
                         .requestMatchers("/api/v1/auth/**").permitAll()
                         .requestMatchers("/api/v1/search/**").permitAll()
+                        .requestMatchers("/api/v1/filters/**").permitAll()
                         //USER
                         .requestMatchers(HttpMethod.PUT, "/admin/update/{userId}/{newRoleId}").hasAuthority("ADMIN")
                         .requestMatchers("/api/v1/users/**").hasAnyAuthority("USER", "ADMIN", "MANAGER")

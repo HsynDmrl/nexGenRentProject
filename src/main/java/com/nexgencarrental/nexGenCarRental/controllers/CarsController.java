@@ -46,13 +46,10 @@ public class CarsController {
         return ResponseEntity.ok().body(savedCar);
     }
 
-    @PutMapping(value = ApiPathConstants.UPDATE_CAR, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PutMapping(ApiPathConstants.UPDATE_CAR)
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<?> update(
-            @RequestPart("car") String updateCarString,
-            @RequestPart(name = "images", required = false) List<MultipartFile> images) throws IOException {
-        UpdateCarRequest updateCarRequest = objectMapper.readValue(updateCarString, UpdateCarRequest.class);
-        carService.customUpdate(updateCarRequest, images);
+    public ResponseEntity<?> update(@RequestBody UpdateCarRequest updateCarRequest) {
+        carService.customUpdate(updateCarRequest);
         return ResponseEntity.ok().build();
     }
 

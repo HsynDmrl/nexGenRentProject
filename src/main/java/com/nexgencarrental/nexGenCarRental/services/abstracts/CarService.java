@@ -15,7 +15,7 @@ public interface CarService extends BaseService<Car, CarRepository, GetCarRespon
         GetCarListResponse, AddCarRequest, UpdateCarRequest> {
     GetCarFilterResponse customAdd(AddCarRequest addCarRequest, List<MultipartFile> images);
 
-    GetCarFilterResponse customUpdate(UpdateCarRequest updateCarRequest, List<MultipartFile> images);
+    GetCarFilterResponse customUpdate(UpdateCarRequest updateCarRequest);
 
     void customDelete(int id);
 }

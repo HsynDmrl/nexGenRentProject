@@ -62,16 +62,12 @@ public class CarBusinessRulesManager implements CarBusinessRulesService {
 
     @Override
     public void uploadCarImages(List<MultipartFile> images, int carId) {
-        if (images != null) {
-            carImgService.deleteCarImage(carId);
-
             if (images != null) {
                 for (MultipartFile image : images) {
                     carImgService.uploadCarImage(image, carId);
                 }
             }
         }
-    }
 
     @Override
     public void deleteCarWithModel(int carId) {
