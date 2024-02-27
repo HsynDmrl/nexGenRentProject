@@ -23,9 +23,8 @@ public class GetCarFilterResponse {
 
     private boolean isStatus;
 
-    private String gearType; // Enum yerine String türünde
-    private String fuelType; // Enum yerine String türünde
-
+    private String gearType;
+    private String fuelType;
     private String modelName;
     private String colorName;
     private String brandName;

@@ -53,7 +53,6 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
     @Override
     @SneakyThrows
     public GetCarFilterResponse customAdd(AddCarRequest addCarRequest, List<MultipartFile> images) {
-
         validateModelAndColorIds(addCarRequest.getModelId(), addCarRequest.getColorId());
         carBusinessRulesService.existsByPlate(addCarRequest.getPlate());
         Car savedCar = carBusinessRulesService.saveCar(addCarRequest);
@@ -63,7 +62,7 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
     }
 
     @Override
-    public GetCarFilterResponse customUpdate(UpdateCarRequest updateCarRequest, List<MultipartFile> images) {
+    public GetCarFilterResponse customUpdate(UpdateCarRequest updateCarRequest) {
         validateModelAndColorIds(updateCarRequest.getModelId(), updateCarRequest.getColorId());
 
         Car existingCar = carRepository.findById(updateCarRequest.getId())
@@ -81,10 +80,6 @@ public class CarManager extends BaseManager<Car, CarRepository, GetCarResponse, 
         existingCar.setStatus(updateCarRequest.isStatus());
 
         Car updatedCar = carRepository.save(existingCar);
-
-        if (images != null) {
-            carBusinessRulesService.uploadCarImages(images, updatedCar.getId());
-        }
 
         return modelMapperService.forResponse().map(updatedCar, GetCarFilterResponse.class);
     }
