@@ -43,9 +43,9 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/v1/users/getByEmail").hasAnyAuthority("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/v1/users/**").permitAll()
                         //BRAND
-                        .requestMatchers(HttpMethod.POST, "/api/v1/brands/add").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/brands/update").hasAuthority("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/brands/delete").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/brands/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/brands/**").hasAuthority("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/brands/**").hasAuthority("ADMIN")
                         .requestMatchers(HttpMethod.GET, "/api/v1/brands/**").permitAll()
                         //.requestMatchers(HttpMethod.GET,"/api/v1/brands/getAll").hasAnyAuthority("ADMIN","USER","MANAGER")
 
