@@ -25,9 +25,9 @@ The contributors to this project are listed below. Thanks to everyone who contri
 
 Below is the ER (Entity-Relationship) diagram created on PostgreSQL:
 
-![ER Diagram](https://github.com/PickerWork/nexGenRentProject/raw/master/Diagram.png)
+![ER Diagram](https://github.com/HsynDmrl/nexGenRentProject/blob/main/ERD.PNG)
 
-This diagram illustrates the database structure of the project. Please click [here](https://github.com/PickerWork/nexGenRentProject/blob/master/Diagram.png) for details.
+This diagram illustrates the database structure of the project. Please click [here](https://github.com/HsynDmrl/nexGenRentProject/blob/main/ERD.PNG) for details.
 
 ---
 
@@ -100,7 +100,7 @@ With these updates, the system operates more reliably and healthily.
 - Lombok (for automatically generating boilerplate code such as getters, setters, constructors, etc.)
 
 ## Installation and Running
-1. Clone the project repository: `git clone https://github.com/yourusername/yourproject.git`
+1. Clone the project repository: `git clone https://github.com/HsynDmrl/nexGenRentProject.git`
 2. Install and configure the PostgreSQL database.
 3. Edit the `application.properties` file to configure the database connection.
 4. Navigate to the project directory and run the command `mvn spring-boot:run`.
