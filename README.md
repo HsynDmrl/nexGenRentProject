@@ -15,7 +15,7 @@ NexGenRentProject is an application developed within the scope of the Tobeto cou
 
 The contributors to this project are listed below. Thanks to everyone who contributed to the project!
 
-| [![Hüseyin Demirel](https://github.com/hsyndmrl.png)](https://github.com/HsynDmrl) | [![Yasin Yıldız](https://github.com/PickerWork.png)](https://github.com/yasinydz) | [![Mustafa Tayyar](https://github.com/urmustafa.png)](https://github.com/urmustafa) |
+| [![Hüseyin Demirel](https://github.com/hsyndmrl.png)](https://github.com/HsynDmrl) | [![Yasin Yıldız](https://github.com/yasinydz.png)](https://github.com/yasinydz) | [![Mustafa Tayyar](https://github.com/urmustafa.png)](https://github.com/urmustafa) |
 | --- | --- | --- |
 | Hüseyin Demirel 🤝 | Yasin Yıldız 🤝 | Mustafa Tayyar 🤝|
 
